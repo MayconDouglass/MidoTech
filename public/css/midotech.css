@@ -1,0 +1,66 @@
+/* CSS tabelas */
+.actionDataTab {
+    width: 255px;
+}
+.statusDataTab {
+    width: 30px;
+    text-align: center;
+}
+.idDataTab {
+    width: 66px;
+}
+
+/* badge */
+.badge {
+    display: inline-block;
+    padding: .25em .4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out
+}
+
+/* CSS Button*/
+.btn-alterar {
+    color: #fff;
+    background-color: #5a06e0;
+    border-color: #4f0cbb;
+    box-shadow: none
+}
+
+.btn-alterar:hover {
+    color: #fff;
+    background-color: #4f0cbb;
+    border-color: #5a06e0
+}
+
+.btn-alterar.focus,
+.btn-alterar:focus {
+    box-shadow: none, 0 0 0 0 rgba(121, 38, 255, 0.5)
+}
+
+.btn-alterar.disabled,
+.btn-alterar:disabled {
+    color: #fff;
+    background-color: #7700ff;
+    border-color: #7700ff
+}
+
+.btn-alterar:not(:disabled):not(.disabled).active,
+.btn-alterar:not(:disabled):not(.disabled):active,
+.show>.btn-alterar.dropdown-toggle {
+    color: #fff;
+    background-color: #7000cc;
+    border-color: #6900bf
+}
+
+.btn-alterar:not(:disabled):not(.disabled).active:focus,
+.btn-alterar:not(:disabled):not(.disabled):active:focus,
+.show>.btn-alterar.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0 rgba(139, 38, 255, 0.5)
+}
+

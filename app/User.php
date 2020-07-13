@@ -2,38 +2,58 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    protected $table = 'usuarios';
+	protected $primaryKey = 'id_usuario';
+	public $timestamps = false;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+	protected $casts = [
+		'empresa' => 'int',
+		'perfil' => 'int',
+		'licencas' => 'int',
+		'ativo' => 'int',
+		'usucad' => 'int'
+	];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+	protected $dates = [
+		'data_cadastro',
+		'data_alteracao'
+	];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+	protected $hidden = [
+		'password',
+		'remember_token'
+	];
+
+	protected $fillable = [
+		'empresa',
+		'perfil',
+		'nome',
+		'email',
+		'password',
+		'remember_token',
+		'licencas',
+		'ativo',
+		'usucad',
+		'data_cadastro',
+		'data_alteracao'
+	];
+
+	public function usuario()
+	{
+		return $this->belongsTo(Usuario::class, 'usucad');
+	}
+
+	public function perfil_acessos()
+	{
+		return $this->hasMany(PerfilAcesso::class, 'usuario');
+	}
+
+	public function usuarios()
+	{
+		return $this->hasMany(Usuario::class, 'usucad');
+	}
 }
