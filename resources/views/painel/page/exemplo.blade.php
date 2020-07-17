@@ -4,6 +4,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{url('/')}}/js/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
+<link rel="stylesheet" href="{{url('/')}}/js/plugins/select2/css/select2m.css">
 @endsection
 
 @section('head')
@@ -64,52 +65,25 @@
             <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal"
               data-target="#VisualizarCadModal"> Visualizar</button>
             <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
-              data-target="#AlterarCadModal"> Alterar</button>
+              data-target="#AlterarCadEmpModal"> Alterar</button>
             <button type="button" class="btn btn-danger btn-sm fa fa-trash-o" data-toggle="modal"
               data-target="#modal-danger"> Excluir</button>
           </td>
         </tr>
-        <tr>
-          <td>1</td>
-          <td>Internet
-            Explorer 5.0
-          </td>
-          <td><span class="badge badge-danger">Inativo</span></td>
-          <td>
-            <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal"
-              data-target="#VisualizarCadModal"> Visualizar</button>
-            <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
-              data-target="#AlterarCadModal"> Alterar</button>
-            <button type="button" class="btn btn-danger btn-sm fa fa-trash-o" data-toggle="modal"
-              data-target="#modal-danger"> Excluir</button>
-          </td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Internet
-            Explorer 5.5
-          </td>
-          <td><span class="badge badge-danger">Inativo</span></td>
-          <td>
-            <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal"
-              data-target="#VisualizarCadModal"> Visualizar</button>
-            <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
-              data-target="#AlterarCadModal"> Alterar</button>
-            <button type="button" class="btn btn-danger btn-sm fa fa-trash-o" data-toggle="modal"
-              data-target="#modal-danger"> Excluir</button>
-          </td>
-        </tr>
+
       </tbody>
     </table>
   </div>
 </div>
 
+
+
 <!-- Modal Cadastro-->
 <div class="modal fade" id="CadastroModal" tabindex="-1" role="dialog" aria-labelledby="CadastroModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
-      <div class="b_add_modalHeader">
+      <div class="add_modalHeader">
         <div class="modal-header">
           <h5 class="modal-title" id="CadastroModalLabel">Novo Usuário</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -123,63 +97,129 @@
         <form class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
           @csrf
           <div class="form-group row">
-
             <div class="col-sm-6">
-              <label class="control-label">Nome</label>
-              <input class="form-control" type="text" name="nomecad" placeholder="Digite o nome" required>
+              <p><img id="previewImg" src="storage/img/users/default.jpg" class="imgCad"></p>
             </div>
-
-
             <div class="col-sm-6">
-              <label class="control-label">Escola/Setor</label>
-              <select class="form-control">
-                <option>Alabama</option>
-                <option>Alaska</option>
-                <option>California</option>
-                <option>Delaware</option>
-                <option>Tennessee</option>
-                <option>Texas</option>
-                <option>Washington</option>
-              </select>
-              <p></p>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Selecionar Logo</label>
+              </div><br>
+              <label class="control-label">Razão Social</label>
+              <input class="form-control" type="text" name="razaocad" id="razao_social" required>
+              <label class="control-label">Nome Fantasia</label>
+              <input class="form-control" type="text" name="fantasiacad" id="nome_fantasia" required>
             </div>
 
-            <div class="col-sm-6">
-              <label class="control-label">Login</label>
-              <input class="form-control" type="email" name="logincad" placeholder="Digite o login" required>
-            </div>
-
-            <div class="col-sm-3">
-              <label class="control-label">Senha</label>
-              <input class="form-control" type="password" name="passwordcad" placeholder="Digite a senha" required>
-            </div>
-
-
-
-            <div class="col-sm-3">
-              <label class="control-label">Perfil</label>
-              <select class="select" name="perfilcad">
-                <option value="1">AAA</option>
-              </select>
-              <p></p>
-            </div>
-
-            <div class="col-sm-3">
-              <label class="control-label">Status</label>
-              <select class="form-control" name="statuscad">
-                <option value="1">Ativo</option>
-                <option value="0">Inativo</option>
+            <div class="col-sm-4">
+              <label class="control-label">Regime Tributário</label>
+              <select class="select-notsearch" tabindex="-1" name="regimecad" id="regime_tributario">
+                <option value="1">Regime Normal</option>
+                <option value="2">Regime Normal - excesso de sublimite da receita bruta</option>
+                <option value="3">Simples Nacional</option>
               </select>
             </div>
 
-            <div class="col-sm-6">
-              <label class="control-label">Foto de Perfil</label>
-              <input class="filestyle" type="file" name="fotocad" id="fileImg" accept=".jpg,.png">
+            <div class="col-sm-2">
+              <label class="control-label">Saldo dos Clientes</label>
+              <select class="select-notsearch" tabindex="-1" name="saldocad" id="saldo_cliente">
+                <option value="1">Consolidado</option>
+                <option value="2">Individual</option>
+              </select>
             </div>
 
             <div class="col-sm-3">
-              <img id="previewImg" src="storage/img/users/default.jpg" alt="User Image" class="imgCad">
+              <label class="control-label">Atividade</label>
+              <select class="select2" tabindex="-1" name="atividadecad" id="atividade">
+                <option value="1">Consolidado</option>
+                <option value="2">Individual</option>
+              </select>
             </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Ativa</label>
+              <select class="select-notsearch" tabindex="-1" name="ativacad" id="ativa">
+                <option value="1">Sim</option>
+                <option value="2">Não</option>
+              </select>
+            </div>
+
+            <div class="col-sm-1">
+              <label class="control-label">SIGLA</label>
+              <input class="form-control" type="text" name="siglacad" id="sigla">
+            </div>
+
+            <div class="col-sm-4">
+              <label class="control-label">Logradouro</label>
+              <input class="form-control" type="text" name="logradourocad" id="logradouro" required>
+            </div>
+
+            <div class="col-sm-1">
+              <label class="control-label">Número</label>
+              <input class="form-control" type="number" name="numerocad" id="numero" required>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Complemento</label>
+              <input class="form-control" type="text" name="complementocad" id="complemento">
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Bairro</label>
+              <input class="form-control" type="text" name="bairrocad" id="bairro" required>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Cidade</label>
+              <input class="form-control" type="text" name="cidadecad" id="cidade" required>
+            </div>
+
+            <div class="col-sm-1">
+              <label class="control-label">UF</label>
+              <input class="form-control" type="text" name="ufcad" id="uf" required>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">CEP</label>
+              <input class="form-control" type="text" name="cepcad" id="cep" required>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">CNPJ</label>
+              <input class="form-control" type="text" name="cnpjcad" id="cnpj" required>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Insc. Estadual</label>
+              <input class="form-control" type="text" name="iecad" id="ie" required>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Insc. Municipal</label>
+              <input class="form-control" type="text" name="imcad" id="im">
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Telefone</label>
+              <input class="form-control" type="text" name="telefonecad" id="telefone">
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Data Cadastro</label>
+              <input class="form-control" type="text" name="datacad" id="data_cadastro">
+            </div>
+
+            <div class="col-sm-6">
+              <label class="control-label">Email</label>
+              <input class="form-control" type="text" name="emailcad" id="email">
+            </div>
+
+            <div class="col-sm-6">
+              <label class="control-label">Site</label>
+              <input class="form-control" type="text" name="sitecad" id="site">
+            </div>
+
+
           </div>
 
           <div class="modal-footer">
@@ -194,12 +234,13 @@
   </div>
 
 
-
   @endsection
 
 
   @section('js')
   <script src="{{url('/')}}/js/pages/midotech.js"></script>
+  <script src="{{url('/')}}/js/plugins/bs-custom-file-input/bs-custom-file-input.js"></script>
+  <script src="{{url('/')}}/js/plugins/select2/js/select2.full.js"></script>
   <script src="{{url('/')}}/js/plugins/datatables/jquery.dataTables.js"></script>
   <script src="{{url('/')}}/js/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
   @endsection
