@@ -47,12 +47,7 @@ $('#customFile').change(function () {
 
 //Read and Change Modal
 
-$('#AlterarCadEmpModal').on('show.bs.modal', function (event) {
+$('#AlterarEmpModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
     $(this).find('form').trigger('reset');   
-})
-
-$('#Cadastro2Modal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) //Botão que acionou o modal  
-    $(this).find('form').trigger('reset');
 })
