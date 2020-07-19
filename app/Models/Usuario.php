@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property int $id_usuario
  * @property int $empresa
- * @property int $perfil
+ * @property int $perfil_fk
  * @property string $nome
  * @property string $email
  * @property string $password
@@ -27,6 +27,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $data_alteracao
  * 
  * @property Usuario $usuario
+ * @property Perfil $perfil
+ * @property Setempresa $setempresa
+ * @property Collection|Perfil[] $perfils
  * @property Collection|PerfilAcesso[] $perfil_acessos
  * @property Collection|Usuario[] $usuarios
  *
@@ -40,7 +43,7 @@ class Usuario extends Model
 
 	protected $casts = [
 		'empresa' => 'int',
-		'perfil' => 'int',
+		'perfil_fk' => 'int',
 		'licencas' => 'int',
 		'ativo' => 'int',
 		'usucad' => 'int'
@@ -58,7 +61,7 @@ class Usuario extends Model
 
 	protected $fillable = [
 		'empresa',
-		'perfil',
+		'perfil_fk',
 		'nome',
 		'email',
 		'password',
@@ -73,6 +76,21 @@ class Usuario extends Model
 	public function usuario()
 	{
 		return $this->belongsTo(Usuario::class, 'usucad');
+	}
+
+	public function perfil()
+	{
+		return $this->belongsTo(Perfil::class, 'perfil_fk');
+	}
+
+	public function setempresa()
+	{
+		return $this->belongsTo(Setempresa::class, 'empresa');
+	}
+
+	public function perfils()
+	{
+		return $this->hasMany(Perfil::class, 'usualt');
 	}
 
 	public function perfil_acessos()

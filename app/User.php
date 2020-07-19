@@ -12,7 +12,7 @@ class User extends Authenticatable
 
 	protected $casts = [
 		'empresa' => 'int',
-		'perfil' => 'int',
+		'perfil_fk' => 'int',
 		'licencas' => 'int',
 		'ativo' => 'int',
 		'usucad' => 'int'
@@ -30,7 +30,7 @@ class User extends Authenticatable
 
 	protected $fillable = [
 		'empresa',
-		'perfil',
+		'perfil_fk',
 		'nome',
 		'email',
 		'password',
@@ -44,16 +44,31 @@ class User extends Authenticatable
 
 	public function usuario()
 	{
-		return $this->belongsTo(Usuario::class, 'usucad');
+		return $this->belongsTo(\App\Models\Usuario::class, 'usucad');
+	}
+
+	public function perfil()
+	{
+		return $this->belongsTo(\App\Models\Perfil::class, 'perfil_fk');
+	}
+
+	public function setempresa()
+	{
+		return $this->belongsTo(\App\Models\Setempresa::class, 'empresa');
+	}
+
+	public function perfils()
+	{
+		return $this->hasMany(\App\Models\Perfil::class, 'usualt');
 	}
 
 	public function perfil_acessos()
 	{
-		return $this->hasMany(PerfilAcesso::class, 'usuario');
+		return $this->hasMany(\App\Models\PerfilAcesso::class, 'usuario');
 	}
 
 	public function usuarios()
 	{
-		return $this->hasMany(Usuario::class, 'usucad');
+		return $this->hasMany(\App\Models\Usuario::class, 'usucad');
 	}
 }

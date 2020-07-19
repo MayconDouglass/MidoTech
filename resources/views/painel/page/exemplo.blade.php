@@ -63,7 +63,7 @@
           <td><span class="badge badge-success">Ativo</span></td>
           <td>
             <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal"
-              data-target="#VisualizarCadModal"> Visualizar</button>
+              data-target="#VisualizarEmpModal"> Visualizar</button>
             <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
               data-target="#AlterarEmpModal"> Alterar</button>
             <button type="button" class="btn btn-danger btn-sm fa fa-trash-o" data-toggle="modal"
@@ -234,7 +234,7 @@
   </div>
 </div>
 
-<!-- Modal Cadastro-->
+<!-- Modal Alteracao-->
 <div class="modal fade" id="AlterarEmpModal" tabindex="-1" role="dialog" aria-labelledby="AlterarEmpModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
@@ -261,15 +261,16 @@
                 <input type="file" class="custom-file-input" id="customFile">
                 <label class="custom-file-label" for="customFile">Selecionar Logo</label>
               </div><br>
+              <input class="form-control" type="hidden" name="idEmp" id="emp_cod" required>
               <label class="control-label">Razão Social</label>
-              <input class="form-control" type="text" name="razaocad" id="razao_social" required>
+              <input class="form-control" type="text" name="razaoalt" id="razao_social_alt" required>
               <label class="control-label">Nome Fantasia</label>
-              <input class="form-control" type="text" name="fantasiacad" id="nome_fantasia" required>
+              <input class="form-control" type="text" name="fantasiaalt" id="nome_fantasia_alt" required>
             </div>
 
             <div class="col-sm-4">
               <label class="control-label">Regime Tributário</label>
-              <select class="select-notsearch" tabindex="-1" name="regimecad" id="regime_tributario">
+              <select class="select-notsearch-emp" tabindex="-1" name="regimealt" id="regime_tributario_alt">
                 <option value="1">Regime Normal</option>
                 <option value="2">Regime Normal - excesso de sublimite da receita bruta</option>
                 <option value="3">Simples Nacional</option>
@@ -278,7 +279,7 @@
 
             <div class="col-sm-2">
               <label class="control-label">Saldo dos Clientes</label>
-              <select class="select-notsearch" tabindex="-1" name="saldocad" id="saldo_cliente">
+              <select class="select-notsearch-emp" tabindex="-1" name="saldoalt" id="saldo_cliente_alt">
                 <option value="1">Consolidado</option>
                 <option value="2">Individual</option>
               </select>
@@ -286,7 +287,7 @@
 
             <div class="col-sm-3">
               <label class="control-label">Atividade</label>
-              <select class="select2" tabindex="-1" name="atividadecad" id="atividade">
+              <select class="select2-emp" tabindex="-1" name="atividadealt" id="atividade_alt">
                 <option value="1">Consolidado</option>
                 <option value="2">Individual</option>
               </select>
@@ -294,7 +295,7 @@
 
             <div class="col-sm-2">
               <label class="control-label">Ativa</label>
-              <select class="select-notsearch" tabindex="-1" name="ativacad" id="ativa">
+              <select class="select-notsearch-emp" tabindex="-1" name="ativaalt" id="ativa_alt">
                 <option value="1">Sim</option>
                 <option value="2">Não</option>
               </select>
@@ -302,77 +303,77 @@
 
             <div class="col-sm-1">
               <label class="control-label">SIGLA</label>
-              <input class="form-control" type="text" name="siglacad" id="sigla">
+              <input class="form-control" type="text" name="siglaalt" id="sigla_alt">
             </div>
 
             <div class="col-sm-4">
               <label class="control-label">Logradouro</label>
-              <input class="form-control" type="text" name="logradourocad" id="logradouro" required>
+              <input class="form-control" type="text" name="logradouroalt" id="logradouro_alt" required>
             </div>
 
             <div class="col-sm-1">
               <label class="control-label">Número</label>
-              <input class="form-control" type="number" name="numerocad" id="numero" required>
+              <input class="form-control" type="number" name="numeroalt" id="numero_alt" required>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Complemento</label>
-              <input class="form-control" type="text" name="complementocad" id="complemento">
+              <input class="form-control" type="text" name="complementoalt" id="complemento_alt">
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Bairro</label>
-              <input class="form-control" type="text" name="bairrocad" id="bairro" required>
+              <input class="form-control" type="text" name="bairroalt" id="bairro_alt" required>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Cidade</label>
-              <input class="form-control" type="text" name="cidadecad" id="cidade" required>
+              <input class="form-control" type="text" name="cidadealt" id="cidade_alt" required>
             </div>
 
             <div class="col-sm-1">
               <label class="control-label">UF</label>
-              <input class="form-control" type="text" name="ufcad" id="uf" required>
+              <input class="form-control" type="text" name="ufalt" id="uf_alt" required>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">CEP</label>
-              <input class="form-control" type="text" name="cepcad" id="cep" required>
+              <input class="form-control" type="text" name="cepalt" id="cep_alt" required>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">CNPJ</label>
-              <input class="form-control" type="text" name="cnpjcad" id="cnpj" required>
+              <input class="form-control" type="text" name="cnpjalt" id="cnpj_alt" required>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Insc. Estadual</label>
-              <input class="form-control" type="text" name="iecad" id="ie" required>
+              <input class="form-control" type="text" name="iealt" id="ie_alt" required>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Insc. Municipal</label>
-              <input class="form-control" type="text" name="imcad" id="im">
+              <input class="form-control" type="text" name="imalt" id="im_alt">
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Telefone</label>
-              <input class="form-control" type="text" name="telefonecad" id="telefone">
+              <input class="form-control" type="text" name="telefonealt" id="telefone_alt">
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Data Cadastro</label>
-              <input class="form-control" type="text" name="datacad" id="data_cadastro">
+              <input class="form-control" type="text" name="dataalt" id="data_cadastro_alt">
             </div>
 
             <div class="col-sm-6">
               <label class="control-label">Email</label>
-              <input class="form-control" type="text" name="emailcad" id="email">
+              <input class="form-control" type="text" name="emailalt" id="email_alt">
             </div>
 
             <div class="col-sm-6">
               <label class="control-label">Site</label>
-              <input class="form-control" type="text" name="sitecad" id="site">
+              <input class="form-control" type="text" name="sitealt" id="site_alt">
             </div>
 
 
@@ -390,6 +391,186 @@
   </div>
 </div>
 
+
+<!-- Modal Visualizacao-->
+<div class="modal fade" id="VisualizarEmpModal" tabindex="-1" role="dialog" aria-labelledby="VisualizarEmpModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="view_modalHeader">
+        <div class="modal-header">
+          <h5 class="modal-title" id="VisualizarEmpModalLabel">Nova Empresa</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+
+        <!-- Form de cadastro -->
+        <form class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
+          @csrf
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <p><img id="previewImg" src="storage/img/users/default.jpg" class="imgCad"></p>
+            </div>
+            <div class="col-sm-6">
+              <label class="control-label">Código Empresa</label>
+              <input class="form-control" type="text" name="idEmp" id="emp_cod" disabled>
+              <label class="control-label">Razão Social</label>
+              <input class="form-control" type="text" name="razaoview" id="razao_social_view" disabled>
+              <label class="control-label">Nome Fantasia</label>
+              <input class="form-control" type="text" name="fantasiaview" id="nome_fantasia_view" disabled>
+            </div>
+
+            <div class="col-sm-4">
+              <label class="control-label">Regime Tributário</label>
+              <select class="select-notsearch" tabindex="-1" name="regimeview" id="regime_tributario_view" disabled>
+                <option value="1">Regime Normal</option>
+                <option value="2">Regime Normal - excesso de sublimite da receita bruta</option>
+                <option value="3">Simples Nacional</option>
+              </select>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Saldo dos Clientes</label>
+              <select class="select-notsearch" tabindex="-1" name="saldoview" id="saldo_cliente_view" disabled>
+                <option value="1">Consolidado</option>
+                <option value="2">Individual</option>
+              </select>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Atividade</label>
+              <select class="select2" tabindex="-1" name="atividadeview" id="atividade_view" disabled>
+                <option value="1">Consolidado</option>
+                <option value="2">Individual</option>
+              </select>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Ativa</label>
+              <select class="select-notsearch" tabindex="-1" name="ativaview" id="ativa_view" disabled>
+                <option value="1">Sim</option>
+                <option value="2">Não</option>
+              </select>
+            </div>
+
+            <div class="col-sm-1">
+              <label class="control-label">SIGLA</label>
+              <input class="form-control" type="text" name="siglaview" id="sigla_view" disabled>
+            </div>
+
+            <div class="col-sm-4">
+              <label class="control-label">Logradouro</label>
+              <input class="form-control" type="text" name="logradouroview" id="logradouro_view" disabled>
+            </div>
+
+            <div class="col-sm-1">
+              <label class="control-label">Número</label>
+              <input class="form-control" type="number" name="numeroview" id="numero_view" disabled>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Complemento</label>
+              <input class="form-control" type="text" name="complementoview" id="complemento_view" disabled>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Bairro</label>
+              <input class="form-control" type="text" name="bairroview" id="bairro_view" disabled>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Cidade</label>
+              <input class="form-control" type="text" name="cidadeview" id="cidade_view" disabled>
+            </div>
+
+            <div class="col-sm-1">
+              <label class="control-label">UF</label>
+              <input class="form-control" type="text" name="ufview" id="uf_view" disabled>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">CEP</label>
+              <input class="form-control" type="text" name="cepview" id="cep_view" disabled>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">CNPJ</label>
+              <input class="form-control" type="text" name="cnpjview" id="cnpj_view" disabled>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Insc. Estadual</label>
+              <input class="form-control" type="text" name="ieview" id="ie_view" disabled>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Insc. Municipal</label>
+              <input class="form-control" type="text" name="imview" id="im_view" disabled>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Telefone</label>
+              <input class="form-control" type="text" name="telefoneview" id="telefone_view" disabled>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Data Cadastro</label>
+              <input class="form-control" type="text" name="dataview" id="data_cadastro_view" disabled>
+            </div>
+
+            <div class="col-sm-6">
+              <label class="control-label">Email</label>
+              <input class="form-control" type="text" name="emailview" id="email_view" disabled>
+            </div>
+
+            <div class="col-sm-6">
+              <label class="control-label">Site</label>
+              <input class="form-control" type="text" name="siteview" id="site_view" disabled>
+            </div>
+
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="reset" data-dismiss="modal"><i class="fa fa-times">
+                Cancelar</i></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Exclusao-->
+<div class="modal fade" id="modal-danger">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="delete_modalHeader">
+        <div class="modal-header">
+          <h4 class="b_text_modal_title_danger"></h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" method="POST" action="">
+          @csrf
+          <input type="hidden" class="form-control col-form-label-sm" id="iddelete" name="iddelete">
+          <label class="b_text_modal_danger">Deseja realmente excluir este registro?</label>
+
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-secondary btn-sm fa fa-times" data-dismiss="modal"> Cancelar</button>
+            <button type="submit" class="btn btn-danger btn-sm fa fa-trash-o"> Confirmar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 @endsection
 

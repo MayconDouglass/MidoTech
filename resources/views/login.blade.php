@@ -24,24 +24,21 @@
         <div class="col-12 user-img">
           <img src="storage/sys/logo.png">
         </div>
-        
+        @if (session('status_login_error'))
+        <div class="alert alert-danger">
+          {{ session('status_login_error') }}
+        </div>
+        @endif
         <div class="col-12">
-          <form class="login-form" method="POST" action="/ava/login">
+          <form class="login-form" method="POST" action="/login">
             @csrf
-            @if (session('status_login_error'))
-            <div class="alert alert-danger">
-              {{ session('status_login_error') }}
-            </div>
-            @endif
-
-
+           
             <div class="form-group">
-              <input name="email" type="email" placeholder="Email" name="email" required>
+              <input type="email" placeholder="Email" name="email" autofocus>
             </div>
 
-
             <div class="form-group">
-              <input type="password" placeholder="Senha" name="password" required>
+              <input type="password" placeholder="Senha" name="senha">
             </div>
 
 

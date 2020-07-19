@@ -21,6 +21,16 @@ $(function () {
         minimumResultsForSearch: Infinity
     });
     
+    $('.select2-emp').select2({
+        dropdownParent: $("#AlterarEmpModal"),
+        width: '100%'
+    });
+    $('.select-notsearch-emp').select2({
+        dropdownParent: $("#AlterarEmpModal"),
+        width: '100%',
+        minimumResultsForSearch: Infinity
+    });
+    
     bsCustomFileInput.init();
 });
 
@@ -47,7 +57,20 @@ $('#customFile').change(function () {
 
 //Read and Change Modal
 
+$('#modal-danger').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Botão que acionou o modal
+    var iddelete = button.data('whatever-id')
+    $("#iddelete").val(iddelete);
+    var modal = $(this)
+    modal.find('.b_text_modal_title_danger').text('Excluir Registro')
+})
+
 $('#AlterarEmpModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Botão que acionou o modal
+    $(this).find('form').trigger('reset');   
+})
+
+$('#VisualizarEmpModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
     $(this).find('form').trigger('reset');   
 })

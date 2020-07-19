@@ -25,10 +25,15 @@ Route::get('/recuperar/password', function () {
     return view('recpass');
 });
 
+Route::get('/', 'LoginController@form')->name('login');
+Route::post('/login', 'LoginController@Login');
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/logout', function () {
         Auth::logout();
         return redirect()->action('LoginController@form');
     })->name('logoutAdmin');
 
-    });
+
+});
+

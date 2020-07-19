@@ -43,7 +43,7 @@
             <i class="fa fa-user-circle-o"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <span class="dropdown-item dropdown-header">Nome Usuario</span>
+            <span class="dropdown-item dropdown-header">{{$unome}}</span>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item">
               <i class="fa fa-user mr-2"></i> Perfil
@@ -80,11 +80,17 @@
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image">
-            <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-          </div>
-          <div class="info">
-            <a href="#" class="d-block">Usuario</a>
+          <div class="row">
+            <div class="image col-sm-12">
+              <img src="{{$uimagem}}" class="imgUser elevation-2" alt="User Image">
+            </div>
+
+            <div class="col-sm-12">
+              <label>{{$unome}}</label>
+            </div>
+            <div class="col-sm-12">
+              <label>{{$unomeperfil}}</label>
+            </div>
           </div>
         </div>
 
@@ -206,7 +212,7 @@
       <section class="content">
         @yield('content')
       </section>
-      
+
       <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
@@ -237,10 +243,10 @@
   <script src="{{url('/')}}/js/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
   <!-- AdminLTE App -->
   <script src="{{url('/')}}/js/adminlte.js"></script>
- 
-  
+
+
   <!-- PAGE PLUGINS -->
-  @yield('js')  
+  @yield('js')
   <!-- jQuery Mapael -->
   <script src="{{url('/')}}/js/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
   <script src="{{url('/')}}/js/plugins/raphael/raphael.min.js"></script>
