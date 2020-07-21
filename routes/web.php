@@ -33,7 +33,9 @@ Route::group(['middleware' => ['auth']], function () {
         Auth::logout();
         return redirect()->action('LoginController@form');
     })->name('logoutAdmin');
-
+  
+   
+    Route::get('/empresa', 'EmpresaController@create')->name('empresas');
 
 });
 

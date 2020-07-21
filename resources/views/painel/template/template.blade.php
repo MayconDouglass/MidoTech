@@ -79,18 +79,11 @@
       <!-- Sidebar -->
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="row">
-            <div class="image col-sm-12">
-              <img src="{{$uimagem}}" class="imgUser elevation-2" alt="User Image">
-            </div>
-
-            <div class="col-sm-12">
-              <label>{{$unome}}</label>
-            </div>
-            <div class="col-sm-12">
-              <label>{{$unomeperfil}}</label>
-            </div>
+        <div class="app-sidebar__user text-justify">
+          <img class="app-sidebar__user-avatar" src="{{$uimagem}}" width="70px" height="70px" alt="User Image">
+          <div>
+            <p class="app-sidebar__user-name">{{$unome}}</p>
+            <p class="app-sidebar__user-designation">{{$unomeperfil}}</p>
           </div>
         </div>
 
@@ -125,7 +118,7 @@
               </ul>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="../../index.html" class="nav-link">
+                  <a href="{{route('empresas')}}" class="nav-link">
                     <i class="fas fa-building nav-icon"></i>
                     <p>Empresa</p>
                   </a>
