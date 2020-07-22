@@ -16,15 +16,15 @@
           <button type="button" class="btn btn-primary fa fa-user-plus" data-toggle="modal"
             data-target="#CadastroModal">
             Cadastrar</button></h1>
-      </div><!-- /.col -->
+      </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="index">Home</a></li>
           <li class="breadcrumb-item active">Empresas</li>
         </ol>
-      </div><!-- /.col -->
-    </div><!-- /.row -->
-  </div><!-- /.container-fluid -->
+      </div>
+    </div>
+  </div>
 </div>
 
 @if (session('status_error'))
@@ -131,8 +131,9 @@
             <div class="col-sm-3">
               <label class="control-label">Atividade</label>
               <select class="select2" tabindex="-1" name="atividadecad" id="atividade">
-                <option value="1">Consolidado</option>
-                <option value="2">Individual</option>
+                @foreach ($atividades as $atividade)
+                <option value="{{$atividade->id_atividade}}">{{$atividade->descricao}}</option>   
+                @endforeach
               </select>
             </div>
 

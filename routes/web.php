@@ -11,19 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('login');
-});
-Route::get('/index', function () {
-    return view('painel.page.index');
-});
 
-Route::get('/index2', function () {
-    return view('painel.page.exemplo');
-});
-Route::get('/recuperar/password', function () {
-    return view('recpass');
-});
 
 Route::get('/', 'LoginController@form')->name('login');
 Route::post('/login', 'LoginController@Login');
