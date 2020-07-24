@@ -1,6 +1,7 @@
 /* CSS tabelas */
 .actionDataTab {
     width: 255px;
+    text-align: center;
 }
 
 .statusDataTab {
@@ -10,6 +11,12 @@
 
 .idDataTab {
     width: 66px;
+    text-align: center;
+}
+
+.idDataTabText {
+    width: 66px;
+    text-align: center;
 }
 
 /* badge */
@@ -149,11 +156,16 @@
     color: #fff;
 }
 
+/* Tamanho avatar barra lateral */
 .app-sidebar__user-avatar {
     -webkit-box-flex: 0;
     -ms-flex: 0 0 auto;
     flex: 0 0 auto;
     margin-right: 15px;
+    width: 50px;
+    height: 50px;
+    box-shadow: 0px 0px 20px #3b4652;
+    border: 2px solid #035cc2;
 }
 
 .app-sidebar__user-name {
@@ -170,3 +182,7 @@
     margin-bottom: 0;
 }
 
+.status {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}

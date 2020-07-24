@@ -24,6 +24,7 @@ Route::group(['middleware' => ['auth']], function () {
   
    
     Route::get('/empresa', 'EmpresaController@create')->name('empresas');
+    Route::post('/empresa/cad', 'EmpresaController@store');
 
 });
 

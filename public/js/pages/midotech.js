@@ -20,7 +20,7 @@ $(function () {
         width: '100%',
         minimumResultsForSearch: Infinity
     });
-    
+
     $('.select2-emp').select2({
         dropdownParent: $("#AlterarEmpModal"),
         width: '100%'
@@ -30,8 +30,13 @@ $(function () {
         width: '100%',
         minimumResultsForSearch: Infinity
     });
-    
+
     bsCustomFileInput.init();
+
+    $('.toastrDefaultError').click(function () {
+        toastr.error('Já existe uma empresa com este CNPJ!')
+    });
+
 });
 
 $('#CadastroModal').on('show.bs.modal', function (event) {
@@ -67,10 +72,10 @@ $('#modal-danger').on('show.bs.modal', function (event) {
 
 $('#AlterarEmpModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
-    $(this).find('form').trigger('reset');   
+    $(this).find('form').trigger('reset');
 })
 
 $('#VisualizarEmpModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
-    $(this).find('form').trigger('reset');   
+    $(this).find('form').trigger('reset');
 })

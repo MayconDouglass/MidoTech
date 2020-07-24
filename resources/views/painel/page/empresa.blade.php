@@ -5,6 +5,7 @@
 @section('css')
 <link rel="stylesheet" href="{{url('/')}}/js/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
 <link rel="stylesheet" href="{{url('/')}}/js/plugins/select2/css/select2m.css">
+<link rel="stylesheet" href="{{url('/')}}/js/plugins/toastr/toastr.min.css">
 @endsection
 
 @section('head')
@@ -16,6 +17,7 @@
           <button type="button" class="btn btn-primary fa fa-user-plus" data-toggle="modal"
             data-target="#CadastroModal">
             Cadastrar</button></h1>
+          <button type="button" class="btn btn-danger fa fa-user-plus toastrDefaultError">teste</button></h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -28,12 +30,12 @@
 </div>
 
 @if (session('status_error'))
-<div class="alert alert-danger">
+<div class="alert alert-danger status ">
   {{ session('status_error') }}
 </div>
 @endif
 @if (session('status_success'))
-<div class="alert alert-success">
+<div class="alert alert-success status">
   {{ session('status_success') }}
 </div>
 @endif
@@ -55,12 +57,12 @@
         </tr>
       </thead>
       <tbody>
+        @foreach ($empresas as $empresa)
         <tr>
-          <td>1</td>
-          <td>Internet
-            Explorer 4.0
-          </td>
-          <td><span class="badge badge-success">Ativo</span></td>
+          <td class="idDataTabText">{{$empresa->id_empresa}}</td>
+          <td>{{$empresa->razao_social}}</td>
+          <td><span @if ($empresa->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
+              @endif>{{$empresa->ativo ? "Ativo" : "Inativo"}}</span></td>
           <td>
             <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal"
               data-target="#VisualizarEmpModal"> Visualizar</button>
@@ -70,7 +72,7 @@
               data-target="#modal-danger"> Excluir</button>
           </td>
         </tr>
-
+        @endforeach
       </tbody>
     </table>
   </div>
@@ -94,7 +96,8 @@
       <div class="modal-body">
 
         <!-- Form de cadastro -->
-        <form class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
+        <form class="form-horizontal" method="POST" action="{{action('EmpresaController@store')}}"
+          enctype="multipart/form-data">
           @csrf
           <div class="form-group row">
             <div class="col-sm-6">
@@ -102,7 +105,7 @@
             </div>
             <div class="col-sm-6">
               <div class="custom-file">
-                <input type="file" class="custom-file-input" id="customFile">
+                <input type="file" class="custom-file-input" id="customFile" name="fotocad">
                 <label class="custom-file-label" for="customFile">Selecionar Logo</label>
               </div><br>
               <label class="control-label">Razão Social</label>
@@ -132,7 +135,7 @@
               <label class="control-label">Atividade</label>
               <select class="select2" tabindex="-1" name="atividadecad" id="atividade">
                 @foreach ($atividades as $atividade)
-                <option value="{{$atividade->id_atividade}}">{{$atividade->descricao}}</option>   
+                <option value="{{$atividade->id_atividade}}">{{$atividade->descricao}}</option>
                 @endforeach
               </select>
             </div>
@@ -207,7 +210,7 @@
 
             <div class="col-sm-2">
               <label class="control-label">Data Cadastro</label>
-              <input class="form-control" type="text" name="datacad" id="data_cadastro">
+              <input class="form-control" type="text" name="datacad" id="data_cadastro" disabled>
             </div>
 
             <div class="col-sm-6">
@@ -580,6 +583,7 @@
 <script src="{{url('/')}}/js/pages/midotech.js"></script>
 <script src="{{url('/')}}/js/plugins/bs-custom-file-input/bs-custom-file-input.js"></script>
 <script src="{{url('/')}}/js/plugins/select2/js/select2.full.js"></script>
+<script src="{{url('/')}}/js/plugins/toastr/toastr.min.js"></script>
 <script src="{{url('/')}}/js/plugins/datatables/jquery.dataTables.js"></script>
 <script src="{{url('/')}}/js/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 @endsection
