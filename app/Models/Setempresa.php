@@ -95,6 +95,11 @@ class Setempresa extends Model
 		return $this->belongsTo(Setatividade::class, 'atividade');
 	}
 
+	public function regimetrib()
+	{
+		return $this->belongsTo(Regimetrib::class, 'regimetrib');
+	}
+
 	public function perfils()
 	{
 		return $this->hasMany(Perfil::class, 'emp_cod');

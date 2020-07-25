@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id_regime
  * @property string $descricao
  * @property int $ativo
+ * 
+ * @property Collection|Setempresa[] $setempresas
  *
  * @package App\Models
  */
@@ -31,4 +34,9 @@ class Regimetrib extends Model
 		'descricao',
 		'ativo'
 	];
+
+	public function setempresas()
+	{
+		return $this->hasMany(Setempresa::class, 'regimetrib');
+	}
 }

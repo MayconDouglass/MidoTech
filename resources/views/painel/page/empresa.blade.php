@@ -5,7 +5,6 @@
 @section('css')
 <link rel="stylesheet" href="{{url('/')}}/js/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
 <link rel="stylesheet" href="{{url('/')}}/js/plugins/select2/css/select2m.css">
-<link rel="stylesheet" href="{{url('/')}}/js/plugins/toastr/toastr.min.css">
 @endsection
 
 @section('head')
@@ -17,7 +16,6 @@
           <button type="button" class="btn btn-primary fa fa-user-plus" data-toggle="modal"
             data-target="#CadastroModal">
             Cadastrar</button></h1>
-          <button type="button" class="btn btn-danger fa fa-user-plus toastrDefaultError">teste</button></h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -64,8 +62,24 @@
           <td><span @if ($empresa->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
               @endif>{{$empresa->ativo ? "Ativo" : "Inativo"}}</span></td>
           <td>
-            <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal"
-              data-target="#VisualizarEmpModal"> Visualizar</button>
+            <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal" data-target="#VisualizarEmpModal"
+            data-codigo="{{$empresa->id_empresa}}" data-razao="{{$empresa->razao_social}}" data-fantasia="{{$empresa->nome_fantasia}}"
+            data-logradouro="{{$empresa->Logradouro}}" data-numero="{{$empresa->Numero}}" data-complemento="{{$empresa->Complemento}}"
+            data-bairro="{{$empresa->Bairro}}" data-cidade="{{$empresa->Cidade}}" data-estado="{{$empresa->Estado}}"
+            data-cep="{{$empresa->CEP}}" data-cnpj="{{$empresa->CNPJ}}" data-ie="{{$empresa->IE}}" data-im="{{$empresa->IM}}"
+            data-telefone="{{$empresa->Telefone}}" data-ativo="{{$empresa->ativo}}" data-site="{{$empresa->Pag_web}}" data-email="{{$empresa->email}}"
+            data-sigla="{{$empresa->Sigla}}" data-cadastro="{{date('d/m/Y',strtotime($empresa->DataCad))}}" data-alteracao="{{$empresa->DataAlt ? date('d/m/Y', strtotime($empresa->DataAlt)) : "Sem alteração"}}" data-regimetrib="{{$empresa->regimetrib}}"
+            data-atividade="{{$empresa->atividade}}" data-saldocliente="{{$empresa->saldo_cliente}}" data-processamento="{{$empresa->data_processamento}}"
+            data-imgview="<?php 
+            $arquivo = 'storage/img/emp/'.$empresa->id_empresa.'.jpg';
+                                    if(file_exists($arquivo)){
+                                    $imagem = $arquivo;
+                                    } else {
+                                    $imagem = 'storage/img/emp/default.jpg';
+                                    }
+                                    echo ($imagem);
+            ?>" 
+            > Visualizar</button>
             <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
               data-target="#AlterarEmpModal"> Alterar</button>
             <button type="button" class="btn btn-danger btn-sm fa fa-trash-o" data-toggle="modal"
@@ -403,7 +417,7 @@
     <div class="modal-content">
       <div class="view_modalHeader">
         <div class="modal-header">
-          <h5 class="modal-title" id="VisualizarEmpModalLabel">Nova Empresa</h5>
+          <h5 class="modal-title" id="VisualizarEmpModalLabel"></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -412,11 +426,11 @@
       <div class="modal-body">
 
         <!-- Form de cadastro -->
-        <form class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
+        <form class="form-horizontal" method="POST">
           @csrf
           <div class="form-group row">
             <div class="col-sm-6">
-              <p><img id="previewImg" src="storage/img/users/default.jpg" class="imgCad"></p>
+              <p><img id="viewImg" src="storage/img/users/default.jpg" class="imgCad"></p>
             </div>
             <div class="col-sm-6">
               <label class="control-label">Código Empresa</label>
@@ -431,8 +445,8 @@
               <label class="control-label">Regime Tributário</label>
               <select class="select-notsearch" tabindex="-1" name="regimeview" id="regime_tributario_view" disabled>
                 <option value="1">Regime Normal</option>
-                <option value="2">Regime Normal - excesso de sublimite da receita bruta</option>
-                <option value="3">Simples Nacional</option>
+                <option value="2">Simples Nacional</option>
+                <option value="3">Simples Nacional - excesso de sublimite da receita bruta</option>
               </select>
             </div>
 
@@ -525,12 +539,17 @@
               <input class="form-control" type="text" name="dataview" id="data_cadastro_view" disabled>
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-sm-2">
+              <label class="control-label">Data Alteração</label>
+              <input class="form-control" type="text" name="dataview" id="data_alteracao_view" disabled>
+            </div>
+
+            <div class="col-sm-5">
               <label class="control-label">Email</label>
               <input class="form-control" type="text" name="emailview" id="email_view" disabled>
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-sm-5">
               <label class="control-label">Site</label>
               <input class="form-control" type="text" name="siteview" id="site_view" disabled>
             </div>
@@ -583,7 +602,6 @@
 <script src="{{url('/')}}/js/pages/midotech.js"></script>
 <script src="{{url('/')}}/js/plugins/bs-custom-file-input/bs-custom-file-input.js"></script>
 <script src="{{url('/')}}/js/plugins/select2/js/select2.full.js"></script>
-<script src="{{url('/')}}/js/plugins/toastr/toastr.min.js"></script>
 <script src="{{url('/')}}/js/plugins/datatables/jquery.dataTables.js"></script>
 <script src="{{url('/')}}/js/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
 @endsection
