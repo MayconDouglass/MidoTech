@@ -22,9 +22,15 @@ Route::group(['middleware' => ['auth']], function () {
         return redirect()->action('LoginController@form');
     })->name('logoutAdmin');
   
-   
+    //CRUD Empresa
     Route::get('/empresa', 'EmpresaController@create')->name('empresas');
     Route::post('/empresa/cad', 'EmpresaController@store');
+    Route::post('/empresa/update', 'EmpresaController@update');
+    Route::post('/empresa/delete', 'EmpresaController@destroy');
+
+    //CRUD Users
+    Route::get('/usuario', 'UsuarioController@create')->name('usuarios');
+ 
 
 });
 

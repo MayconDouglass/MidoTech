@@ -58,13 +58,22 @@ $('#customFile').change(function () {
     }
     fileReader.readAsDataURL(file)
 })
+//preview upload img
+$('#customFileAlt').change(function () {
+    const file = $(this)[0].files[0]
+    const fileReader = new FileReader()
+    fileReader.onloadend = function () {
+        $('#previewImgAlt').attr('src', fileReader.result)
+    }
+    fileReader.readAsDataURL(file)
+})
 
 
 //Read and Change Modal
 
 $('#modal-danger').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
-    var iddelete = button.data('whatever-id')
+    var iddelete = button.data('codigo')
     $("#iddelete").val(iddelete);
     var modal = $(this)
     modal.find('.b_text_modal_title_danger').text('Excluir Registro')
@@ -72,7 +81,70 @@ $('#modal-danger').on('show.bs.modal', function (event) {
 
 $('#AlterarEmpModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
+    var empCodAlt = button.data('codigo')
+    var razaoSocialAlt = button.data('razao')
+    var nomeFantasiaAlt = button.data('fantasia')
+    var logradouroAlt = button.data('logradouro')
+    var numeroAlt = button.data('numero')
+    var complementoAlt = button.data('complemento')
+    var bairroAlt = button.data('bairro')
+    var cidadeAlt = button.data('cidade')
+    var estadoAlt = button.data('estado')
+    var cepAlt = button.data('cep')
+    var cnpjAlt = button.data('cnpj')
+    var ieAlt = button.data('ie')
+    var imAlt = button.data('im')
+    var telefoneAlt = button.data('telefone')
+    var statusAlt = button.data('ativo')
+    var siteAlt = button.data('site')
+    var emailAlt = button.data('email')
+    var siglaAlt = button.data('sigla')
+    var dataCadAlt = button.data('cadastro')
+    var regimetribAlt = button.data('regimetrib')
+    var atividadeAlt = button.data('atividade')
+    var saldoClienteAlt = button.data('saldocliente')
+    var processamentoAlt = button.data('processamento')
+    var logoAlt = button.data('imgalt')
+
+    $("#regime_tributario_alt").select2({
+        dropdownParent: $("#AlterarEmpModal"), width: '100%',
+    }).val(regimetribAlt).trigger("change");
+
+    $("#saldo_cliente_alt").select2({
+        dropdownParent: $("#AlterarEmpModal"), width: '100%',
+    }).val(saldoClienteAlt).trigger("change");
+
+    $("#atividade_alt").select2({
+        dropdownParent: $("#AlterarEmpModal"), width: '100%',
+    }).val(atividadeAlt).trigger("change");
+
+    $("#ativa_alt").select2({
+        dropdownParent: $("#AlterarEmpModal"), width: '100%',
+    }).val(statusAlt).trigger("change");
+
+    $('#previewImgAlt').attr('src', logoAlt);
+    
     $(this).find('form').trigger('reset');
+    var modal = $(this)
+    modal.find('.modal-title').text('Alterar Registro')
+    modal.find('#emp_cod').val(empCodAlt)
+    modal.find('#razao_social_alt').val(razaoSocialAlt)
+    modal.find('#nome_fantasia_alt').val(nomeFantasiaAlt)
+    modal.find('#sigla_alt').val(siglaAlt)
+    modal.find('#logradouro_alt').val(logradouroAlt)
+    modal.find('#numero_alt').val(numeroAlt)
+    modal.find('#complemento_alt').val(complementoAlt)
+    modal.find('#cidade_alt').val(cidadeAlt)
+    modal.find('#bairro_alt').val(bairroAlt)
+    modal.find('#uf_alt').val(estadoAlt)
+    modal.find('#cep_alt').val(cepAlt)
+    modal.find('#cnpj_alt').val(cnpjAlt)
+    modal.find('#ie_alt').val(ieAlt)
+    modal.find('#im_alt').val(imAlt)
+    modal.find('#telefone_alt').val(telefoneAlt)
+    modal.find('#data_cadastro_alt').val(dataCadAlt)
+    modal.find('#email_alt').val(emailAlt)
+    modal.find('#site_alt').val(siteAlt)
 })
 
 $('#VisualizarEmpModal').on('show.bs.modal', function (event) {
