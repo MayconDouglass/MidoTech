@@ -20,7 +20,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $email
  * @property string $password
  * @property string|null $remember_token
- * @property int $licencas
  * @property int $ativo
  * @property int|null $usucad
  * @property Carbon $data_cadastro
@@ -44,7 +43,6 @@ class Usuario extends Model
 	protected $casts = [
 		'empresa' => 'int',
 		'perfil_fk' => 'int',
-		'licencas' => 'int',
 		'ativo' => 'int',
 		'usucad' => 'int'
 	];
@@ -66,7 +64,6 @@ class Usuario extends Model
 		'email',
 		'password',
 		'remember_token',
-		'licencas',
 		'ativo',
 		'usucad',
 		'data_cadastro',

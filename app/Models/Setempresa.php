@@ -37,6 +37,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $atividade
  * @property int $saldo_cliente
  * @property Carbon $data_processamento
+ * @property int $Licenca
  * 
  * @property Setatividade $setatividade
  * @property Collection|Perfil[] $perfils
@@ -55,7 +56,8 @@ class Setempresa extends Model
 		'ativo' => 'int',
 		'regimetrib' => 'int',
 		'atividade' => 'int',
-		'saldo_cliente' => 'int'
+		'saldo_cliente' => 'int',
+		'Licenca' => 'int'
 	];
 
 	protected $dates = [
@@ -87,7 +89,8 @@ class Setempresa extends Model
 		'regimetrib',
 		'atividade',
 		'saldo_cliente',
-		'data_processamento'
+		'data_processamento',
+		'Licenca'
 	];
 
 	public function setatividade()

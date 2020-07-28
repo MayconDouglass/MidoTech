@@ -13,7 +13,6 @@ class User extends Authenticatable
 	protected $casts = [
 		'empresa' => 'int',
 		'perfil_fk' => 'int',
-		'licencas' => 'int',
 		'ativo' => 'int',
 		'usucad' => 'int'
 	];
@@ -35,7 +34,6 @@ class User extends Authenticatable
 		'email',
 		'password',
 		'remember_token',
-		'licencas',
 		'ativo',
 		'usucad',
 		'data_cadastro',

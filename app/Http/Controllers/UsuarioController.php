@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Perfil;
 use App\Models\PerfilAcesso;
 use Illuminate\Http\Request;
 use App\Models\Setempresa;
@@ -28,12 +29,13 @@ class UsuarioController extends Controller
             $uimagem = 'storage/img/users/default.jpg';
             }
             
+            $perfis = Perfil::where('ativo',1)->get();
 
             $empresas = Setempresa::all();
            
             $usuarios = Usuario::all();
 
-            return view('painel.page.usuario',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','usuarios'));
+            return view('painel.page.usuario',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','usuarios','perfis'));
             
         }else{
 

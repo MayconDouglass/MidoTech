@@ -63,6 +63,7 @@ class EmpresaController extends Controller
             $empresa->Pag_web = $request->sitecad;
             $empresa->email = $request->emailcad;
             $empresa->Sigla = $request->siglacad;
+            $empresa->Licenca = $request->licencacad;
             $empresa->DataCad = date('Y-m-d H:i:s');
             $empresa->regimetrib = $request->regimecad;
             $empresa->atividade = $request->atividadecad;
@@ -120,6 +121,7 @@ class EmpresaController extends Controller
             $empresa->Pag_web = $request->sitealt;
             $empresa->email = $request->emailalt;
             $empresa->Sigla = $request->siglaalt;
+            $empresa->Licenca = $request->licencaalt;
             $empresa->DataAlt = date('Y-m-d H:i:s');
             $empresa->regimetrib = $request->regimealt;
             $empresa->atividade = $request->atividadealt;

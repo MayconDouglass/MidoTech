@@ -31,6 +31,16 @@ $(function () {
         minimumResultsForSearch: Infinity
     });
 
+    $('.select2-users').select2({
+        dropdownParent: $("#AlterarUserModal"),
+        width: '100%'
+    });
+    $('.select-notsearch-users').select2({
+        dropdownParent: $("#AlterarUserModal"),
+        width: '100%',
+        minimumResultsForSearch: Infinity
+    });
+
     bsCustomFileInput.init();
 
     $('.toastrDefaultError').click(function () {
@@ -79,6 +89,63 @@ $('#modal-danger').on('show.bs.modal', function (event) {
     modal.find('.b_text_modal_title_danger').text('Excluir Registro')
 })
 
+$('#AlterarUserModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Botão que acionou o modal
+    var empCodAlt = button.data('codigo')
+    var razaoSocialAlt = button.data('razao')
+    var logoAlt = button.data('imgalt')
+
+    $("#regime_tributario_alt").select2({
+        dropdownParent: $("#AlterarUserModal"), width: '100%',
+    }).val(regimetribAlt).trigger("change");
+
+
+    $('#previewImgAlt').attr('src', logoAlt);
+    
+    $(this).find('form').trigger('reset');
+    var modal = $(this)
+    modal.find('.modal-title').text('Alterar Registro')
+    modal.find('#emp_cod').val(empCodAlt)
+    modal.find('#razao_social_alt').val(razaoSocialAlt)
+})
+
+$('#VisualizarUserModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Botão que acionou o modal
+    var userCodView = button.data('codigo')
+    var emailView = button.data('email')
+    var nomeView = button.data('nome')
+    var empresaView = button.data('empresa')
+    var perfilView = button.data('perfil')
+    var statusView = button.data('status')
+    var dataCadView = button.data('datacad')
+    var dataAltView = button.data('dataalt')
+
+    var logoView = button.data('imgview')
+
+    $("#empresa_view").select2({
+        dropdownParent: $("#VisualizarUserModal"), width: '100%',
+    }).val(empresaView).trigger("change");
+
+    $("#perfil_view").select2({
+        dropdownParent: $("#VisualizarUserModal"), width: '100%',
+    }).val(perfilView).trigger("change");
+
+    $("#ativa_view").select2({
+        dropdownParent: $("#VisualizarUserModal"), width: '100%',
+    }).val(statusView).trigger("change");
+
+    $('#viewImg').attr('src', logoView);
+    
+    $(this).find('form').trigger('reset');
+    var modal = $(this)
+    modal.find('.modal-title').text('Visualizar Registro')
+    modal.find('#user_cod').val(userCodView)
+    modal.find('#email_view').val(emailView)
+    modal.find('#nome_view').val(nomeView)
+    modal.find('#data_cadastro_view').val(dataCadView)
+    modal.find('#data_alteracao_view').val(dataAltView)
+})
+
 $('#AlterarEmpModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
     var empCodAlt = button.data('codigo')
@@ -104,6 +171,7 @@ $('#AlterarEmpModal').on('show.bs.modal', function (event) {
     var atividadeAlt = button.data('atividade')
     var saldoClienteAlt = button.data('saldocliente')
     var processamentoAlt = button.data('processamento')
+    var licencaAlt = button.data('licenca')
     var logoAlt = button.data('imgalt')
 
     $("#regime_tributario_alt").select2({
@@ -145,6 +213,7 @@ $('#AlterarEmpModal').on('show.bs.modal', function (event) {
     modal.find('#data_cadastro_alt').val(dataCadAlt)
     modal.find('#email_alt').val(emailAlt)
     modal.find('#site_alt').val(siteAlt)
+    modal.find('#licenca_alt').val(licencaAlt)
 })
 
 $('#VisualizarEmpModal').on('show.bs.modal', function (event) {
@@ -173,6 +242,7 @@ $('#VisualizarEmpModal').on('show.bs.modal', function (event) {
     var atividadeView = button.data('atividade')
     var saldoClienteView = button.data('saldocliente')
     var processamentoView = button.data('processamento')
+    var licencaView = button.data('licenca')
     var logoView = button.data('imgview')
 
     $("#regime_tributario_view").select2({
@@ -215,4 +285,5 @@ $('#VisualizarEmpModal').on('show.bs.modal', function (event) {
     modal.find('#data_alteracao_view').val(dataAltView)
     modal.find('#email_view').val(emailView)
     modal.find('#site_view').val(siteView)
+    modal.find('#licenca_view').val(licencaView)
 })

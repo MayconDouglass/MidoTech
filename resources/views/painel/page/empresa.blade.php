@@ -70,7 +70,7 @@
             data-telefone="{{$empresa->Telefone}}" data-ativo="{{$empresa->ativo}}" data-site="{{$empresa->Pag_web}}" data-email="{{$empresa->email}}"
             data-sigla="{{$empresa->Sigla}}" data-cadastro="{{date('d/m/Y',strtotime($empresa->DataCad))}}" data-alteracao="{{$empresa->DataAlt ? date('d/m/Y', strtotime($empresa->DataAlt)) : "Sem alteração"}}" data-regimetrib="{{$empresa->regimetrib}}"
             data-atividade="{{$empresa->atividade}}" data-saldocliente="{{$empresa->saldo_cliente}}" data-processamento="{{$empresa->data_processamento}}"
-            data-imgview="<?php 
+            data-licenca="{{$empresa->Licenca}}" data-imgview="<?php 
             $arquivo = 'storage/img/emp/'.$empresa->id_empresa.'.jpg';
                                     if(file_exists($arquivo)){
                                     $imagem = $arquivo;
@@ -88,7 +88,7 @@
             data-telefone="{{$empresa->Telefone}}" data-ativo="{{$empresa->ativo}}" data-site="{{$empresa->Pag_web}}" data-email="{{$empresa->email}}"
             data-sigla="{{$empresa->Sigla}}" data-cadastro="{{date('d/m/Y',strtotime($empresa->DataCad))}}" data-alteracao="{{$empresa->DataAlt ? date('d/m/Y', strtotime($empresa->DataAlt)) : "Sem alteração"}}" data-regimetrib="{{$empresa->regimetrib}}"
             data-atividade="{{$empresa->atividade}}" data-saldocliente="{{$empresa->saldo_cliente}}" data-processamento="{{$empresa->data_processamento}}"
-            data-imgalt="<?php 
+            data-licenca="{{$empresa->Licenca}}" data-imgalt="<?php 
             $arquivo = 'storage/img/emp/'.$empresa->id_empresa.'.jpg';
                                     if(file_exists($arquivo)){
                                     $imagem = $arquivo;
@@ -238,8 +238,8 @@
             </div>
 
             <div class="col-sm-2">
-              <label class="control-label">Data Cadastro</label>
-              <input class="form-control" type="text" name="datacad" id="data_cadastro" disabled>
+              <label class="control-label">Nº de Licenças</label>
+              <input class="form-control" type="number" name="licencacad" id="licenca_cadastro" min="0">
             </div>
 
             <div class="col-sm-6">
@@ -405,9 +405,14 @@
               <input class="form-control" type="text" name="emailalt" maxlength="150" id="email_alt">
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-sm-4">
               <label class="control-label">Site</label>
               <input class="form-control" type="text" name="sitealt" id="site_alt" maxlength="150">
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Nº de Licenças</label>
+              <input class="form-control" type="number" name="licencaalt" id="licenca_alt" min="0">
             </div>
 
 
@@ -560,16 +565,20 @@
               <input class="form-control" type="text" name="dataview" id="data_alteracao_view" disabled>
             </div>
 
-            <div class="col-sm-5">
+            <div class="col-sm-4">
               <label class="control-label">Email</label>
               <input class="form-control" type="text" name="emailview" id="email_view" disabled>
             </div>
 
-            <div class="col-sm-5">
+            <div class="col-sm-4">
               <label class="control-label">Site</label>
               <input class="form-control" type="text" name="siteview" id="site_view" disabled>
             </div>
 
+            <div class="col-sm-2">
+              <label class="control-label">Nº de Licenças</label>
+              <input class="form-control" type="number" name="licencaview" id="licenca_view" min="0" disabled>
+            </div>
 
           </div>
 

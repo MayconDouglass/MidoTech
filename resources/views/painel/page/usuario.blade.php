@@ -12,7 +12,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0 text-dark">Empresas
+        <h1 class="m-0 text-dark">Usuários
           <button type="button" class="btn btn-primary fa fa-user-plus" data-toggle="modal"
             data-target="#CadastroModal">
             Cadastrar</button></h1>
@@ -49,56 +49,46 @@
       <thead>
         <tr>
           <th class="idDataTab">ID</th>
-          <th>Razão Social</th>
+          <th>Empresa</th>
+          <th>Usuário</th>
           <th class="statusDataTab">Status</th>
           <th class="actionDataTab">Ações</th>
         </tr>
       </thead>
       <tbody>
-        @foreach ($empresas as $empresa)
+        @foreach ($usuarios as $usuario)
         <tr>
-          <td class="idDataTabText">{{$empresa->id_empresa}}</td>
-          <td>{{$empresa->razao_social}}</td>
-          <td><span @if ($empresa->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
-              @endif>{{$empresa->ativo ? "Ativo" : "Inativo"}}</span></td>
+          <td class="idDataTabText">{{$usuario->id_usuario}}</td>
+          <td>{{$usuario->setempresa->Sigla}}</td>
+          <td>{{$usuario->nome}}</td>
+          <td><span @if ($usuario->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
+              @endif>{{$usuario->ativo ? "Ativo" : "Inativo"}}</span></td>
           <td>
-            <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal" data-target="#VisualizarEmpModal"
-            data-codigo="{{$empresa->id_empresa}}" data-razao="{{$empresa->razao_social}}" data-fantasia="{{$empresa->nome_fantasia}}"
-            data-logradouro="{{$empresa->Logradouro}}" data-numero="{{$empresa->Numero}}" data-complemento="{{$empresa->Complemento}}"
-            data-bairro="{{$empresa->Bairro}}" data-cidade="{{$empresa->Cidade}}" data-estado="{{$empresa->Estado}}"
-            data-cep="{{$empresa->CEP}}" data-cnpj="{{$empresa->CNPJ}}" data-ie="{{$empresa->IE}}" data-im="{{$empresa->IM}}"
-            data-telefone="{{$empresa->Telefone}}" data-ativo="{{$empresa->ativo}}" data-site="{{$empresa->Pag_web}}" data-email="{{$empresa->email}}"
-            data-sigla="{{$empresa->Sigla}}" data-cadastro="{{date('d/m/Y',strtotime($empresa->DataCad))}}" data-alteracao="{{$empresa->DataAlt ? date('d/m/Y', strtotime($empresa->DataAlt)) : "Sem alteração"}}" data-regimetrib="{{$empresa->regimetrib}}"
-            data-atividade="{{$empresa->atividade}}" data-saldocliente="{{$empresa->saldo_cliente}}" data-processamento="{{$empresa->data_processamento}}"
+            <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal" data-target="#VisualizarUserModal" 
+            data-codigo="{{$usuario->id_usuario}}" data-empresa="{{$usuario->empresa}}" data-perfil="{{$usuario->perfil_fk}}"
+            data-nome="{{$usuario->nome}}" data-email="{{$usuario->email}}" data-status="{{$usuario->ativo}}" 
+            data-datacad="{{date('d/m/Y',strtotime($usuario->data_cadastro))}}" data-dataalt="{{$usuario->data_alteracao ? date('d/m/Y', strtotime($usuario->data_alteracao)) : "Sem alteração"}}" 
             data-imgview="<?php 
-            $arquivo = 'storage/img/emp/'.$empresa->id_empresa.'.jpg';
+            $arquivo = 'storage/img/users/'.$usuario->id_usuario.'.jpg';
                                     if(file_exists($arquivo)){
                                     $imagem = $arquivo;
                                     } else {
-                                    $imagem = 'storage/img/emp/default.jpg';
+                                    $imagem = 'storage/img/users/default.jpg';
                                     }
                                     echo ($imagem);
-            ?>" 
-            > Visualizar</button>
-            <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal" data-target="#AlterarEmpModal"
-            data-codigo="{{$empresa->id_empresa}}" data-razao="{{$empresa->razao_social}}" data-fantasia="{{$empresa->nome_fantasia}}"
-            data-logradouro="{{$empresa->Logradouro}}" data-numero="{{$empresa->Numero}}" data-complemento="{{$empresa->Complemento}}"
-            data-bairro="{{$empresa->Bairro}}" data-cidade="{{$empresa->Cidade}}" data-estado="{{$empresa->Estado}}"
-            data-cep="{{$empresa->CEP}}" data-cnpj="{{$empresa->CNPJ}}" data-ie="{{$empresa->IE}}" data-im="{{$empresa->IM}}"
-            data-telefone="{{$empresa->Telefone}}" data-ativo="{{$empresa->ativo}}" data-site="{{$empresa->Pag_web}}" data-email="{{$empresa->email}}"
-            data-sigla="{{$empresa->Sigla}}" data-cadastro="{{date('d/m/Y',strtotime($empresa->DataCad))}}" data-alteracao="{{$empresa->DataAlt ? date('d/m/Y', strtotime($empresa->DataAlt)) : "Sem alteração"}}" data-regimetrib="{{$empresa->regimetrib}}"
-            data-atividade="{{$empresa->atividade}}" data-saldocliente="{{$empresa->saldo_cliente}}" data-processamento="{{$empresa->data_processamento}}"
-            data-imgalt="<?php 
-            $arquivo = 'storage/img/emp/'.$empresa->id_empresa.'.jpg';
+            ?>"> Visualizar</button>
+            <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
+              data-target="#AlterarUserModal" data-imgalt="<?php 
+            $arquivo = 'storage/img/users/'.$usuario->id_usuario.'.jpg';
                                     if(file_exists($arquivo)){
                                     $imagem = $arquivo;
                                     } else {
-                                    $imagem = 'storage/img/emp/default.jpg';
+                                    $imagem = 'storage/img/users/default.jpg';
                                     }
                                     echo ($imagem);
             ?>"> Alterar</button>
             <button type="button" class="btn btn-danger btn-sm fa fa-trash-o" data-toggle="modal"
-              data-target="#modal-danger" data-codigo="{{$empresa->id_empresa}}"> Excluir</button>
+              data-target="#modal-danger" data-codigo="{{$usuario->id_usuario}}"> Excluir</button>
           </td>
         </tr>
         @endforeach
@@ -116,7 +106,7 @@
     <div class="modal-content">
       <div class="add_modalHeader">
         <div class="modal-header">
-          <h5 class="modal-title" id="CadastroModalLabel">Nova Empresa</h5>
+          <h5 class="modal-title" id="CadastroModalLabel">Novo Usuário</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -125,48 +115,36 @@
       <div class="modal-body">
 
         <!-- Form de cadastro -->
-        <form class="form-horizontal" method="POST" action="{{action('EmpresaController@store')}}"
-          enctype="multipart/form-data">
+        <form class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
           @csrf
           <div class="form-group row">
             <div class="col-sm-6">
-              <p><img id="previewImg" src="storage/img/emp/default.jpg" class="imgCad"></p>
+              <p><img id="previewImg" src="storage/img/users/default.jpg" class="imgCad"></p>
             </div>
             <div class="col-sm-6">
               <div class="custom-file">
                 <input type="file" class="custom-file-input" id="customFile" name="fotocad">
                 <label class="custom-file-label" for="customFile">Selecionar Logo</label>
               </div><br>
-              <label class="control-label">Razão Social</label>
-              <input class="form-control" type="text" name="razaocad" id="razao_social" maxlength="150" required>
-              <label class="control-label">Nome Fantasia</label>
-              <input class="form-control" type="text" name="fantasiacad" id="nome_fantasia" maxlength="150" required>
+              <label class="control-label">Email</label>
+              <input class="form-control" type="email" name="emailcad" id="email" maxlength="150" required>
+              <label class="control-label">Senha</label>
+              <p><input class="form-control" type="password" name="passwordcad" id="email" maxlength="10"
+                  placeholder="Máximo de 10 caracteres" required></p>
             </div>
 
-            <div class="col-sm-4">
-              <label class="control-label">Regime Tributário</label>
-              <select class="select-notsearch" tabindex="-1" name="regimecad" id="regime_tributario">
-                @foreach ($regimetributados as $regimetrib)
-                <option value="{{$regimetrib->id_regime}}">{{$regimetrib->descricao}}</option>
-                @endforeach
-              </select>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Saldo dos Clientes</label>
-              <select class="select-notsearch" tabindex="-1" name="saldocad" id="saldo_cliente">
-                <option value="1">Consolidado</option>
-                <option value="2">Individual</option>
-              </select>
+            <div class="col-sm-5">
+              <label class="control-label">Nome</label>
+              <input class="form-control" type="text" name="nomecad" id="nome" maxlength="250" required>
             </div>
 
             <div class="col-sm-3">
-              <label class="control-label">Atividade</label>
-              <select class="select2" tabindex="-1" name="atividadecad" id="atividade">
-                @foreach ($atividades as $atividade)
-                <option value="{{$atividade->id_atividade}}">{{$atividade->descricao}}</option>
-                @endforeach
-              </select>
+              <label class="control-label">Empresa</label>
+              <p><select class="select-notsearch" tabindex="-1" name="saldocad" id="saldo_cliente">
+                  @foreach ($empresas as $empresa)
+                  <option value="{{$empresa->id_empresa}}">{{$empresa->razao_social}}</option>
+                  @endforeach
+                </select></p>
             </div>
 
             <div class="col-sm-2">
@@ -177,81 +155,14 @@
               </select>
             </div>
 
-            <div class="col-sm-1">
-              <label class="control-label">SIGLA</label>
-              <input class="form-control" type="text" name="siglacad" id="sigla"  maxlength="6">
-            </div>
-
-            <div class="col-sm-4">
-              <label class="control-label">Logradouro</label>
-              <input class="form-control" type="text" name="logradourocad" id="logradouro" maxlength="150" required>
-            </div>
-
-            <div class="col-sm-1">
-              <label class="control-label">Número</label>
-              <input class="form-control" type="number" name="numerocad" id="numero" min="0" required>
-            </div>
-
             <div class="col-sm-2">
-              <label class="control-label">Complemento</label>
-              <input class="form-control" type="text" name="complementocad" maxlength="50" id="complemento">
+              <label class="control-label">Perfil</label>
+              <select class="select-notsearch" tabindex="-1" name="perfilcad" id="perfil">
+                @foreach ($perfis as $perfil)
+                <option value="{{$perfil->id_perfil}}">{{$perfil->nome}}</option>
+                @endforeach
+              </select>
             </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Bairro</label>
-              <input class="form-control" type="text" name="bairrocad" maxlength="60" id="bairro" required>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Cidade</label>
-              <input class="form-control" type="text" name="cidadecad" id="cidade" maxlength="60" required>
-            </div>
-
-            <div class="col-sm-1">
-              <label class="control-label">UF</label>
-              <input class="form-control" type="text" name="ufcad" id="uf" maxlength="2" required>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">CEP</label>
-              <input class="form-control" type="text" name="cepcad" id="cep" maxlength="9" required>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">CNPJ</label>
-              <input class="form-control" type="text" name="cnpjcad" id="cnpj" maxlength="18" required>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Insc. Estadual</label>
-              <input class="form-control" type="text" name="iecad" id="ie" maxlength="10" required>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Insc. Municipal</label>
-              <input class="form-control" type="text" name="imcad" maxlength="15" id="im">
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Telefone</label>
-              <input class="form-control" type="text" name="telefonecad" maxlength="15" id="telefone">
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Data Cadastro</label>
-              <input class="form-control" type="text" name="datacad" id="data_cadastro" disabled>
-            </div>
-
-            <div class="col-sm-6">
-              <label class="control-label">Email</label>
-              <input class="form-control" type="text" name="emailcad" maxlength="150" id="email">
-            </div>
-
-            <div class="col-sm-6">
-              <label class="control-label">Site</label>
-              <input class="form-control" type="text" name="sitecad" maxlength="150" id="site">
-            </div>
-
 
           </div>
 
@@ -268,13 +179,13 @@
 </div>
 
 <!-- Modal Alteracao-->
-<div class="modal fade" id="AlterarEmpModal" tabindex="-1" role="dialog" aria-labelledby="AlterarEmpModalLabel"
+<div class="modal fade" id="AlterarUserModal" tabindex="-1" role="dialog" aria-labelledby="AlterarUserModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="alt_modalHeader">
         <div class="modal-header">
-          <h5 class="modal-title" id="AlterarEmpModalLabel">Nova Empresa</h5>
+          <h5 class="modal-title" id="AlterarUserModalLabel">Nova Empresa</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -283,11 +194,11 @@
       <div class="modal-body">
 
         <!-- Form de cadastro -->
-        <form class="form-horizontal" method="POST" action="{{action('EmpresaController@update')}}" enctype="multipart/form-data">
+        <form class="form-horizontal" method="POST" action="" enctype="multipart/form-data">
           @csrf
           <div class="form-group row">
             <div class="col-sm-6">
-              <p><img id="previewImgAlt" src="storage/img/emp/default.jpg" class="imgCad" ></p>
+              <p><img id="previewImgAlt" src="storage/img/users/default.jpg" class="imgCad"></p>
             </div>
             <div class="col-sm-6">
               <div class="custom-file">
@@ -298,15 +209,14 @@
               <label class="control-label">Razão Social</label>
               <input class="form-control" type="text" name="razaoalt" id="razao_social_alt" maxlength="150" required>
               <label class="control-label">Nome Fantasia</label>
-              <input class="form-control" type="text" name="fantasiaalt" id="nome_fantasia_alt" maxlength="150" required>
+              <input class="form-control" type="text" name="fantasiaalt" id="nome_fantasia_alt" maxlength="150"
+                required>
             </div>
 
             <div class="col-sm-4">
               <label class="control-label">Regime Tributário</label>
               <select class="select-notsearch-emp" tabindex="-1" name="regimealt" id="regime_tributario_alt">
-                @foreach ($regimetributados as $regimetrib)
-                <option value="{{$regimetrib->id_regime}}">{{$regimetrib->descricao}}</option>
-                @endforeach
+                <option value="1">0</option>
               </select>
             </div>
 
@@ -321,9 +231,7 @@
             <div class="col-sm-3">
               <label class="control-label">Atividade</label>
               <select class="select2-emp" tabindex="-1" name="atividadealt" id="atividade_alt">
-                @foreach ($atividades as $atividade)
-                <option value="{{$atividade->id_atividade}}">{{$atividade->descricao}}</option>
-                @endforeach
+                <option value="1">0</option>
               </select>
             </div>
 
@@ -427,13 +335,13 @@
 
 
 <!-- Modal Visualizacao-->
-<div class="modal fade" id="VisualizarEmpModal" tabindex="-1" role="dialog" aria-labelledby="VisualizarEmpModalLabel"
+<div class="modal fade" id="VisualizarUserModal" tabindex="-1" role="dialog" aria-labelledby="VisualizarUserModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="view_modalHeader">
         <div class="modal-header">
-          <h5 class="modal-title" id="VisualizarEmpModalLabel"></h5>
+          <h5 class="modal-title" id="VisualizarUserModalLabel"></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -446,39 +354,32 @@
           @csrf
           <div class="form-group row">
             <div class="col-sm-6">
-              <p><img id="viewImg" src="storage/img/emp/default.jpg" class="imgCad"></p>
+              <p><img id="viewImg" src="storage/img/users/default.jpg" class="imgCad"></p>
             </div>
             <div class="col-sm-6">
-              <label class="control-label">Código Empresa</label>
-              <input class="form-control" type="text" name="idEmp" id="emp_cod" disabled>
-              <label class="control-label">Razão Social</label>
-              <input class="form-control" type="text" name="razaoview" id="razao_social_view" disabled>
-              <label class="control-label">Nome Fantasia</label>
-              <input class="form-control" type="text" name="fantasiaview" id="nome_fantasia_view" disabled>
+              <label class="control-label">Código Usuário</label>
+              <input class="form-control" type="text" name="idUser" id="user_cod" disabled>
+              <label class="control-label">Email</label>
+              <input class="form-control" type="email" name="emailview" id="email_view" disabled>
+              <label class="control-label">Nome</label>
+              <p><input class="form-control" type="text" name="nomeview" id="nome_view" disabled></p>
             </div>
 
             <div class="col-sm-4">
-              <label class="control-label">Regime Tributário</label>
-              <select class="select-notsearch" tabindex="-1" name="regimeview" id="regime_tributario_view" disabled>
-                <option value="1">Regime Normal</option>
-                <option value="2">Simples Nacional</option>
-                <option value="3">Simples Nacional - excesso de sublimite da receita bruta</option>
+              <label class="control-label">Empresa</label>
+              <select class="select-notsearch" tabindex="-1" name="empresaview" id="empresa_view" disabled>
+                @foreach ($empresas as $empresa)
+                <option value="{{$empresa->id_empresa}}">{{$empresa->razao_social}}</option>
+                @endforeach
               </select>
             </div>
 
             <div class="col-sm-2">
-              <label class="control-label">Saldo dos Clientes</label>
-              <select class="select-notsearch" tabindex="-1" name="saldoview" id="saldo_cliente_view" disabled>
-                <option value="1">Consolidado</option>
-                <option value="2">Individual</option>
-              </select>
-            </div>
-
-            <div class="col-sm-3">
-              <label class="control-label">Atividade</label>
-              <select class="select2" tabindex="-1" name="atividadeview" id="atividade_view" disabled>
-                <option value="1">Consolidado</option>
-                <option value="2">Individual</option>
+              <label class="control-label">Perfil</label>
+              <select class="select-notsearch" tabindex="-1" name="perfilview" id="perfil_view" disabled>
+                @foreach ($perfis as $perfil)
+                <option value="{{$perfil->id_perfil}}">{{$perfil->nome}}</option>
+                @endforeach
               </select>
             </div>
 
@@ -486,68 +387,8 @@
               <label class="control-label">Ativa</label>
               <select class="select-notsearch" tabindex="-1" name="ativaview" id="ativa_view" disabled>
                 <option value="1">Sim</option>
-                <option value="2">Não</option>
+                <option value="0">Não</option>
               </select>
-            </div>
-
-            <div class="col-sm-1">
-              <label class="control-label">SIGLA</label>
-              <input class="form-control" type="text" name="siglaview" id="sigla_view" disabled>
-            </div>
-
-            <div class="col-sm-4">
-              <label class="control-label">Logradouro</label>
-              <input class="form-control" type="text" name="logradouroview" id="logradouro_view" disabled>
-            </div>
-
-            <div class="col-sm-1">
-              <label class="control-label">Número</label>
-              <input class="form-control" type="number" name="numeroview" id="numero_view" disabled>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Complemento</label>
-              <input class="form-control" type="text" name="complementoview" id="complemento_view" disabled>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Bairro</label>
-              <input class="form-control" type="text" name="bairroview" id="bairro_view" disabled>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Cidade</label>
-              <input class="form-control" type="text" name="cidadeview" id="cidade_view" disabled>
-            </div>
-
-            <div class="col-sm-1">
-              <label class="control-label">UF</label>
-              <input class="form-control" type="text" name="ufview" id="uf_view" disabled>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">CEP</label>
-              <input class="form-control" type="text" name="cepview" id="cep_view" disabled>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">CNPJ</label>
-              <input class="form-control" type="text" name="cnpjview" id="cnpj_view" disabled>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Insc. Estadual</label>
-              <input class="form-control" type="text" name="ieview" id="ie_view" disabled>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Insc. Municipal</label>
-              <input class="form-control" type="text" name="imview" id="im_view" disabled>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Telefone</label>
-              <input class="form-control" type="text" name="telefoneview" id="telefone_view" disabled>
             </div>
 
             <div class="col-sm-2">
@@ -559,17 +400,6 @@
               <label class="control-label">Data Alteração</label>
               <input class="form-control" type="text" name="dataview" id="data_alteracao_view" disabled>
             </div>
-
-            <div class="col-sm-5">
-              <label class="control-label">Email</label>
-              <input class="form-control" type="text" name="emailview" id="email_view" disabled>
-            </div>
-
-            <div class="col-sm-5">
-              <label class="control-label">Site</label>
-              <input class="form-control" type="text" name="siteview" id="site_view" disabled>
-            </div>
-
 
           </div>
 
