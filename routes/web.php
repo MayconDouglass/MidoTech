@@ -30,6 +30,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     //CRUD Users
     Route::get('/usuario', 'UsuarioController@create')->name('usuarios');
+    Route::post('/usuario/cad', 'UsuarioController@store');
+    Route::post('/usuario/update', 'UsuarioController@update');
+    Route::post('/usuario/delete', 'UsuarioController@destroy');
  
 
 });

@@ -91,22 +91,38 @@ $('#modal-danger').on('show.bs.modal', function (event) {
 
 $('#AlterarUserModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
-    var empCodAlt = button.data('codigo')
-    var razaoSocialAlt = button.data('razao')
-    var logoAlt = button.data('imgalt')
+    var userCodAlt = button.data('codigo')
+    var nomeAlt = button.data('nome')
+    var emailAlt = button.data('email')
+    var empresaAlt = button.data('empresa')
+    var perfilAlt = button.data('perfil')
+    var statusAlt = button.data('status')
+    var dataCadAlt = button.data('datacad')
+    var dataAltAlt = button.data('dataalt')
+    var fotoAlt = button.data('imgalt')
 
-    $("#regime_tributario_alt").select2({
+    $('#previewImgAlt').attr('src', fotoAlt);
+
+    $("#empresa_alt").select2({
         dropdownParent: $("#AlterarUserModal"), width: '100%',
-    }).val(regimetribAlt).trigger("change");
+    }).val(empresaAlt).trigger("change");
 
+    $("#perfil_alt").select2({
+        dropdownParent: $("#AlterarUserModal"), width: '100%',
+    }).val(perfilAlt).trigger("change");
 
-    $('#previewImgAlt').attr('src', logoAlt);
+    $("#ativa_alt").select2({
+        dropdownParent: $("#AlterarUserModal"), width: '100%',
+    }).val(statusAlt).trigger("change");
     
-    $(this).find('form').trigger('reset');
+    
     var modal = $(this)
     modal.find('.modal-title').text('Alterar Registro')
-    modal.find('#emp_cod').val(empCodAlt)
-    modal.find('#razao_social_alt').val(razaoSocialAlt)
+    modal.find('#user_cod').val(userCodAlt)
+    modal.find('#nome_alt').val(nomeAlt)
+    modal.find('#email_alt').val(emailAlt)
+    modal.find('#data_cadastro_alt').val(dataCadAlt)
+    modal.find('#data_alteracao_alt').val(dataAltAlt)
 })
 
 $('#VisualizarUserModal').on('show.bs.modal', function (event) {
@@ -120,7 +136,7 @@ $('#VisualizarUserModal').on('show.bs.modal', function (event) {
     var dataCadView = button.data('datacad')
     var dataAltView = button.data('dataalt')
 
-    var logoView = button.data('imgview')
+    var fotoView = button.data('imgview')
 
     $("#empresa_view").select2({
         dropdownParent: $("#VisualizarUserModal"), width: '100%',
@@ -134,7 +150,7 @@ $('#VisualizarUserModal').on('show.bs.modal', function (event) {
         dropdownParent: $("#VisualizarUserModal"), width: '100%',
     }).val(statusView).trigger("change");
 
-    $('#viewImg').attr('src', logoView);
+    $('#viewImg').attr('src', fotoView);
     
     $(this).find('form').trigger('reset');
     var modal = $(this)

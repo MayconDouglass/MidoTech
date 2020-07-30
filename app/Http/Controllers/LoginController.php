@@ -49,16 +49,22 @@ class LoginController extends Controller
         $lembrar = empty($request->remember) ? false : true;
 
         $usuario = User::where('email', $request->email)->where('ativo',1)->first();
+        $statusUser = User::where('email', $request->email)->first();
+        //dd($statusUser->ativo);
         //dd(bcrypt($request->senha));
-            //dd($usuario);
             
 
         if ($usuario && Hash::check($request->senha, $usuario->password)) {
            
             Auth::loginUsingId($usuario->id_usuario, $lembrar);
         }
-        
-        return redirect()->action('LoginController@form')->with('status_login_error', 'Por favor, verifique os dados!');
+            
+        if($statusUser->ativo==0){
+            return redirect()->action('LoginController@form')->with('status_login_error', 'Usuário Inativo!');
+        }else{
+            return redirect()->action('LoginController@form')->with('status_login_error', 'Por favor, verifique os dados!');
+        }
+          
     }
 
 

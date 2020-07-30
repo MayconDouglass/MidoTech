@@ -44,4 +44,102 @@ class UsuarioController extends Controller
         }
     }
 
+
+    public function store(Request $request){
+        $countUser = count(Usuario::where('email',$request->emailcad)->get());
+        if($countUser < 1){
+            $usuario = new Usuario();
+            $usuario->empresa = $request->empcad;
+            $usuario->perfil_fk = $request->perfilcad;
+            $usuario->nome = $request->nomecad;
+            $usuario->email = $request->emailcad;
+            $usuario->password = bcrypt($request->passwordcad);
+            $usuario->ativo = $request->ativacad;
+            $usuario->usucad = Auth::user()->id_usuario;
+            $usuario->data_cadastro = date('Y-m-d H:i:s');
+            $saveStatus = $usuario->save();
+
+            if($request->fotocad){
+                $file = $request->fotocad;
+                $filename= $usuario->id_usuario.'.jpg';
+                $info = getimagesize($file);
+                $destination_path = 'storage/img/users/';
+    
+                if ($info['mime'] == 'image/jpeg') {
+                    $image = imagecreatefromjpeg($file);
+                }elseif($info['mime'] == 'image/png'){
+                    $image = imagecreatefrompng($file);
+                }
+            
+                imagejpeg($image, $destination_path.$filename, 70);
+            }
+
+            if($saveStatus){            
+                return redirect()->action('UsuarioController@create')->with('status_success', 'Usuário Cadastrada!');
+            }else{
+                    return redirect()->action('UsuarioController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
+            }
+
+        }else{
+            return redirect()->action('UsuarioController@create')->with('status_error', 'Já existe um usuário com este email!');
+        }
+    }
+
+    public function update(Request $request){
+            $countUser = count(Usuario::where('email',$request->emailalt)->get());
+            $usuario = Usuario::find($request->idUser);
+            $usuario->empresa = $request->empresaalt;
+            $usuario->perfil_fk = $request->perfilalt;
+            $usuario->nome = $request->nomealt;
+            if($usuario->email != $request->emailalt && $countUser==0){
+            $usuario->email = $request->emailalt;
+            }else{
+                return redirect()->action('UsuarioController@create')->with('status_warning', 'Já existe outro usuário com este email, mas as demais informações foram atualizadas!');   
+            }
+            $usuario->ativo = $request->ativaalt;
+            $usuario->usucad = Auth::user()->id_usuario;
+            $usuario->data_alteracao = date('Y-m-d H:i:s');
+            $saveStatus = $usuario->save();
+
+                if($request->fotoalt){
+                    $file = $request->fotoalt;
+                    $filename= $usuario->id_usuario.'.jpg';
+                    $info = getimagesize($file);
+                    $destination_path = 'storage/img/users/';
+        
+                    if ($info['mime'] == 'image/jpeg') {
+                        $image = imagecreatefromjpeg($file);
+                    }elseif($info['mime'] == 'image/png'){
+                        $image = imagecreatefrompng($file);
+                    }
+                
+                    imagejpeg($image, $destination_path.$filename, 70);
+                }
+
+                if($saveStatus){            
+                    return redirect()->action('UsuarioController@create')->with('status_success', 'Usuário Atualizado!');
+                }else{
+                        return redirect()->action('UsuarioController@create')->with('status_error', 'OPS! Algum erro na alteração, tente novamente!');
+                }
+
+       
+    }
+
+
+    public function destroy(Request $request){
+        if(empty($request->iddelete)){
+            return redirect()->action('UsuarioController@create')->with('status_error', 'Falha!');    
+            }
+            $usuario = Usuario::find($request->iddelete);
+            $delete=$usuario->delete();
+            if($delete){
+                $arquivo = 'storage/img/users/'.$request->iddelete.'.jpg';
+                if(file_exists($arquivo)){
+                unlink($arquivo);
+                }
+            return redirect()->action('UsuarioController@create')->with('status_success', 'Usuário Excluída!');
+            }else{
+            return redirect()->action('UsuarioController@create')->with('status_error', 'Não foi possível excluir o usuário, possivelmente existem movimentação/cadastros!');    
+            }
+    }
 }
