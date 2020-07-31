@@ -89,6 +89,14 @@ $('#modal-danger').on('show.bs.modal', function (event) {
     modal.find('.b_text_modal_title_danger').text('Excluir Registro')
 })
 
+$('#modal-password').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Botão que acionou o modal
+    var idUser = button.data('codigo')
+    $("#idUser").val(idUser);
+    var modal = $(this)
+    modal.find('.b_text_modal_title_password').text('Resetar Password')
+})
+
 $('#AlterarUserModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
     var userCodAlt = button.data('codigo')

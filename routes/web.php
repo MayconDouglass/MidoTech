@@ -33,6 +33,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/usuario/cad', 'UsuarioController@store');
     Route::post('/usuario/update', 'UsuarioController@update');
     Route::post('/usuario/delete', 'UsuarioController@destroy');
+    Route::post('/usuario/resetpassword', 'UsuarioController@resetPassword');
  
 
 });

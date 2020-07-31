@@ -276,6 +276,7 @@
   </div>
 </div>
 
+
 <!-- Modal Visualizacao-->
 <div class="modal fade" id="VisualizarUserModal" tabindex="-1" role="dialog" aria-labelledby="VisualizarUserModalLabel"
   aria-hidden="true">
@@ -383,7 +384,7 @@
   </div>
 </div>
 
-<!-- Modal Resetar Senha-->
+<!-- Modal de Exclusao-->
 <div class="modal fade" id="modal-password">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">

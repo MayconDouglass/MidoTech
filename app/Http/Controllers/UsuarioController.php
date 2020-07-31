@@ -125,6 +125,29 @@ class UsuarioController extends Controller
        
     }
 
+    public function resetPassword(Request $request){
+
+       if(empty($request->idUser)){
+
+            return redirect()->action('UsuarioController@create')->with('status_error', 'Falha!');  
+
+       }
+       
+       $usuario = Usuario::find($request->idUser);
+       $usuario->password = bcrypt('123');
+       
+        if($usuario->save()){
+
+            return redirect()->action('UsuarioController@create')->with('status_success', 'Senha resetada!');
+
+        }else{
+
+            return redirect()->action('UsuarioController@create')->with('status_error', 'OPS! Tente novamente!');
+
+        }
+
+    }
+
 
     public function destroy(Request $request){
         if(empty($request->iddelete)){
