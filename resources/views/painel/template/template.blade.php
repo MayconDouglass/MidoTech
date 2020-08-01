@@ -102,7 +102,7 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="/index" class="nav-link">
+                  <a href="{{route('perfis')}}" class="nav-link">
                     <i class="fas fa-users nav-icon"></i>
                     <p>Perfil</p>
                   </a>

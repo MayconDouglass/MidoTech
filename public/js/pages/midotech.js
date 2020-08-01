@@ -41,6 +41,16 @@ $(function () {
         minimumResultsForSearch: Infinity
     });
 
+    $('.select2-perfis').select2({
+        dropdownParent: $("#AlterarPerfilModal"),
+        width: '100%'
+    });
+    $('.select-notsearch-perfis').select2({
+        dropdownParent: $("#AlterarPerfilModal"),
+        width: '100%',
+        minimumResultsForSearch: Infinity
+    });
+
     bsCustomFileInput.init();
 
     $('.toastrDefaultError').click(function () {
@@ -131,6 +141,26 @@ $('#AlterarUserModal').on('show.bs.modal', function (event) {
     modal.find('#email_alt').val(emailAlt)
     modal.find('#data_cadastro_alt').val(dataCadAlt)
     modal.find('#data_alteracao_alt').val(dataAltAlt)
+})
+
+$('#VisualizarPerfilModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Botão que acionou o modal
+    var userCodView = button.data('codigo')
+   
+    
+    $(this).find('form').trigger('reset');
+    var modal = $(this)
+    modal.find('.modal-title').text('Visualizar Registro')
+    modal.find('#user_cod').val(userCodView)
+})
+
+$('#AlterarPerfilModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Botão que acionou o modal
+    var userCodAlt = button.data('codigo')
+        
+    var modal = $(this)
+    modal.find('.modal-title').text('Alterar Registro')
+    modal.find('#user_cod').val(userCodAlt)
 })
 
 $('#VisualizarUserModal').on('show.bs.modal', function (event) {

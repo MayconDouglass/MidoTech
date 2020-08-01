@@ -34,7 +34,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/usuario/update', 'UsuarioController@update');
     Route::post('/usuario/delete', 'UsuarioController@destroy');
     Route::post('/usuario/resetpassword', 'UsuarioController@resetPassword');
- 
+
+     //CRUD Empresa
+     Route::get('/perfil', 'PerfilController@create')->name('perfis');
+     Route::post('/perfil/cad', 'PerfilController@store');
+     Route::post('/perfil/update', 'PerfilController@update');
+     Route::post('/perfil/delete', 'PerfilController@destroy'); 
 
 });
 

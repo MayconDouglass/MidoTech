@@ -20,7 +20,8 @@
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="index">Home</a></li>
-          <li class="breadcrumb-item active">Empresas</li>
+          <li class="breadcrumb-item active">Configuração</li>
+          <li class="breadcrumb-item active">Usuários</li>
         </ol>
       </div>
     </div>

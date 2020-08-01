@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Perfil;
+use App\Models\PerfilAcesso;
 use Illuminate\Http\Request;
+use App\Models\Setempresa;
+use App\Models\Usuario;
 
+use Auth;
 class PerfilController extends Controller
 {
     public function create()
@@ -27,8 +32,6 @@ class PerfilController extends Controller
 
             $empresas = Setempresa::all();
            
-            $usuarios = Usuario::all();
-
             return view('painel.page.perfil',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','perfis'));
             
         }else{
@@ -36,4 +39,6 @@ class PerfilController extends Controller
             return view('login');
 
         }
+    }
 }
+
