@@ -73,6 +73,45 @@
     box-shadow: 0 0 0 0 rgba(139, 38, 255, 0.5)
 }
 
+.btn-permissao {
+    color: #fff;
+    background-color: #078857ec;
+    border-color: #035f3cec;
+    box-shadow: none
+}
+
+.btn-permissao:hover {
+    color: #fff;
+    background-color: #035f3cec;
+    border-color: #078857ec
+}
+
+.btn-permissao.focus,
+.btn-permissao:focus {
+    box-shadow: none, 0 0 0 0 #078857ec
+}
+
+.btn-permissao.disabled,
+.btn-permissao:disabled {
+    color: #fff;
+    background-color: #013a24ec;
+    border-color: #078857ec
+}
+
+.btn-permissao:not(:disabled):not(.disabled).active,
+.btn-permissao:not(:disabled):not(.disabled):active,
+.show>.btn-permissao.dropdown-toggle {
+    color: #fff;
+    background-color: #013a24ec;
+    border-color: #078857ec
+}
+
+.btn-permissao:not(:disabled):not(.disabled).active:focus,
+.btn-permissao:not(:disabled):not(.disabled):active:focus,
+.show>.btn-permissao.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0 #078857ec
+}
+
 /* modal */
 
 
@@ -121,6 +160,11 @@
 
 .delete_modalHeader {
     background-color: #bd0811;
+    color: #fff;
+}
+
+.permissao_modalHeader {
+    background-color: #035f3cec;
     color: #fff;
 }
 
@@ -190,4 +234,45 @@
 .status {
     margin-left: 0.5em;
     margin-right: 0.5em;
+}
+
+/* custom css elementos */
+
+.custom-switch-b {
+    padding-left: 2.25rem
+}
+
+.custom-switch-b .custom-control-label::before {
+    left: -2.25rem;
+    width: 1.75rem;
+    pointer-events: all;
+    border-radius: .5rem
+}
+
+.custom-switch-b .custom-control-label::after {
+    top: calc(.25rem + 2px);
+    left: calc(-2.25rem + 2px);
+    width: calc(1rem - 4px);
+    height: calc(1rem - 4px);
+    background-color: #035f3cec;
+    border-radius: .5rem;
+    transition: background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-transform .15s ease-in-out;
+    transition: transform .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    transition: transform .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out, -webkit-transform .15s ease-in-out
+}
+
+@media (prefers-reduced-motion:reduce) {
+    .custom-switch-b .custom-control-label::after {
+        transition: none
+    }
+}
+
+.custom-switch-b .custom-control-input:checked~.custom-control-label::after {
+    background-color: #035f3cec;
+    -webkit-transform: translateX(.75rem);
+    transform: translateX(.75rem)
+}
+
+.custom-switch-b .custom-control-input:disabled:checked~.custom-control-label::before {
+    background-color: #035f3cec
 }

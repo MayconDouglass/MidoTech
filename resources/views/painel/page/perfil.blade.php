@@ -83,6 +83,8 @@
               data-usualt="{{$perfil->usualt}}" data-datacad="{{date('d/m/Y',strtotime($perfil->datacad))}}"
               data-dataalt="{{$perfil->dataalt ? date('d/m/Y', strtotime($perfil->dataalt)) : "Sem alteração"}}">
               Alterar</button>
+            <button type="button" class="btn btn-permissao btn-sm fa fa-key" data-toggle="modal"
+              data-target="#modal-permissao" data-codigo="{{$perfil->id_perfil}}"></button>
             <button type="button" class="btn btn-danger btn-sm fa fa-trash-o" data-toggle="modal"
               data-target="#modal-danger" data-codigo="{{$perfil->id_perfil}}"></button>
           </td>
@@ -115,58 +117,29 @@
           enctype="multipart/form-data">
           @csrf
           <div class="form-group row">
-
-           <div class="col-sm-12">
-              <div class="card">
-                <div class="card-header d-flex p-0">
-                  <ul class="nav nav-pills ml-auto p-2">
-                    <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Cabeçalho</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Clientes</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">Produtos</a></li>
-                  </ul>
-                </div>
-                <div class="card-body">
-                  <div class="tab-content">
-                    <div class="tab-pane active" id="tab_1" name="cabecalho">
-                      <div class="col-sm-12">
-                        <label class="control-label">Nome</label>
-                        <p><input class="form-control" type="text" name="nomecad" id="nome" maxlength="60" required></p>
-                      </div>
-          
-                      <div class="col-sm-9">
-                        <label class="control-label">Empresa</label>
-                        <p><select class="select-notsearch" tabindex="-1" name="empcad" id="emp_cod">
-                            @foreach ($empresas as $empresa)
-                            <option value="{{$empresa->id_empresa}}">{{$empresa->razao_social}}</option>
-                            @endforeach
-                          </select></p>
-                      </div>
-          
-                      <div class="col-sm-3">
-                        <label class="control-label">Ativa</label>
-                        <select class="select-notsearch" tabindex="-1" name="ativacad" id="ativa">
-                          <option value="1">Sim</option>
-                          <option value="0">Não</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="tab-pane" id="tab_2" name="clientes">
-                      <div class="custom-control col-sm-4 custom-switch custom-switch-off-danger custom-switch-on-success">
-                        <input type="checkbox" class="custom-control-input" id="menu11">
-                        <label class="custom-control-label" for="menu11">Menu 11</label><br>
-                      </div>
-                      <div class="custom-control col-sm-4 custom-switch custom-switch-off-danger custom-switch-on-success">
-                        <input type="checkbox" class="custom-control-input" id="menu12">
-                        <label class="custom-control-label" for="menu12">Menu 12</label><br>
-                      </div>
-                    </div>
-                    <div class="tab-pane" id="tab_3">
-                      L
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div class="col-sm-12">
+              <label class="control-label">Nome</label>
+              <p><input class="form-control" type="text" name="nomecad" id="nome" maxlength="60" required></p>
             </div>
+
+            <div class="col-sm-9">
+              <label class="control-label">Empresa</label>
+              <p><select class="select-notsearch" tabindex="-1" name="empcad" id="emp_cod">
+                  @foreach ($empresas as $empresa)
+                  <option value="{{$empresa->id_empresa}}">{{$empresa->razao_social}}</option>
+                  @endforeach
+                </select></p>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Ativa</label>
+              <select class="select-notsearch" tabindex="-1" name="ativacad" id="ativa">
+                <option value="1">Sim</option>
+                <option value="0">Não</option>
+              </select>
+            </div>
+
+
 
 
           </div>
@@ -214,7 +187,7 @@
               </select>
             </div>
 
-            
+
           </div>
 
       </div>
@@ -328,6 +301,113 @@
             <button type="button" class="btn btn-secondary btn-sm fa fa-times" data-dismiss="modal"> Cancelar</button>
             <button type="submit" class="btn btn-danger btn-sm fa fa-trash-o"> Confirmar</button>
           </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Permissao-->
+<div class="modal fade" id="modal-permissao">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="permissao_modalHeader">
+        <div class="modal-header">
+          <h4 class="b_text_modal_title_permissao"></h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" method="POST" action="{{action('PerfilController@destroy')}}">
+          @csrf
+          <input type="hidden" class="form-control col-form-label-sm" id="idPerfil" name="idPerfil">
+          <div class="card-body">
+            <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" id="clientes-tab" data-toggle="pill" href="#clientes-tabContent" role="tab"
+                  aria-controls="clientes" aria-selected="true">Clientes</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="produtos-tab" data-toggle="pill" href="#produtos-tabContent" role="tab"
+                  aria-controls="produtos" aria-selected="false">Produtos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="vendas-tab" data-toggle="pill" href="#vendas-tabContent" role="tab"
+                  aria-controls="vendas" aria-selected="false">Vendas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="compras-tab" data-toggle="pill" href="#compras-tabContent" role="tab"
+                  aria-controls="compras" aria-selected="false">Compras</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="financeiro-tab" data-toggle="pill" href="#financeiro-tabContent" role="tab"
+                  aria-controls="financeiro" aria-selected="false">Financeiro</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="tabContent">
+              <div class="tab-pane fade show active" id="clientes-tabContent" role="tabpanel"
+                aria-labelledby="cliente-tab">
+                <br>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <div class="custom-control custom-switch custom-switch-on-success">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch11" name="clienteMenu11">
+                      <label class="custom-control-label" for="customSwitch11">11 - Cadastro </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="custom-control custom-switch custom-switch-on-success" name="clienteMenu12">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch12">
+                      <label class="custom-control-label" for="customSwitch12">Menu 12</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="custom-control custom-switch custom-switch-on-success">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch13" name="clienteMenu13">
+                      <label class="custom-control-label" for="customSwitch13">Menu 13</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="custom-control custom-switch custom-switch-on-success">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch14" name="clienteMenu14">
+                      <label class="custom-control-label" for="customSwitch14">Menu 14</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="custom-control custom-switch custom-switch-on-success">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch15" name="clienteMenu15">
+                      <label class="custom-control-label" for="customSwitch15">Menu 15</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-2">
+                    <div class="custom-control custom-switch custom-switch-on-success">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch16" name="clienteMenu16">
+                      <label class="custom-control-label" for="customSwitch16">Menu 16</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="produtos-tabContent" role="tabpanel" aria-labelledby="produtos-tab">
+                produtos
+              </div>
+              <div class="tab-pane fade" id="vendas-tabContent" role="tabpanel" aria-labelledby="vendas-tab">
+                vendas
+              </div>
+              <div class="tab-pane fade" id="compras-tabContent" role="tabpanel" aria-labelledby="compras-tab">
+                compras
+              </div>
+              <div class="tab-pane fade" id="financeiro-tabContent" role="tabpanel" aria-labelledby="financeiro-tab">
+                financeiro
+              </div>
+              <br>
+            </div>
+
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-secondary btn-sm fa fa-times" data-dismiss="modal"> Cancelar</button>
+              <button type="submit" class="btn btn-permissao btn-sm fa fa-floppy-o"> Confirmar</button>
+            </div>
         </form>
       </div>
     </div>

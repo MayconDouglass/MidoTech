@@ -99,6 +99,14 @@ $('#modal-danger').on('show.bs.modal', function (event) {
     modal.find('.b_text_modal_title_danger').text('Excluir Registro')
 })
 
+$('#modal-permissao').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Botão que acionou o modal
+    var idPerfil = button.data('codigo')
+    $("#idPerfil").val(idPerfil);
+    var modal = $(this)
+    modal.find('.b_text_modal_title_permissao').text('Permissões do Perfil')
+})
+
 $('#modal-password').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
     var idUser = button.data('codigo')
