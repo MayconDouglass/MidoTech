@@ -20,7 +20,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/logout', function () {
         Auth::logout();
         return redirect()->action('LoginController@form');
-    })->name('logoutAdmin');
+    })->name('logout');
   
     //CRUD Empresa
     Route::get('/empresa', 'EmpresaController@create')->name('empresas');
@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth']], function () {
      Route::post('/perfil/cad', 'PerfilController@store');
      Route::post('/perfil/update', 'PerfilController@update');
      Route::post('/perfil/delete', 'PerfilController@destroy'); 
+     Route::post('/perfil/permissao', 'PerfilController@obterPermissoes'); 
 
 });
 

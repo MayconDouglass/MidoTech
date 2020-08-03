@@ -77,7 +77,7 @@ class UsuarioController extends Controller
             if($saveStatus){            
                 return redirect()->action('UsuarioController@create')->with('status_success', 'Usuário Cadastrada!');
             }else{
-                    return redirect()->action('UsuarioController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
+                    return redirect()->action('UsuarioController@create')->with('status_error', 'OPS! Algum erro no cadastro, tente novamente!');
             }
 
         }else{

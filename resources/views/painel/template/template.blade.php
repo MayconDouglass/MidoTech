@@ -57,7 +57,7 @@
               <i class="fa fa-cogs mr-2"></i> Configuração
             </a>
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
+            <a href="{{route('logout')}}" class="dropdown-item">
               <i class="fa fa-sign-out mr-2"></i> Sair
             </a>
           </div>

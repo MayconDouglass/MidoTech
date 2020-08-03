@@ -84,7 +84,7 @@
               data-dataalt="{{$perfil->dataalt ? date('d/m/Y', strtotime($perfil->dataalt)) : "Sem alteração"}}">
               Alterar</button>
             <button type="button" class="btn btn-permissao btn-sm fa fa-key" data-toggle="modal"
-              data-target="#modal-permissao" data-codigo="{{$perfil->id_perfil}}"></button>
+              data-target="#modal-permissao" data-codigo="{{$perfil->id_perfil}}" data-nome="{{$perfil->nome}}"></button>
             <button type="button" class="btn btn-danger btn-sm fa fa-trash-o" data-toggle="modal"
               data-target="#modal-danger" data-codigo="{{$perfil->id_perfil}}"></button>
           </td>
@@ -133,14 +133,11 @@
 
             <div class="col-sm-3">
               <label class="control-label">Ativa</label>
-              <select class="select-notsearch" tabindex="-1" name="ativacad" id="ativa">
+              <select class="select-notsearch" tabindex="-1" name="statuscad" id="ativa">
                 <option value="1">Sim</option>
                 <option value="0">Não</option>
               </select>
             </div>
-
-
-
 
           </div>
 
@@ -178,10 +175,11 @@
           enctype="multipart/form-data">
           @csrf
           <div class="form-group row">
+            <input class="form-control" type="hidden" name="idPerfil" id="idperfil" required>
 
             <div class="col-sm-12">
               <label class="control-label">Ativa</label>
-              <select class="select-notsearch-perfis" tabindex="-1" name="ativaalt" id="ativa_alt">
+              <select class="select-notsearch-perfis" tabindex="-1" name="statusalt" id="status_alt">
                 <option value="1">Sim</option>
                 <option value="0">Não</option>
               </select>

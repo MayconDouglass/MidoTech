@@ -102,9 +102,34 @@ $('#modal-danger').on('show.bs.modal', function (event) {
 $('#modal-permissao').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
     var idPerfil = button.data('codigo')
+    var nomePerfil = button.data('nome')
     $("#idPerfil").val(idPerfil);
+
+    $.ajax({
+        type: 'post',
+        dataType: 'json',
+        url: 'perfil/permissao',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            'perfil_cod': idPerfil
+        },
+        success: function (result) {
+
+            dd(result);
+
+        },
+        error: function (resultError) {
+
+            console.log('Erro na consulta');
+
+        }
+
+    })
+    
     var modal = $(this)
-    modal.find('.b_text_modal_title_permissao').text('Permissões do Perfil')
+    modal.find('.b_text_modal_title_permissao').text('Permissões do Perfil: '+ nomePerfil)
 })
 
 $('#modal-password').on('show.bs.modal', function (event) {
@@ -170,6 +195,8 @@ $('#AlterarPerfilModal').on('show.bs.modal', function (event) {
     modal.find('.modal-title').text('Alterar Registro')
     modal.find('#user_cod').val(userCodAlt)
 })
+
+
 
 $('#VisualizarUserModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
