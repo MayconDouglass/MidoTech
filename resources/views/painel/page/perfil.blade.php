@@ -84,7 +84,8 @@
               data-dataalt="{{$perfil->dataalt ? date('d/m/Y', strtotime($perfil->dataalt)) : "Sem alteração"}}">
               Alterar</button>
             <button type="button" class="btn btn-permissao btn-sm fa fa-key" data-toggle="modal"
-              data-target="#modal-permissao" data-codigo="{{$perfil->id_perfil}}" data-nome="{{$perfil->nome}}"></button>
+              data-target="#modal-permissao" data-codigo="{{$perfil->id_perfil}}"
+              data-nome="{{$perfil->nome}}"></button>
             <button type="button" class="btn btn-danger btn-sm fa fa-trash-o" data-toggle="modal"
               data-target="#modal-danger" data-codigo="{{$perfil->id_perfil}}"></button>
           </td>
@@ -321,95 +322,55 @@
         <form class="form-horizontal" method="POST" action="{{action('PerfilController@destroy')}}">
           @csrf
           <input type="hidden" class="form-control col-form-label-sm" id="idPerfil" name="idPerfil">
-          <div class="card-body">
-            <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" id="clientes-tab" data-toggle="pill" href="#clientes-tabContent" role="tab"
-                  aria-controls="clientes" aria-selected="true">Clientes</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="produtos-tab" data-toggle="pill" href="#produtos-tabContent" role="tab"
-                  aria-controls="produtos" aria-selected="false">Produtos</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="vendas-tab" data-toggle="pill" href="#vendas-tabContent" role="tab"
-                  aria-controls="vendas" aria-selected="false">Vendas</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="compras-tab" data-toggle="pill" href="#compras-tabContent" role="tab"
-                  aria-controls="compras" aria-selected="false">Compras</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="financeiro-tab" data-toggle="pill" href="#financeiro-tabContent" role="tab"
-                  aria-controls="financeiro" aria-selected="false">Financeiro</a>
-              </li>
-            </ul>
-            <div class="tab-content" id="tabContent">
-              <div class="tab-pane fade show active" id="clientes-tabContent" role="tabpanel"
-                aria-labelledby="cliente-tab">
-                <br>
-                <div class="row">
-                  <div class="col-sm-3">
-                    <div class="custom-control custom-switch custom-switch-on-success">
-                      <input type="checkbox" class="custom-control-input" id="customSwitch11" name="clienteMenu11">
-                      <label class="custom-control-label" for="customSwitch11">11 - Cadastro </label>
-                    </div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div class="custom-control custom-switch custom-switch-on-success" name="clienteMenu12">
-                      <input type="checkbox" class="custom-control-input" id="customSwitch12">
-                      <label class="custom-control-label" for="customSwitch12">Menu 12</label>
-                    </div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div class="custom-control custom-switch custom-switch-on-success">
-                      <input type="checkbox" class="custom-control-input" id="customSwitch13" name="clienteMenu13">
-                      <label class="custom-control-label" for="customSwitch13">Menu 13</label>
-                    </div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div class="custom-control custom-switch custom-switch-on-success">
-                      <input type="checkbox" class="custom-control-input" id="customSwitch14" name="clienteMenu14">
-                      <label class="custom-control-label" for="customSwitch14">Menu 14</label>
-                    </div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div class="custom-control custom-switch custom-switch-on-success">
-                      <input type="checkbox" class="custom-control-input" id="customSwitch15" name="clienteMenu15">
-                      <label class="custom-control-label" for="customSwitch15">Menu 15</label>
-                    </div>
-                  </div>
-                  <div class="col-sm-2">
-                    <div class="custom-control custom-switch custom-switch-on-success">
-                      <input type="checkbox" class="custom-control-input" id="customSwitch16" name="clienteMenu16">
-                      <label class="custom-control-label" for="customSwitch16">Menu 16</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="tab-pane fade" id="produtos-tabContent" role="tabpanel" aria-labelledby="produtos-tab">
-                produtos
-              </div>
-              <div class="tab-pane fade" id="vendas-tabContent" role="tabpanel" aria-labelledby="vendas-tab">
-                vendas
-              </div>
-              <div class="tab-pane fade" id="compras-tabContent" role="tabpanel" aria-labelledby="compras-tab">
-                compras
-              </div>
-              <div class="tab-pane fade" id="financeiro-tabContent" role="tabpanel" aria-labelledby="financeiro-tab">
-                financeiro
-              </div>
-              <br>
+          <div class="form-group row">
+            
+            <div class="col-sm-3">
+              <input type="hidden" value="1" class="form-control col-form-label-sm" id="idRoleView" name="idRoleView">
+              <label class="control-label">Visualizar Cadastros</label>
+              <select class="select-notsearch-role" tabindex="-1" name="role_view_cadastros" id="role_view_cadastros">
+                <option value="1">Sim</option>
+                <option value="0">Não</option>
+              </select>
             </div>
 
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-secondary btn-sm fa fa-times" data-dismiss="modal"> Cancelar</button>
-              <button type="submit" class="btn btn-permissao btn-sm fa fa-floppy-o"> Confirmar</button>
+            <div class="col-sm-3">
+              <input type="hidden" value="2" class="form-control col-form-label-sm" id="idRoleEdit" name="idRoleEdit">
+              <label class="control-label">Alterar Cadastros</label>
+              <select class="select-notsearch-role" tabindex="-1" name="role_edit_cadastros" id="role_edit_cadastros">
+                <option value="1">Sim</option>
+                <option value="0">Não</option>
+              </select>
             </div>
-        </form>
+
+            <div class="col-sm-3">
+              <input type="hidden" value="3" class="form-control col-form-label-sm" id="idRoleDel" name="idRoleDel">
+              <label class="control-label">Deletar Cadastros</label>
+              <p><select class="select-notsearch-role" tabindex="-1" name="role_del_cadastros" id="role_del_cadastros">
+                <option value="1">Sim</option>
+                <option value="0">Não</option>
+              </select></p>
+            </div>
+            
+            <div class="col-sm-3">
+              <input type="hidden" value="4" class="form-control col-form-label-sm" id="idRoleDesconto" name="idRoleDesconto">
+              <label class="control-label">Respeitar Desconto máx.</label>
+              <select class="select-notsearch-role" tabindex="-1" name="role_desc_max" id="role_desc_max">
+                <option value="1">Sim</option>
+                <option value="0">Não</option>
+              </select>
+            </div>
+
+          </div>
       </div>
+
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-secondary btn-sm fa fa-times" data-dismiss="modal"> Cancelar</button>
+        <button type="submit" class="btn btn-permissao btn-sm fa fa-floppy-o"> Confirmar</button>
+      </div>
+      </form>
     </div>
   </div>
+</div>
 </div>
 
 

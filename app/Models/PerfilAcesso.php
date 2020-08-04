@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id_acesso
  * @property int $perfil_cod
  * @property int $usuario
- * @property int $menu
+ * @property int $role
  * @property int $ativo
  * 
  * @property Perfil $perfil
@@ -30,14 +30,14 @@ class PerfilAcesso extends Model
 	protected $casts = [
 		'perfil_cod' => 'int',
 		'usuario' => 'int',
-		'menu' => 'int',
+		'role' => 'int',
 		'ativo' => 'int'
 	];
 
 	protected $fillable = [
 		'perfil_cod',
 		'usuario',
-		'menu',
+		'role',
 		'ativo'
 	];
 
@@ -49,5 +49,10 @@ class PerfilAcesso extends Model
 	public function usuario()
 	{
 		return $this->belongsTo(Usuario::class, 'usuario');
+	}
+
+	public function role()
+	{
+		return $this->belongsTo(Role::class, 'role');
 	}
 }

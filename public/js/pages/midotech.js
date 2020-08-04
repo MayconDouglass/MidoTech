@@ -51,6 +51,16 @@ $(function () {
         minimumResultsForSearch: Infinity
     });
 
+    $('.select2-role').select2({
+        dropdownParent: $("#modal-permissao"),
+        width: '100%'
+    });
+    $('.select-notsearch-role').select2({
+        dropdownParent: $("#modal-permissao"),
+        width: '100%',
+        minimumResultsForSearch: Infinity
+    });
+
     bsCustomFileInput.init();
 
     $('.toastrDefaultError').click(function () {
@@ -104,29 +114,6 @@ $('#modal-permissao').on('show.bs.modal', function (event) {
     var idPerfil = button.data('codigo')
     var nomePerfil = button.data('nome')
     $("#idPerfil").val(idPerfil);
-
-    $.ajax({
-        type: 'post',
-        dataType: 'json',
-        url: 'perfil/permissao',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: {
-            'perfil_cod': idPerfil
-        },
-        success: function (result) {
-
-            dd(result);
-
-        },
-        error: function (resultError) {
-
-            console.log('Erro na consulta');
-
-        }
-
-    })
     
     var modal = $(this)
     modal.find('.b_text_modal_title_permissao').text('Permissões do Perfil: '+ nomePerfil)

@@ -96,11 +96,4 @@ class PerfilController extends Controller
             }
     }
 
-    public function obterPermissoes(Request $request){
-
-        $permissao = PerfilAcesso::where('perfil_cod',$request->perfil_cod)->get('menu')->get('ativo');
-      // dd($permissao);
-        return response()->json([$permissao],200);
-
-    }
 }
