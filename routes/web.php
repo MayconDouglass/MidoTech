@@ -40,7 +40,8 @@ Route::group(['middleware' => ['auth']], function () {
      Route::post('/perfil/cad', 'PerfilController@store');
      Route::post('/perfil/update', 'PerfilController@update');
      Route::post('/perfil/delete', 'PerfilController@destroy'); 
-     Route::post('/perfil/permissao', 'PerfilController@obterPermissoes'); 
+     Route::post('/perfil/permissao', 'PerfilController@atualizarPermissao'); 
+     Route::post('/perfil/obterperm', 'PerfilController@obterPermissaoPerfil'); 
 
 });
 

@@ -115,6 +115,28 @@ $('#modal-permissao').on('show.bs.modal', function (event) {
     var nomePerfil = button.data('nome')
     $("#idPerfil").val(idPerfil);
     
+    $.ajax({
+        type: 'post',
+        dataType: 'json',
+        url: 'perfil/obterperm',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            'id': idPerfil
+        },
+        success: function (result) {
+            console.log(result[0]);
+
+        },
+        error: function (resultError) {
+
+            console.log('Erro na consulta');
+
+        }
+
+    })
+
     var modal = $(this)
     modal.find('.b_text_modal_title_permissao').text('Permissões do Perfil: '+ nomePerfil)
 })
