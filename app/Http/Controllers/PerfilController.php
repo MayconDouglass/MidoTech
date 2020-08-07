@@ -108,15 +108,27 @@ class PerfilController extends Controller
 
     public function atualizarPermissao(Request $request){
         $select = 'role';
-                         
-        for ($i=1; $i < 5; $i++) { 
-            $perfilAcesso = PerfilAcesso::where('perfil_cod','=',$request->idPerfil)->where('role',$i)->first();     
-            $perfilAcesso->perfil_cod = $request->idPerfil;
-            $perfilAcesso->usuario = Auth::user()->id_usuario;
-            $perfilAcesso->role = $i;
-            $perfilAcesso->ativo = $request->input($select.$i);
-            $perfilAcesso->save();
-        }
+        $acesso = PerfilAcesso::where('perfil_cod','=',$request->idPerfil)->get();  
+        if(count($acesso) > 0){
+            for ($i=1; $i < 5; $i++) { 
+                $perfilAcesso = PerfilAcesso::where('perfil_cod','=',$request->idPerfil)->where('role',$i)->first();     
+                $perfilAcesso->perfil_cod = $request->idPerfil;
+                $perfilAcesso->usuario = Auth::user()->id_usuario;
+                $perfilAcesso->role = $i;
+                $perfilAcesso->ativo = $request->input($select.$i);
+                $perfilAcesso->save();
+            }
+        }else{
+            foreach (range(1,4) as $teste => $role) {
+                $perfilAcesso = new PerfilAcesso();     
+                $perfilAcesso->perfil_cod = $request->idPerfil;
+                $perfilAcesso->usuario = Auth::user()->id_usuario;
+                $perfilAcesso->role = $role;
+                $perfilAcesso->ativo = $request->input($select.$role);
+                $perfilAcesso->save();
+            }             
+        }              
+        
         $perfil = Perfil::find($request->idPerfil);
         $perfil->ativo = 1;
         $testestatus = $perfil->save();
@@ -129,8 +141,8 @@ class PerfilController extends Controller
 
     public function obterPermissaoPerfil(Request $request){
         //dd($request);
-        $permissao = PerfilAcesso::where('perfil_cod',$request->id)->select('role','ativo')->get('role','ativo');
-      //  dd(response()->json([$permissao],200));
+        $permissao = PerfilAcesso::where('perfil_cod',$request->id)->pluck('ativo');
+        //dd($permissao[0]);
         return response()->json([$permissao],200);
 
     }

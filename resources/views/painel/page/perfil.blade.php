@@ -327,7 +327,7 @@
             <div class="col-sm-3">
               <input type="hidden" value="1" class="form-control col-form-label-sm" id="idRoleView" name="idRole1">
               <label class="control-label">Visualizar Cadastros</label>
-              <select class="select-notsearch-role" tabindex="-1" name="role1" id="role_view_cadastros">
+              <select class="select-notsearch-role" tabindex="-1" name="role1" id="role1">
                 <option value="1">Sim</option>
                 <option value="0">Não</option>
               </select>
@@ -336,7 +336,7 @@
             <div class="col-sm-3">
               <input type="hidden" value="2" class="form-control col-form-label-sm" id="idRoleEdit" name="idRole2">
               <label class="control-label">Alterar Cadastros</label>
-              <select class="select-notsearch-role" tabindex="-1" name="role2" id="role_edit_cadastros">
+              <select class="select-notsearch-role" tabindex="-1" name="role2" id="role2">
                 <option value="1">Sim</option>
                 <option value="0">Não</option>
               </select>
@@ -345,7 +345,7 @@
             <div class="col-sm-3">
               <input type="hidden" value="3" class="form-control col-form-label-sm" id="idRoleDel" name="idRole3">
               <label class="control-label">Deletar Cadastros</label>
-              <p><select class="select-notsearch-role" tabindex="-1" name="role3" id="role_del_cadastros">
+              <p><select class="select-notsearch-role" tabindex="-1" name="role3" id="role3">
                 <option value="1">Sim</option>
                 <option value="0">Não</option>
               </select></p>
@@ -354,7 +354,7 @@
             <div class="col-sm-3">
               <input type="hidden" value="4" class="form-control col-form-label-sm" id="idRoleDesconto" name="idRole4">
               <label class="control-label">Respeitar Desconto máx.</label>
-              <select class="select-notsearch-role" tabindex="-1" name="role4" id="role_desc_max">
+              <select class="select-notsearch-role" tabindex="-1" name="role4" id="role4">
                 <option value="1">Sim</option>
                 <option value="0">Não</option>
               </select>

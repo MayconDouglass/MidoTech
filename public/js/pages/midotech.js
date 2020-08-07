@@ -67,6 +67,7 @@ $(function () {
         toastr.error('Já existe uma empresa com este CNPJ!')
     });
 
+    
 });
 
 $('#CadastroModal').on('show.bs.modal', function (event) {
@@ -115,6 +116,8 @@ $('#modal-permissao').on('show.bs.modal', function (event) {
     var nomePerfil = button.data('nome')
     $("#idPerfil").val(idPerfil);
     
+   
+    
     $.ajax({
         type: 'post',
         dataType: 'json',
@@ -126,8 +129,13 @@ $('#modal-permissao').on('show.bs.modal', function (event) {
             'id': idPerfil
         },
         success: function (result) {
-            console.log(result[0]);
+            
+            for (let index = 1; index <= result[0].length; index++) {
 
+            $("#role".concat(index)).val(result[0][index-1]).trigger("change");
+
+            }
+           
         },
         error: function (resultError) {
 
