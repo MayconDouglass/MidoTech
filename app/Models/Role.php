@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id_role
  * @property string $descricao
  * 
- * @property PerfilAcesso $perfil_acesso
+ * @property Collection|PerfilAcesso[] $perfil_acessos
  *
  * @package App\Models
  */
@@ -28,8 +29,8 @@ class Role extends Model
 		'descricao'
 	];
 
-	public function perfil_acesso()
+	public function perfil_acessos()
 	{
-		return $this->hasOne(PerfilAcesso::class, 'role');
+		return $this->hasMany(PerfilAcesso::class, 'role');
 	}
 }

@@ -114,10 +114,8 @@ $('#modal-permissao').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
     var idPerfil = button.data('codigo')
     var nomePerfil = button.data('nome')
-    $("#idPerfil").val(idPerfil);
     
-   
-    
+      
     $.ajax({
         type: 'post',
         dataType: 'json',
@@ -147,6 +145,7 @@ $('#modal-permissao').on('show.bs.modal', function (event) {
 
     var modal = $(this)
     modal.find('.b_text_modal_title_permissao').text('Permissões do Perfil: '+ nomePerfil)
+    modal.find('#idPerfil').val(idPerfil)
 })
 
 $('#modal-password').on('show.bs.modal', function (event) {
@@ -195,22 +194,49 @@ $('#AlterarUserModal').on('show.bs.modal', function (event) {
 
 $('#VisualizarPerfilModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
-    var userCodView = button.data('codigo')
+    var perfilCodView = button.data('codigo')
+    var empCodView = button.data('empresa')
+    var nomeView = button.data('nome')
+    var statusView = button.data('status')
+    var usuCadView = button.data('usucad')
+    var usuAltView = button.data('usualt')
+    var dataCadView = button.data('datacad')
+    var dataAltView = button.data('dataalt')
    
-    
+    $("#status_alt").select2({
+        dropdownParent: $("#VisualisarPerfilModal"), 
+        width: '100%',
+        minimumResultsForSearch: Infinity
+    }).val(perfilStatusAlt).trigger("change");
+
+
     $(this).find('form').trigger('reset');
     var modal = $(this)
     modal.find('.modal-title').text('Visualizar Registro')
-    modal.find('#user_cod').val(userCodView)
+    modal.find('#idPerfil_view').val(perfilCodView)
+    modal.find('#nome_view').val(nomeView)
+    modal.find('#empresa_view').val(empCodView)
+    modal.find('#user_cadastro_view').val(usuCadView)
+    modal.find('#user_alteracao_view').val(usuAltView)
+    modal.find('#data_cadastro_view').val(dataCadView)
+    modal.find('#data_alteracao_view').val(dataAltView)
+    modal.find('#status_view').val(statusView)
 })
 
 $('#AlterarPerfilModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
-    var userCodAlt = button.data('codigo')
-        
+    var perfilCodAlt = button.data('codigo')
+    var perfilStatusAlt = button.data('status')
+
+    $("#status_alt").select2({
+        dropdownParent: $("#AlterarPerfilModal"), 
+        width: '100%',
+        minimumResultsForSearch: Infinity
+    }).val(perfilStatusAlt).trigger("change");
+
     var modal = $(this)
     modal.find('.modal-title').text('Alterar Registro')
-    modal.find('#user_cod').val(userCodAlt)
+    modal.find('#idPerfil').val(perfilCodAlt)
 })
 
 

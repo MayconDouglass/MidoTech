@@ -73,15 +73,12 @@
             <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal"
               data-target="#VisualizarPerfilModal" data-codigo="{{$perfil->id_perfil}}"
               data-empresa="{{$perfil->emp_cod}}" data-nome="{{$perfil->nome}}" data-status="{{$perfil->ativo}}"
-              data-usucad="{{$perfil->usucad}}" data-usualt="{{$perfil->usualt}}"
+              data-usucad="{{$perfil->usuario->nome}}" data-usualt="{{$perfil->usuario->nome}}"
               data-datacad="{{date('d/m/Y',strtotime($perfil->datacad))}}"
               data-dataalt="{{$perfil->dataalt ? date('d/m/Y', strtotime($perfil->dataalt)) : "Sem alteração"}}">
               Visualizar</button>
             <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
-              data-target="#AlterarPerfilModal" data-codigo="{{$perfil->id_perfil}}" data-empresa="{{$perfil->emp_cod}}"
-              data-nome="{{$perfil->nome}}" data-status="{{$perfil->ativo}}" data-usucad="{{$perfil->usucad}}"
-              data-usualt="{{$perfil->usualt}}" data-datacad="{{date('d/m/Y',strtotime($perfil->datacad))}}"
-              data-dataalt="{{$perfil->dataalt ? date('d/m/Y', strtotime($perfil->dataalt)) : "Sem alteração"}}">
+              data-target="#AlterarPerfilModal" data-codigo="{{$perfil->id_perfil}}" data-status="{{$perfil->ativo}}">
               Alterar</button>
             <button type="button" class="btn btn-permissao btn-sm fa fa-key" data-toggle="modal"
               data-target="#modal-permissao" data-codigo="{{$perfil->id_perfil}}"
@@ -176,7 +173,7 @@
           enctype="multipart/form-data">
           @csrf
           <div class="form-group row">
-            <input class="form-control" type="hidden" name="idPerfil" id="idperfil" required>
+            <input class="form-control" type="hidden" name="idPerfil" id="idPerfil" required>
 
             <div class="col-sm-12">
               <label class="control-label">Ativa</label>
@@ -203,7 +200,6 @@
 </div>
 </div>
 
-
 <!-- Modal Visualizacao-->
 <div class="modal fade" id="VisualizarPerfilModal" tabindex="-1" role="dialog"
   aria-labelledby="VisualizarPerfilModalLabel" aria-hidden="true">
@@ -224,7 +220,12 @@
           @csrf
           <div class="form-group row">
 
-            <div class="col-sm-12">
+            <div class="col-sm-2">
+              <label class="control-label">ID</label>
+              <p><input class="form-control" type="text" name="idperfilview" id="idPerfil_view" disabled></p>
+            </div>
+
+            <div class="col-sm-10">
               <label class="control-label">Nome</label>
               <p><input class="form-control" type="text" name="nomeview" id="nome_view" disabled></p>
             </div>
@@ -240,7 +241,7 @@
 
             <div class="col-sm-3">
               <label class="control-label">Ativa</label>
-              <p><select class="select-notsearch" tabindex="-1" name="ativaview" id="ativa_view" disabled>
+              <p><select class="select-notsearch" tabindex="-1" name="statusview" id="status_view" disabled>
                   <option value="1">Sim</option>
                   <option value="0">Não</option>
                 </select></p>
@@ -279,7 +280,7 @@
 </div>
 
 <!-- Modal de Exclusao-->
-<div class="modal fade" id="modal-danger">
+<div class="modal fade" id="modal-danger" tabindex="-1">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="delete_modalHeader">
@@ -307,7 +308,7 @@
 </div>
 
 <!-- Modal de Permissao-->
-<div class="modal fade" id="modal-permissao">
+<div class="modal fade" id="modal-permissao" tabindex="-1">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="permissao_modalHeader">
@@ -323,7 +324,7 @@
           @csrf
           <input type="hidden" class="form-control col-form-label-sm" id="idPerfil" name="idPerfil">
           <div class="form-group row">
-            
+
             <div class="col-sm-3">
               <input type="hidden" value="1" class="form-control col-form-label-sm" id="idRoleView" name="idRole1">
               <label class="control-label">Visualizar Cadastros</label>
@@ -346,11 +347,11 @@
               <input type="hidden" value="3" class="form-control col-form-label-sm" id="idRoleDel" name="idRole3">
               <label class="control-label">Deletar Cadastros</label>
               <p><select class="select-notsearch-role" tabindex="-1" name="role3" id="role3">
-                <option value="1">Sim</option>
-                <option value="0">Não</option>
-              </select></p>
+                  <option value="1">Sim</option>
+                  <option value="0">Não</option>
+                </select></p>
             </div>
-            
+
             <div class="col-sm-3">
               <input type="hidden" value="4" class="form-control col-form-label-sm" id="idRoleDesconto" name="idRole4">
               <label class="control-label">Respeitar Desconto máx.</label>

@@ -28,7 +28,7 @@ class PerfilController extends Controller
             $uimagem = 'storage/img/users/default.jpg';
             }
             
-            $perfis = Perfil::where('ativo',1)->get();
+            $perfis = Perfil::all();
 
             $empresas = Setempresa::all();
            
@@ -86,10 +86,10 @@ class PerfilController extends Controller
             $perfil->usualt = Auth::user()->id_usuario;
             $updateStatus = $perfil->save();
 
-            if($updateStatus){            
-                return redirect()->action('PerfilController@create')->with('status_success', 'Status atualizado!');
+            if($updateStatus){         
+               return redirect()->action('PerfilController@create')->with('status_success', 'Status atualizado!');
             }else{
-                    return redirect()->action('PerfilController@create')->with('status_error', 'OPS! Algum erro ocorreu, tente novamente!');
+               return redirect()->action('PerfilController@create')->with('status_error', 'OPS! Algum erro ocorreu, tente novamente!');
             }        
     }
 
@@ -109,8 +109,10 @@ class PerfilController extends Controller
     public function atualizarPermissao(Request $request){
         $select = 'role';
         $acesso = PerfilAcesso::where('perfil_cod','=',$request->idPerfil)->get();  
+        $sizeRole = PerfilAcesso::all()->max('role') ;
+        //dd($sizeRole);
         if(count($acesso) > 0){
-            for ($i=1; $i < 5; $i++) { 
+            for ($i=1; $i < $sizeRole + 1; $i++) { 
                 $perfilAcesso = PerfilAcesso::where('perfil_cod','=',$request->idPerfil)->where('role',$i)->first();     
                 $perfilAcesso->perfil_cod = $request->idPerfil;
                 $perfilAcesso->usuario = Auth::user()->id_usuario;
@@ -119,7 +121,7 @@ class PerfilController extends Controller
                 $perfilAcesso->save();
             }
         }else{
-            foreach (range(1,4) as $teste => $role) {
+            foreach (range(1,$sizeRole) as $size => $role) {
                 $perfilAcesso = new PerfilAcesso();     
                 $perfilAcesso->perfil_cod = $request->idPerfil;
                 $perfilAcesso->usuario = Auth::user()->id_usuario;
@@ -130,9 +132,9 @@ class PerfilController extends Controller
         }              
         
         $perfil = Perfil::find($request->idPerfil);
-        $perfil->ativo = 1;
-        $testestatus = $perfil->save();
-        if($testestatus){   
+        $perfil->usualt = Auth::user()->id_usuario;
+        $statusAcesso = $perfil->save();
+        if($statusAcesso){   
             return redirect()->action('PerfilController@create')->with('status_success', 'Permissões atualizadas!');
             }else{
             return redirect()->action('PerfilController@create')->with('status_error', 'Não foi possível atualizar as permissões deste perfil, tente novamente!');    

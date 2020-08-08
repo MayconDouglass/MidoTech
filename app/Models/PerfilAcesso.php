@@ -46,11 +46,6 @@ class PerfilAcesso extends Model
 		return $this->belongsTo(Perfil::class, 'perfil_cod');
 	}
 
-	public function usuario()
-	{
-		return $this->belongsTo(Usuario::class, 'usuario');
-	}
-
 	public function role()
 	{
 		return $this->belongsTo(Role::class, 'role');

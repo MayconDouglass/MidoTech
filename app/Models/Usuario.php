@@ -29,7 +29,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property Perfil $perfil
  * @property Setempresa $setempresa
  * @property Collection|Perfil[] $perfils
- * @property Collection|PerfilAcesso[] $perfil_acessos
  * @property Collection|Usuario[] $usuarios
  *
  * @package App\Models
@@ -88,11 +87,6 @@ class Usuario extends Model
 	public function perfils()
 	{
 		return $this->hasMany(Perfil::class, 'usualt');
-	}
-
-	public function perfil_acessos()
-	{
-		return $this->hasMany(PerfilAcesso::class, 'usuario');
 	}
 
 	public function usuarios()
