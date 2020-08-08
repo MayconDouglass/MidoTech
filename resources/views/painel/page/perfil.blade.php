@@ -94,7 +94,7 @@
 </div>
 
 
-
+@if ()
 <!-- Modal Cadastro-->
 <div class="modal fade" id="CadastroModal" tabindex="-1" role="dialog" aria-labelledby="CadastroModalLabel"
   aria-hidden="true">
@@ -200,85 +200,6 @@
 </div>
 </div>
 
-<!-- Modal Visualizacao-->
-<div class="modal fade" id="VisualizarPerfilModal" tabindex="-1" role="dialog"
-  aria-labelledby="VisualizarPerfilModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="view_modalHeader">
-        <div class="modal-header">
-          <h5 class="modal-title" id="VisualizarPerfilModalLabel"></h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      </div>
-      <div class="modal-body">
-
-        <!-- Form de cadastro -->
-        <form class="form-horizontal" method="POST">
-          @csrf
-          <div class="form-group row">
-
-            <div class="col-sm-2">
-              <label class="control-label">ID</label>
-              <p><input class="form-control" type="text" name="idperfilview" id="idPerfil_view" disabled></p>
-            </div>
-
-            <div class="col-sm-10">
-              <label class="control-label">Nome</label>
-              <p><input class="form-control" type="text" name="nomeview" id="nome_view" disabled></p>
-            </div>
-
-            <div class="col-sm-9">
-              <label class="control-label">Empresa</label>
-              <select class="select-notsearch" tabindex="-1" name="empresaview" id="empresa_view" disabled>
-                @foreach ($empresas as $empresa)
-                <option value="{{$empresa->id_empresa}}">{{$empresa->razao_social}}</option>
-                @endforeach
-              </select>
-            </div>
-
-            <div class="col-sm-3">
-              <label class="control-label">Ativa</label>
-              <p><select class="select-notsearch" tabindex="-1" name="statusview" id="status_view" disabled>
-                  <option value="1">Sim</option>
-                  <option value="0">Não</option>
-                </select></p>
-            </div>
-
-            <div class="col-sm-6">
-              <label class="control-label">Usuário Cadastro</label>
-              <input class="form-control" type="text" name="usuview" id="user_cadastro_view" disabled>
-            </div>
-
-            <div class="col-sm-6">
-              <label class="control-label">Data Cadastro</label>
-              <p><input class="form-control" type="text" name="dataview" id="data_cadastro_view" disabled></p>
-            </div>
-
-            <div class="col-sm-6">
-              <label class="control-label">Usuário Alteração</label>
-              <input class="form-control" type="text" name="usuview" id="user_alteracao_view" disabled>
-            </div>
-
-            <div class="col-sm-6">
-              <label class="control-label">Data Alteração</label>
-              <input class="form-control" type="text" name="dataview" id="data_alteracao_view" disabled>
-            </div>
-
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" id="reset" data-dismiss="modal"><i class="fa fa-times">
-                Cancelar</i></button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- Modal de Exclusao-->
 <div class="modal fade" id="modal-danger" tabindex="-1">
   <div class="modal-dialog modal-sm">
@@ -373,6 +294,92 @@
   </div>
 </div>
 </div>
+@endif
+
+
+
+
+
+<!-- Modal Visualizacao-->
+<div class="modal fade" id="VisualizarPerfilModal" tabindex="-1" role="dialog" z
+  aria-labelledby="VisualizarPerfilModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="view_modalHeader">
+        <div class="modal-header">
+          <h5 class="modal-title" id="VisualizarPerfilModalLabel"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+
+        <!-- Form de cadastro -->
+        <form class="form-horizontal" method="POST">
+          @csrf
+          <div class="form-group row">
+
+            <div class="col-sm-2">
+              <label class="control-label">ID</label>
+              <p><input class="form-control" type="text" name="idperfilview" id="idPerfil_view" disabled></p>
+            </div>
+
+            <div class="col-sm-10">
+              <label class="control-label">Nome</label>
+              <p><input class="form-control" type="text" name="nomeview" id="nome_view" disabled></p>
+            </div>
+
+            <div class="col-sm-9">
+              <label class="control-label">Empresa</label>
+              <select class="select-notsearch" tabindex="-1" name="empresaview" id="empresa_view" disabled>
+                @foreach ($empresas as $empresa)
+                <option value="{{$empresa->id_empresa}}">{{$empresa->razao_social}}</option>
+                @endforeach
+              </select>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Ativa</label>
+              <p><select class="select-notsearch" tabindex="-1" name="statusview" id="status_view" disabled>
+                  <option value="1">Sim</option>
+                  <option value="0">Não</option>
+                </select></p>
+            </div>
+
+            <div class="col-sm-6">
+              <label class="control-label">Usuário Cadastro</label>
+              <input class="form-control" type="text" name="usuview" id="user_cadastro_view" disabled>
+            </div>
+
+            <div class="col-sm-6">
+              <label class="control-label">Data Cadastro</label>
+              <p><input class="form-control" type="text" name="dataview" id="data_cadastro_view" disabled></p>
+            </div>
+
+            <div class="col-sm-6">
+              <label class="control-label">Usuário Alteração</label>
+              <input class="form-control" type="text" name="usuview" id="user_alteracao_view" disabled>
+            </div>
+
+            <div class="col-sm-6">
+              <label class="control-label">Data Alteração</label>
+              <input class="form-control" type="text" name="dataview" id="data_alteracao_view" disabled>
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="reset" data-dismiss="modal"><i class="fa fa-times">
+                Cancelar</i></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 
 @endsection
