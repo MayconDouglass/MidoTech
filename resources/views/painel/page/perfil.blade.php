@@ -13,9 +13,15 @@
     <div class="row mb-2">
       <div class="col-sm-6">
         <h1 class="m-0 text-dark">Perfis
+          @foreach ($acessoPerfil as $acesso)
+          @if (($acesso->role == 2)&&($acesso->ativo == 1))
           <button type="button" class="btn btn-primary fa fa-user-plus" data-toggle="modal"
             data-target="#CadastroModal">
-            Cadastrar</button></h1>
+            Cadastrar
+          </button>
+          @endif
+          @endforeach
+        </h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -77,14 +83,27 @@
               data-datacad="{{date('d/m/Y',strtotime($perfil->datacad))}}"
               data-dataalt="{{$perfil->dataalt ? date('d/m/Y', strtotime($perfil->dataalt)) : "Sem alteração"}}">
               Visualizar</button>
-            <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
-              data-target="#AlterarPerfilModal" data-codigo="{{$perfil->id_perfil}}" data-status="{{$perfil->ativo}}">
-              Alterar</button>
-            <button type="button" class="btn btn-permissao btn-sm fa fa-key" data-toggle="modal"
-              data-target="#modal-permissao" data-codigo="{{$perfil->id_perfil}}"
-              data-nome="{{$perfil->nome}}"></button>
+              
+              @foreach ($acessoPerfil as $acesso)
+              @if (($acesso->role == 2)&&($acesso->ativo == 1))
+                <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
+                  data-target="#AlterarPerfilModal" data-codigo="{{$perfil->id_perfil}}" data-status="{{$perfil->ativo}}">
+                  Alterar
+                </button>
+              
+                <button type="button" class="btn btn-permissao btn-sm fa fa-key" data-toggle="modal"
+                  data-target="#modal-permissao" data-codigo="{{$perfil->id_perfil}}"
+                  data-nome="{{$perfil->nome}}">
+                </button>
+              @endif
+            @endforeach
+            @foreach ($acessoPerfil as $acesso)
+            @if (($acesso->role == 3)&&($acesso->ativo == 1))
             <button type="button" class="btn btn-danger btn-sm fa fa-trash-o" data-toggle="modal"
-              data-target="#modal-danger" data-codigo="{{$perfil->id_perfil}}"></button>
+              data-target="#modal-danger" data-codigo="{{$perfil->id_perfil}}">
+            </button>
+            @endif
+            @endforeach
           </td>
         </tr>
         @endforeach
@@ -94,7 +113,6 @@
 </div>
 
 
-@if ()
 <!-- Modal Cadastro-->
 <div class="modal fade" id="CadastroModal" tabindex="-1" role="dialog" aria-labelledby="CadastroModalLabel"
   aria-hidden="true">
@@ -257,7 +275,7 @@
 
             <div class="col-sm-3">
               <input type="hidden" value="2" class="form-control col-form-label-sm" id="idRoleEdit" name="idRole2">
-              <label class="control-label">Alterar Cadastros</label>
+              <label class="control-label">Alterar/Cadastrar</label>
               <select class="select-notsearch-role" tabindex="-1" name="role2" id="role2">
                 <option value="1">Sim</option>
                 <option value="0">Não</option>
@@ -276,7 +294,16 @@
             <div class="col-sm-3">
               <input type="hidden" value="4" class="form-control col-form-label-sm" id="idRoleDesconto" name="idRole4">
               <label class="control-label">Respeitar Desconto máx.</label>
-              <select class="select-notsearch-role" tabindex="-1" name="role4" id="role4">
+              <p><select class="select-notsearch-role" tabindex="-1" name="role4" id="role4">
+                  <option value="1">Sim</option>
+                  <option value="0">Não</option>
+                </select></p>
+            </div>
+
+            <div class="col-sm-3">
+              <input type="hidden" value="5" class="form-control col-form-label-sm" id="idRoleAdmin" name="idRole5">
+              <label class="control-label">Administrador</label>
+              <select class="select-notsearch-role" tabindex="-1" name="role5" id="role5">
                 <option value="1">Sim</option>
                 <option value="0">Não</option>
               </select>
@@ -294,14 +321,10 @@
   </div>
 </div>
 </div>
-@endif
-
-
-
 
 
 <!-- Modal Visualizacao-->
-<div class="modal fade" id="VisualizarPerfilModal" tabindex="-1" role="dialog" z
+<div class="modal fade" id="VisualizarPerfilModal" tabindex="-1" role="dialog"
   aria-labelledby="VisualizarPerfilModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 //use Illuminate\Support\Facades\Auth;
 use App\User;
-use App\Perfil;
+use App\Models\PerfilAcesso;
 use Auth;
 use Hash;
 
@@ -27,8 +27,10 @@ class LoginController extends Controller
             } else {
             $uimagem = 'storage/img/users/default.jpg';
             }
-            
-            return view('painel.page.index',compact('uperfil','unomeperfil','unome','uid','uimagem'));
+
+            $acessoPerfil = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk);
+
+            return view('painel.page.index',compact('uperfil','unomeperfil','unome','uid','uimagem','acessoPerfil'));
        
         }else{
 
@@ -53,6 +55,7 @@ class LoginController extends Controller
         //dd($statusUser->ativo);
         //dd(bcrypt($request->senha));
             
+        
 
         if ($usuario && Hash::check($request->senha, $usuario->password)) {
            

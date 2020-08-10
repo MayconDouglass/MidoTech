@@ -203,11 +203,12 @@ $('#VisualizarPerfilModal').on('show.bs.modal', function (event) {
     var dataCadView = button.data('datacad')
     var dataAltView = button.data('dataalt')
    
-    $("#status_alt").select2({
+   
+    $("#status_view").select2({
         dropdownParent: $("#VisualisarPerfilModal"), 
         width: '100%',
         minimumResultsForSearch: Infinity
-    }).val(perfilStatusAlt).trigger("change");
+    }).val(statusView).trigger("change");
 
 
     $(this).find('form').trigger('reset');
@@ -220,7 +221,6 @@ $('#VisualizarPerfilModal').on('show.bs.modal', function (event) {
     modal.find('#user_alteracao_view').val(usuAltView)
     modal.find('#data_cadastro_view').val(dataCadView)
     modal.find('#data_alteracao_view').val(dataAltView)
-    modal.find('#status_view').val(statusView)
 })
 
 $('#AlterarPerfilModal').on('show.bs.modal', function (event) {

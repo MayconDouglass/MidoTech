@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PerfilAcesso;
 use App\Models\Regimetrib;
 use Illuminate\Http\Request;
 //use Illuminate\Support\Facades\Auth;
 use App\Models\Setempresa;
 use App\Models\Setatividade;
 use Auth;
-use Hash;
 
 class EmpresaController extends Controller
 {
@@ -32,9 +32,18 @@ class EmpresaController extends Controller
             $empresas = Setempresa::all();
             $atividades = Setatividade::where('ativo',1)->get();
             $regimetributados = Regimetrib::where('ativo',1)->get();
+            $roleView = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
+            ->where('role',1)
+            ->pluck('ativo');
+            $acessoPerfil = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
+            ->select('role','ativo')->get();
 
-            return view('painel.page.empresa',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','atividades','regimetributados'));
-            
+                if ($roleView[0]  == 1){
+                    return view('painel.page.empresa',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','atividades','regimetributados','acessoPerfil'));
+                }else{
+                    return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','acessoPerfil'));
+                }  
+
         }else{
 
             return view('login');

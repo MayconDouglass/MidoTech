@@ -1,6 +1,6 @@
 @extends('painel.template.template')
 
-@section('title','Empresa')
+@section('title','OPS! Sem permissão!')
 
 @section('head')
 <div class="content-header">

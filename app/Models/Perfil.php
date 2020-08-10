@@ -59,7 +59,7 @@ class Perfil extends Model
 
 	public function usuario()
 	{
-		return $this->belongsTo(Usuario::class, 'usualt');
+		return $this->belongsTo(Usuario::class, 'usucad');
 	}
 
 	public function setempresa()

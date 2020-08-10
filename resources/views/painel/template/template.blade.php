@@ -91,7 +91,8 @@
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add perfil : ADM -->
-
+            @foreach ($acessoPerfil as $acesso)
+            @if (($acesso->role == 1)&&($acesso->ativo == 1))
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-cogs"></i>
@@ -125,6 +126,8 @@
                 </li>
               </ul>
             </li>
+            @endif
+            @endforeach
             <!-- Fim Add perfil : ADM -->
 
             <li class="nav-item has-treeview">
@@ -136,12 +139,16 @@
                 </p>
               </a>
               <ul class="nav nav-treeview">
+                @foreach ($acessoPerfil as $acesso)
+                @if (($acesso->role == 1)&&($acesso->ativo == 1))
                 <li class="nav-item">
                   <a href="#" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>11 . Cadastro</p>
                   </a>
                 </li>
+                @endif
+                @endforeach
                 <li class="nav-item has-treeview">
                   <a href="#" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>

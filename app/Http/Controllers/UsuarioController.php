@@ -35,8 +35,18 @@ class UsuarioController extends Controller
            
             $usuarios = Usuario::all();
 
-            return view('painel.page.usuario',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','usuarios','perfis'));
-            
+            $roleView = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
+                                    ->where('role',1)
+                                    ->pluck('ativo');
+            $acessoPerfil = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
+            ->select('role','ativo')->get();
+
+            if ($roleView[0]  == 1){
+            return view('painel.page.usuario',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','usuarios','perfis','acessoPerfil'));
+            }else{
+                return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','perfis','acessoPerfil'));
+            }  
+
         }else{
 
             return view('login');
@@ -117,7 +127,7 @@ class UsuarioController extends Controller
                 }
 
                 if($saveStatus){            
-                    return redirect()->action('UsuarioController@create')->with('status_success', 'Usuário Atualizado!');
+                        return redirect()->action('UsuarioController@create')->with('status_success', 'Usuário Atualizado!');
                 }else{
                         return redirect()->action('UsuarioController@create')->with('status_error', 'OPS! Algum erro na alteração, tente novamente!');
                 }
