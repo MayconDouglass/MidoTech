@@ -35,13 +35,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/usuario/delete', 'UsuarioController@destroy');
     Route::post('/usuario/resetpassword', 'UsuarioController@resetPassword');
 
-     //CRUD Empresa
+     //CRUD Perfil
      Route::get('/perfil', 'PerfilController@create')->name('perfis');
      Route::post('/perfil/cad', 'PerfilController@store');
      Route::post('/perfil/update', 'PerfilController@update');
      Route::post('/perfil/delete', 'PerfilController@destroy'); 
      Route::post('/perfil/permissao', 'PerfilController@atualizarPermissao'); 
      Route::post('/perfil/obterperm', 'PerfilController@obterPermissaoPerfil'); 
+
+     // Cliente
+     Route::get('/clientes', 'ClienteController@create')->name('clientes');
+     Route::get('/clientes/new', 'ClienteController@addUser')->name('adduser');
 
 });
 

@@ -40,6 +40,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $Licenca
  * 
  * @property Setatividade $setatividade
+ * @property Collection|Cliente[] $clientes
  * @property Collection|Perfil[] $perfils
  * @property Collection|Usuario[] $usuarios
  *
@@ -101,6 +102,11 @@ class Setempresa extends Model
 	public function regimetrib()
 	{
 		return $this->belongsTo(Regimetrib::class, 'regimetrib');
+	}
+
+	public function clientes()
+	{
+		return $this->hasMany(Cliente::class, 'emp_cod');
 	}
 
 	public function perfils()

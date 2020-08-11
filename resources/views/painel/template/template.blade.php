@@ -142,7 +142,7 @@
                 @foreach ($acessoPerfil as $acesso)
                 @if (($acesso->role == 1)&&($acesso->ativo == 1))
                 <li class="nav-item">
-                  <a href="#" class="nav-link">
+                  <a href="{{route('clientes')}}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>11 . Cadastro</p>
                   </a>

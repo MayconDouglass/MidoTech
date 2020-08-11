@@ -33,6 +33,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $tab_cod
  * @property int $tes_cod
  * @property int $ven_cod
+ * 
+ * @property Setempresa $setempresa
  *
  * @package App\Models
  */
@@ -84,4 +86,9 @@ class Cliente extends Model
 		'tes_cod',
 		'ven_cod'
 	];
+
+	public function setempresa()
+	{
+		return $this->belongsTo(Setempresa::class, 'emp_cod');
+	}
 }

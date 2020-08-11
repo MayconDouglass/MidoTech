@@ -28,9 +28,19 @@ class LoginController extends Controller
             $uimagem = 'storage/img/users/default.jpg';
             }
 
-            $acessoPerfil = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk);
+            $roleView = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
+                                    ->where('role',1)
+                                    ->pluck('ativo');
+            $acessoPerfil = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
+            ->select('role','ativo')->get();
+            
+            if ($roleView[0]  == 1){
+                return view('painel.page.index',compact('uperfil','unomeperfil','unome','uid','uimagem','acessoPerfil'));
+            }else{
+                return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','perfis','acessoPerfil'));
+            }  
 
-            return view('painel.page.index',compact('uperfil','unomeperfil','unome','uid','uimagem','acessoPerfil'));
+            
        
         }else{
 
