@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Usuario $usuario
  * @property Perfil $perfil
  * @property Setempresa $setempresa
+ * @property Collection|Modocobranca[] $modocobrancas
  * @property Collection|Perfil[] $perfils
  * @property Collection|Usuario[] $usuarios
  *
@@ -82,6 +83,11 @@ class Usuario extends Model
 	public function setempresa()
 	{
 		return $this->belongsTo(Setempresa::class, 'empresa');
+	}
+
+	public function modocobrancas()
+	{
+		return $this->hasMany(Modocobranca::class, 'usuCad');
 	}
 
 	public function perfils()

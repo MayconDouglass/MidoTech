@@ -55,14 +55,14 @@ class User extends Authenticatable
 		return $this->belongsTo(\App\Models\Setempresa::class, 'empresa');
 	}
 
+	public function modocobrancas()
+	{
+		return $this->hasMany(\App\Models\Modocobranca::class, 'usuCad');
+	}
+
 	public function perfils()
 	{
 		return $this->hasMany(\App\Models\Perfil::class, 'usualt');
-	}
-
-	public function perfil_acessos()
-	{
-		return $this->hasMany(\App\Models\PerfilAcesso::class, 'usuario');
 	}
 
 	public function usuarios()

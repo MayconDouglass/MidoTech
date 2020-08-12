@@ -43,6 +43,9 @@ Route::group(['middleware' => ['auth']], function () {
      Route::post('/perfil/permissao', 'PerfilController@atualizarPermissao'); 
      Route::post('/perfil/obterperm', 'PerfilController@obterPermissaoPerfil'); 
 
+     // Modo de Cobranca
+     Route::get('/modocobranca', 'ModCobController@create')->name('modoCob');
+
      // Cliente
      Route::get('/clientes', 'ClienteController@create')->name('clientes');
      Route::get('/clientes/new', 'ClienteController@addUser')->name('adduser');

@@ -128,7 +128,34 @@
             </li>
             @endif
             @endforeach
-            <!-- Fim Add perfil : ADM -->
+
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-circle"></i>
+                <p>
+                  Tabelas Genéricas
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                @foreach ($acessoPerfil as $acesso)
+                @if (($acesso->role == 1)&&($acesso->ativo == 1))
+                <li class="nav-item">
+                  <a href="{{route('modoCob')}}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Modo de Cobrança</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Prazo de Cobrança</p>
+                  </a>
+                </li>
+                @endif
+                @endforeach
+              </ul>
+            </li>
 
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
@@ -194,6 +221,8 @@
                 </li>
               </ul>
             </li>
+
+            
 
         </nav>
         <!-- /.sidebar-menu -->

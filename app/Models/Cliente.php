@@ -35,6 +35,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $ven_cod
  * 
  * @property Setempresa $setempresa
+ * @property Modocobranca $modocobranca
  *
  * @package App\Models
  */
@@ -90,5 +91,10 @@ class Cliente extends Model
 	public function setempresa()
 	{
 		return $this->belongsTo(Setempresa::class, 'emp_cod');
+	}
+
+	public function modocobranca()
+	{
+		return $this->belongsTo(Modocobranca::class, 'modo_cobranca');
 	}
 }

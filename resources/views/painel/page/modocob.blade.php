@@ -1,6 +1,6 @@
 @extends('painel.template.template')
 
-@section('title','Perfil')
+@section('title','Modo de Cobrança')
 
 @section('css')
 <link rel="stylesheet" href="{{url('/')}}/js/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
@@ -12,7 +12,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0 text-dark">Perfis
+        <h1 class="m-0 text-dark">Modo de Cobranças
           @foreach ($acessoPerfil as $acesso)
           @if (($acesso->role == 2)&&($acesso->ativo == 1))
           <button type="button" class="btn btn-primary fa fa-user-plus" data-toggle="modal"
@@ -27,7 +27,7 @@
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="index">Home</a></li>
           <li class="breadcrumb-item active">Configuração</li>
-          <li class="breadcrumb-item active">Perfis</li>
+          <li class="breadcrumb-item active">Modo de Cobrança</li>
         </ol>
       </div>
     </div>
@@ -61,39 +61,40 @@
       <thead>
         <tr>
           <th class="idDataTab">ID</th>
-          <th>Empresa</th>
-          <th>Usuário</th>
-          <th class="statusDataTab">Status</th>
+          <th>Descrição</th>
+          <th>Cobrança</th>
+          <th class="statusDataTab">Pagamento NFe</th>
+          <th class="statusDataTab">Liberação de crédito</th>
           <th class="actionDataTab">Ações</th>
         </tr>
       </thead>
       <tbody>
-        @foreach ($perfis as $perfil)
+        @foreach ($modoCobs as $modoCob)
         <tr>
-          <td class="idDataTabText">{{$perfil->id_perfil}}</td>
-          <td>{{$perfil->setempresa->Sigla}}</td>
-          <td>{{$perfil->nome}}</td>
-          <td><span @if ($perfil->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
-              @endif>{{$perfil->ativo ? "Ativo" : "Inativo"}}</span></td>
+          <td class="idDataTabText">{{$modoCob->id_modocob}}</td>
+          <td>{{$modoCob->descricao}}</td>
+          <td>{{$modoCob->situacaomodcob->descricao}}</td>
+          <td><span @if ($modoCob->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
+              @endif>{{$modoCob->ativo ? "Ativo" : "Inativo"}}</span></td>
           <td>
             <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal"
-              data-target="#VisualizarPerfilModal" data-codigo="{{$perfil->id_perfil}}"
-              data-empresa="{{$perfil->emp_cod}}" data-nome="{{$perfil->nome}}" data-status="{{$perfil->ativo}}"
-              data-usucad="{{$perfil->usuario->nome}}" data-usualt="{{$perfil->usuarioa ? $perfil->usuarioa->nome : "Sem alteração"}}"
-              data-datacad="{{date('d/m/Y',strtotime($perfil->datacad))}}"
-              data-dataalt="{{$perfil->dataalt ? date('d/m/Y', strtotime($perfil->dataalt)) : "Sem alteração"}}">
+              data-target="#VisualizarModCobModal" data-codigo="{{$modoCob->id_modocob}}"
+              data-descricao="{{$modoCob->descricao}}" data-situacao="{{$modoCob->situacao}}" data-observacao="{{$modoCob->observacao}}"
+              data-usucad="{{$modoCob->usuario->nome}}" data-usualt="{{$modoCob->usuarioAlt ? $modoCob->usuarioa->nome : "Sem alteração"}}"
+              data-datacad="{{date('d/m/Y',strtotime($modoCob->dataCad))}}"
+              data-dataalt="{{$perfil->dataalt ? date('d/m/Y', strtotime($modoCob->dataAlt)) : "Sem alteração"}}">
               Visualizar</button>
               
               @foreach ($acessoPerfil as $acesso)
               @if (($acesso->role == 2)&&($acesso->ativo == 1))
                 <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
-                  data-target="#AlterarPerfilModal" data-codigo="{{$perfil->id_perfil}}" data-status="{{$perfil->ativo}}">
+                  data-target="#AlterarPerfilModal" data-codigo="{{$modoCob->id_modocob}}" data-status="{{$modoCob->ativo}}">
                   Alterar
                 </button>
               
                 <button type="button" class="btn btn-permissao btn-sm fa fa-key" data-toggle="modal"
-                  data-target="#modal-permissao" data-codigo="{{$perfil->id_perfil}}"
-                  data-nome="{{$perfil->nome}}">
+                  data-target="#modal-permissao" data-codigo="{{$modoCob->id_modocob}}"
+                  data-nome="{{$modoCob->descricao}}">
                 </button>
               @endif
             @endforeach
@@ -134,15 +135,15 @@
           @csrf
           <div class="form-group row">
             <div class="col-sm-12">
-              <label class="control-label">Nome</label>
+              <label class="control-label">Descricao</label>
               <p><input class="form-control" type="text" name="nomecad" id="nome" maxlength="60" required></p>
             </div>
 
             <div class="col-sm-9">
-              <label class="control-label">Empresa</label>
-              <p><select class="select-notsearch" tabindex="-1" name="empcad" id="emp_cod">
-                  @foreach ($empresas as $empresa)
-                  <option value="{{$empresa->id_empresa}}">{{$empresa->razao_social}}</option>
+              <label class="control-label">Situação</label>
+              <p><select class="select2" tabindex="-1" name="empcad" id="emp_cod">
+                  @foreach ($situacoesCob as $situacaoCob)
+              <option value="{{$situacaoCob->id_situacao}}">{{$situacaoCob->descricao}}</option>
                   @endforeach
                 </select></p>
             </div>
@@ -356,9 +357,7 @@
             <div class="col-sm-9">
               <label class="control-label">Empresa</label>
               <select class="select-notsearch" tabindex="-1" name="empresaview" id="empresa_view" disabled>
-                @foreach ($empresas as $empresa)
-                <option value="{{$empresa->id_empresa}}">{{$empresa->razao_social}}</option>
-                @endforeach
+                
               </select>
             </div>
 
