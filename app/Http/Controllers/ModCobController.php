@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Modocobranca;
+use App\Models\Natoperacao;
 use App\Models\PerfilAcesso;
 use App\Models\Situacaomodcob;
+
+use Illuminate\Http\Request;
+
 use Auth;
 
 class ModCobController extends Controller
@@ -34,9 +38,10 @@ class ModCobController extends Controller
 
             $modoCobs = Modocobranca::all();
             $situacoesCob = Situacaomodcob::all();
+            $natOperacoes = Natoperacao::where('ativo',1)->get();
 
                 if ($roleView[0]  == 1){
-                    return view('painel.page.modocob',compact('uperfil','unomeperfil','unome','uid','uimagem','acessoPerfil','situacoesCob','modoCobs'));
+                    return view('painel.page.modocob',compact('uperfil','unomeperfil','unome','uid','uimagem','acessoPerfil','situacoesCob','modoCobs','natOperacoes'));
                 }else{
                     return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','acessoPerfil'));
                 }  
@@ -46,6 +51,29 @@ class ModCobController extends Controller
             return view('login');
 
         }
+    }
+
+    public function store(Request $request){
+
+        $modCob = new Modocobranca;
+        $modCob->descricao = $request->descricaocad;
+        $modCob->situacao = $request->situacaocad;
+        $modCob->observacao = $request->obscad;
+        $modCob->natureza = $request->naturezacad;
+        $modCob->lib_credito = $request->liberacaocad;
+        $modCob->pag_nfe = $request->formacad;
+        $modCob->ativo = $request->statuscad;
+        $modCob->dataCad = date('Y-m-d H:i:s');
+        $modCob->usuCad = Auth::user()->id_usuario;
+        $saveStatus = $modCob->save();
+
+        if($saveStatus){            
+                return redirect()->action('ModCobController@create')->with('status_success', 'Modo de Cobrança Cadastrada!');
+        }else{
+                return redirect()->action('ModCobController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
+        }
+
+
     }
 
 }

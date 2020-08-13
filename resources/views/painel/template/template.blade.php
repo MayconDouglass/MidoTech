@@ -131,7 +131,7 @@
 
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-circle"></i>
+                <i class="nav-icon fa fa-superpowers"></i>
                 <p>
                   Tabelas Genéricas
                   <i class="right fas fa-angle-left"></i>
@@ -142,7 +142,7 @@
                 @if (($acesso->role == 1)&&($acesso->ativo == 1))
                 <li class="nav-item">
                   <a href="{{route('modoCob')}}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
+                    <i class="fa fa-money nav-icon"></i>
                     <p>Modo de Cobrança</p>
                   </a>
                 </li>

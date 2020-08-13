@@ -63,8 +63,8 @@
           <th class="idDataTab">ID</th>
           <th>Descrição</th>
           <th>Cobrança</th>
-          <th class="statusDataTab">Pagamento NFe</th>
           <th class="statusDataTab">Liberação de crédito</th>
+          <th class="statusDataTab">Pagamento NFe</th>
           <th class="actionDataTab">Ações</th>
         </tr>
       </thead>
@@ -74,34 +74,39 @@
           <td class="idDataTabText">{{$modoCob->id_modocob}}</td>
           <td>{{$modoCob->descricao}}</td>
           <td>{{$modoCob->situacaomodcob->descricao}}</td>
-          <td><span @if ($modoCob->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
-              @endif>{{$modoCob->ativo ? "Ativo" : "Inativo"}}</span></td>
+          <td>
+            <span @if ($modoCob->lib_credito > 0) class="badge badge-success" @else class="badge badge-danger"
+              @endif>{{$modoCob->lib_credito ? "Sim" : "Não"}}</span>
+          </td>
+          <td>
+            <span @if ($modoCob->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
+              @endif>{{$modoCob->ativo ? "Ativo" : "Inativo"}}</span>
+          </td>
           <td>
             <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal"
               data-target="#VisualizarModCobModal" data-codigo="{{$modoCob->id_modocob}}"
-              data-descricao="{{$modoCob->descricao}}" data-situacao="{{$modoCob->situacao}}" data-observacao="{{$modoCob->observacao}}"
-              data-usucad="{{$modoCob->usuario->nome}}" data-usualt="{{$modoCob->usuarioAlt ? $modoCob->usuarioa->nome : "Sem alteração"}}"
+              data-descricao="{{$modoCob->descricao}}" data-situacao="{{$modoCob->situacao}}"
+              data-natureza="{{$modoCob->natureza}}" data-liberacao="{{$modoCob->lib_credito}}"
+              data-pagnfe="{{$modoCob->pag_nfe}}" data-status="{{$modoCob->ativo}}"
+              data-observacao="{{$modoCob->observacao}}" data-usucad="{{$modoCob->usuario->nome}}"
+              data-usualt="{{$modoCob->usuarioAlt ? $modoCob->usuarioa->nome : "Sem alteração"}}"
               data-datacad="{{date('d/m/Y',strtotime($modoCob->dataCad))}}"
-              data-dataalt="{{$perfil->dataalt ? date('d/m/Y', strtotime($modoCob->dataAlt)) : "Sem alteração"}}">
+              data-dataalt="{{$modoCob->dataalt ? date('d/m/Y', strtotime($modoCob->dataAlt)) : "Sem alteração"}}">
               Visualizar</button>
-              
-              @foreach ($acessoPerfil as $acesso)
-              @if (($acesso->role == 2)&&($acesso->ativo == 1))
-                <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
-                  data-target="#AlterarPerfilModal" data-codigo="{{$modoCob->id_modocob}}" data-status="{{$modoCob->ativo}}">
-                  Alterar
-                </button>
-              
-                <button type="button" class="btn btn-permissao btn-sm fa fa-key" data-toggle="modal"
-                  data-target="#modal-permissao" data-codigo="{{$modoCob->id_modocob}}"
-                  data-nome="{{$modoCob->descricao}}">
-                </button>
-              @endif
+
+            @foreach ($acessoPerfil as $acesso)
+            @if (($acesso->role == 2)&&($acesso->ativo == 1))
+            <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
+              data-target="#AlterarPerfilModal" data-codigo="{{$modoCob->id_modocob}}"
+              data-status="{{$modoCob->ativo}}">
+              Alterar
+            </button>
+            @endif
             @endforeach
             @foreach ($acessoPerfil as $acesso)
             @if (($acesso->role == 3)&&($acesso->ativo == 1))
             <button type="button" class="btn btn-danger btn-sm fa fa-trash-o" data-toggle="modal"
-              data-target="#modal-danger" data-codigo="{{$perfil->id_perfil}}">
+              data-target="#modal-danger" data-codigo="{{$modoCob->id_modocob}}">
             </button>
             @endif
             @endforeach
@@ -117,11 +122,11 @@
 <!-- Modal Cadastro-->
 <div class="modal fade" id="CadastroModal" tabindex="-1" role="dialog" aria-labelledby="CadastroModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="add_modalHeader">
         <div class="modal-header">
-          <h5 class="modal-title" id="CadastroModalLabel">Novo Perfil</h5>
+          <h5 class="modal-title" id="CadastroModalLabel">Novo Modo de Cobrança</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -130,30 +135,72 @@
       <div class="modal-body">
 
         <!-- Form de cadastro -->
-        <form class="form-horizontal" method="POST" action="{{action('PerfilController@store')}}"
+        <form class="form-horizontal" method="POST" action="{{action('ModCobController@store')}}"
           enctype="multipart/form-data">
           @csrf
           <div class="form-group row">
-            <div class="col-sm-12">
+            <div class="col-sm-8">
               <label class="control-label">Descricao</label>
-              <p><input class="form-control" type="text" name="nomecad" id="nome" maxlength="60" required></p>
+              <p><input class="form-control" type="text" name="descricaocad" id="nome" maxlength="60" required></p>
             </div>
 
-            <div class="col-sm-9">
+            <div class="col-sm-2">
+              <label class="control-label">Lib. de Crédito</label>
+              <select class="select-notsearch" tabindex="-1" name="liberacaocad" id="liberacao_cod">
+                <option value="1">Sim</option>
+                <option value="0">Não</option>
+              </select>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Ativo</label>
+              <p><select class="select-notsearch" tabindex="-1" name="statuscad" id="status_cod">
+                  <option value="1">Sim</option>
+                  <option value="0">Não</option>
+                </select></p>
+            </div>
+
+            <div class="col-sm-6">
               <label class="control-label">Situação</label>
-              <p><select class="select2" tabindex="-1" name="empcad" id="emp_cod">
+              <p><select class="select-notsearch" tabindex="-1" name="situacaocad" id="situacao_cod">
                   @foreach ($situacoesCob as $situacaoCob)
-              <option value="{{$situacaoCob->id_situacao}}">{{$situacaoCob->descricao}}</option>
+                  <option value="{{$situacaoCob->id_situacao}}">{{$situacaoCob->descricao}}</option>
                   @endforeach
                 </select></p>
             </div>
 
-            <div class="col-sm-3">
-              <label class="control-label">Ativa</label>
-              <select class="select-notsearch" tabindex="-1" name="statuscad" id="ativa">
-                <option value="1">Sim</option>
-                <option value="0">Não</option>
-              </select>
+            <div class="col-sm-6">
+              <label class="control-label">Forma Pagamento NF-e</label>
+              <p><select class="select-notsearch" tabindex="-1" name="formacad" id="forma_cod">
+                  <option value="01">Dinheiro</option>
+                  <option value="02">Cheque</option>
+                  <option value="03">Cartão de Crédito</option>
+                  <option value="04">Cartão de Débito</option>
+                  <option value="05">Crédito Loja</option>
+                  <option value="10">Vale Alimentação</option>
+                  <option value="11">Vale Refeição</option>
+                  <option value="12">Vale Presente</option>
+                  <option value="13">Vale Combustivel</option>
+                  <option value="15">Boleto Bancário</option>
+                  <option value="90">Sem Pagamento</option>
+                  <option value="99">Outros</option>
+                </select></p>
+            </div>
+
+
+            <div class="col-sm-12">
+              <label class="control-label">Natureza</label>
+              <p><select class="select2" tabindex="-1" name="naturezacad" id="natureza_cod">
+                  @foreach ($natOperacoes as $natOperacao)
+                  <option value="{{$natOperacao->id_natoperacao}}">{{$natOperacao->descricao}}</option>
+                  @endforeach
+                </select></p>
+            </div>
+
+            <div class="col-sm-12">
+              <label class="control-label">Observação</label>
+              <textarea class="form-control" rows="3" name="obscad" maxlength="100"
+                placeholder="Máximo 100 caracteres"></textarea>
             </div>
 
           </div>
@@ -247,83 +294,6 @@
   </div>
 </div>
 
-<!-- Modal de Permissao-->
-<div class="modal fade" id="modal-permissao" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="permissao_modalHeader">
-        <div class="modal-header">
-          <h4 class="b_text_modal_title_permissao"></h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      </div>
-      <div class="modal-body">
-        <form class="form-horizontal" method="POST" action="{{action('PerfilController@atualizarPermissao')}}">
-          @csrf
-          <input type="hidden" class="form-control col-form-label-sm" id="idPerfil" name="idPerfil">
-          <div class="form-group row">
-
-            <div class="col-sm-3">
-              <input type="hidden" value="1" class="form-control col-form-label-sm" id="idRoleView" name="idRole1">
-              <label class="control-label">Visualizar Cadastros</label>
-              <select class="select-notsearch-role" tabindex="-1" name="role1" id="role1">
-                <option value="1">Sim</option>
-                <option value="0">Não</option>
-              </select>
-            </div>
-
-            <div class="col-sm-3">
-              <input type="hidden" value="2" class="form-control col-form-label-sm" id="idRoleEdit" name="idRole2">
-              <label class="control-label">Alterar/Cadastrar</label>
-              <select class="select-notsearch-role" tabindex="-1" name="role2" id="role2">
-                <option value="1">Sim</option>
-                <option value="0">Não</option>
-              </select>
-            </div>
-
-            <div class="col-sm-3">
-              <input type="hidden" value="3" class="form-control col-form-label-sm" id="idRoleDel" name="idRole3">
-              <label class="control-label">Deletar Cadastros</label>
-              <p><select class="select-notsearch-role" tabindex="-1" name="role3" id="role3">
-                  <option value="1">Sim</option>
-                  <option value="0">Não</option>
-                </select></p>
-            </div>
-
-            <div class="col-sm-3">
-              <input type="hidden" value="4" class="form-control col-form-label-sm" id="idRoleDesconto" name="idRole4">
-              <label class="control-label">Respeitar Desconto máx.</label>
-              <p><select class="select-notsearch-role" tabindex="-1" name="role4" id="role4">
-                  <option value="1">Sim</option>
-                  <option value="0">Não</option>
-                </select></p>
-            </div>
-
-            <div class="col-sm-3">
-              <input type="hidden" value="5" class="form-control col-form-label-sm" id="idRoleAdmin" name="idRole5">
-              <label class="control-label">Administrador</label>
-              <select class="select-notsearch-role" tabindex="-1" name="role5" id="role5">
-                <option value="1">Sim</option>
-                <option value="0">Não</option>
-              </select>
-            </div>
-
-          </div>
-      </div>
-
-      <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-secondary btn-sm fa fa-times" data-dismiss="modal"> Cancelar</button>
-        <button type="submit" class="btn btn-permissao btn-sm fa fa-floppy-o"> Confirmar</button>
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
-</div>
-
-
 <!-- Modal Visualizacao-->
 <div class="modal fade" id="VisualizarPerfilModal" tabindex="-1" role="dialog"
   aria-labelledby="VisualizarPerfilModalLabel" aria-hidden="true">
@@ -357,7 +327,7 @@
             <div class="col-sm-9">
               <label class="control-label">Empresa</label>
               <select class="select-notsearch" tabindex="-1" name="empresaview" id="empresa_view" disabled>
-                
+
               </select>
             </div>
 
@@ -408,8 +378,7 @@
 
 
 @section('js')
-<script src="{{url('/')}}/js/pages/midotech.js"></script>
-<script src="{{url('/')}}/js/plugins/bs-custom-file-input/bs-custom-file-input.js"></script>
+<script src="{{url('/')}}/js/pages/modcob.js"></script>
 <script src="{{url('/')}}/js/plugins/select2/js/select2.full.js"></script>
 <script src="{{url('/')}}/js/plugins/datatables/jquery.dataTables.js"></script>
 <script src="{{url('/')}}/js/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>

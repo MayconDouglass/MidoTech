@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property Situacaomodcob $situacaomodcob
  * @property Usuario $usuario
+ * @property Natoperacao $natoperacao
  * @property Collection|Cliente[] $clientes
  *
  * @package App\Models
@@ -77,9 +78,9 @@ class Modocobranca extends Model
 		return $this->belongsTo(Usuario::class, 'usuCad');
 	}
 
-	public function usuarioa()
+	public function natoperacao()
 	{
-		return $this->belongsTo(Usuario::class, 'usuAlt');
+		return $this->belongsTo(Natoperacao::class, 'natureza');
 	}
 
 	public function clientes()
