@@ -46,6 +46,8 @@ Route::group(['middleware' => ['auth']], function () {
      // Modo de Cobranca
      Route::get('/modocobranca', 'ModCobController@create')->name('modoCob');
      Route::post('/modocobranca/cad', 'ModCobController@store');
+     Route::post('/modocobranca/update', 'ModCobController@update');
+     Route::post('/modocobranca/delete', 'ModCobController@destroy');
 
      // Cliente
      Route::get('/clientes', 'ClienteController@create')->name('clientes');

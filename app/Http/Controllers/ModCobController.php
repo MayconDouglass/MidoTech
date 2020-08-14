@@ -76,4 +76,40 @@ class ModCobController extends Controller
 
     }
 
+    public function update(Request $request){
+        //dd($request->all());
+        $modCobAlt = Modocobranca::find($request->idModCob);
+        $modCobAlt->situacao = $request->situacaoalt;
+        $modCobAlt->observacao = $request->obsalt;
+        $modCobAlt->natureza = $request->naturezaalt;
+        $modCobAlt->lib_credito = $request->liberacaoalt;
+        $modCobAlt->pag_nfe = $request->formaalt;
+        $modCobAlt->ativo = $request->statusalt;
+        $modCobAlt->dataAlt = date('Y-m-d H:i:s');
+        $modCobAlt->usuAlt = Auth::user()->id_usuario;
+        
+        $saveStatus = $modCobAlt->save();
+
+        if($saveStatus){            
+                return redirect()->action('ModCobController@create')->with('status_success', 'Modo de Cobrança Atualizado!');
+        }else{
+                return redirect()->action('ModCobController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
+        }
+
+
+    }
+
+    public function destroy(Request $request){
+        if(empty($request->iddelete)){
+        return redirect()->action('ModCobController@create')->with('status_error', 'Falha!');    
+        }
+            $modCobDel = Modocobranca::find($request->iddelete);
+            $delete=$modCobDel ->delete();
+            if($delete){
+               return redirect()->action('ModCobController@create')->with('status_success', 'Excluído!');
+            }else{
+            return redirect()->action('ModCobController@create')->with('status_error', 'Não foi possível excluir o registro, possivelmente existem movimentação/cadastros!');    
+            }
+    }
+
 }
