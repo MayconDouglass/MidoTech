@@ -1,6 +1,6 @@
 @extends('painel.template.template')
 
-@section('title','Modo de Cobrança')
+@section('title','Prazo de Pagamento')
 
 @section('css')
 <link rel="stylesheet" href="{{url('/')}}/js/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
@@ -12,7 +12,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0 text-dark">Modo de Cobranças
+        <h1 class="m-0 text-dark">Prazo de Pagamento
           @foreach ($acessoPerfil as $acesso)
           @if (($acesso->role == 2)&&($acesso->ativo == 1))
           <button type="button" class="btn btn-primary fa fa-user-plus" data-toggle="modal"
@@ -27,7 +27,7 @@
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="index">Home</a></li>
           <li class="breadcrumb-item active">Tabelas Genéricas</li>
-          <li class="breadcrumb-item active">Modo de Cobrança</li>
+          <li class="breadcrumb-item active">Prazo de Pagamento</li>
         </ol>
       </div>
     </div>
@@ -62,65 +62,47 @@
         <tr>
           <th class="idDataTab">ID</th>
           <th>Descrição</th>
-          <th>Cobrança</th>
-          <th class="statusDataTab">Liberação de crédito</th>
+          <th>Nº Parcelas</th>
           <th class="statusDataTab">Status</th>
           <th class="actionDataTab">Ações</th>
         </tr>
       </thead>
       <tbody>
-        @foreach ($modoCobs as $modoCob)
+        @foreach ($prazoPagamentos as $prazoPagamento)
         <tr>
-          <td class="idDataTabText">{{$modoCob->id_modocob}}</td>
-          <td>{{$modoCob->descricao}}</td>
-          <td>{{$modoCob->situacaomodcob->descricao}}</td>
+          <td class="idDataTabText">{{$prazoPagamento->id_prazo}}</td>
+          <td>{{$prazoPagamento->descricao}}</td>
+          <td>{{$prazoPagamento->num_parcelas}}</td>
           <td>
-            @switch($modoCob->lib_credito)
-            @case(1)
-            <span class="badge badge-success">Sim</span>
-            @break
-            @case(2)
-            <span class="badge badge-info">Obrigatório</span>
-            @break
-            @default
-            <span class="badge badge-danger">Não</span>
-            @endswitch
-          </td>
-          <td>
-            <span @if ($modoCob->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
-              @endif>{{$modoCob->ativo ? "Ativo" : "Inativo"}}</span>
+            <span @if ($prazoPagamento->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
+              @endif>{{$prazoPagamento->ativo ? "Ativo" : "Inativo"}}</span>
           </td>
           <td>
             <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal"
-              data-target="#VisualizarModCobModal" data-codigo="{{$modoCob->id_modocob}}"
-              data-descricao="{{$modoCob->descricao}}" data-situacao="{{$modoCob->situacao}}"
-              data-natureza="{{$modoCob->natureza}}" data-liberacao="{{$modoCob->lib_credito}}"
-              data-pagnfe="{{$modoCob->pag_nfe}}" data-status="{{$modoCob->ativo}}"
-              data-observacao="{{$modoCob->observacao}}" data-usucad="{{$modoCob->usuario->nome}}"
-              data-usualt="{{$modoCob->usuarioAlt ? $modoCob->usuarioa->nome : "Sem alteração"}}"
-              data-datacad="{{date('d/m/Y',strtotime($modoCob->dataCad))}}"
-              data-dataalt="{{$modoCob->dataalt ? date('d/m/Y', strtotime($modoCob->dataAlt)) : "Sem alteração"}}">
+              data-target="#VisualizarPrazoModal" data-codigo="{{$prazoPagamento->id_prazo}}"
+              data-descricao="{{$prazoPagamento->descricao}}" data-taxaDiario="{{$prazoPagamento->taxa_diario}}"
+              data-multaAtraso="{{$prazoPagamento->multa_atraso}}"
+              data-acressimo="{{$prazoPagamento->acressimo_financeiro}}"
+              data-descPrazo="{{$prazoPagamento->desc_prazo}}" data-tipo="{{$prazoPagamento->tipo_prazo}}"
+              data-parcelas="{{$prazoPagamento->num_parcelas}}" data-status="{{$prazoPagamento->ativo}}">
               Visualizar</button>
 
             @foreach ($acessoPerfil as $acesso)
             @if (($acesso->role == 2)&&($acesso->ativo == 1))
             <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
-              data-target="#AlterarModCobModal" data-codigo="{{$modoCob->id_modocob}}"
-              data-descricao="{{$modoCob->descricao}}" data-situacao="{{$modoCob->situacao}}"
-              data-natureza="{{$modoCob->natureza}}" data-liberacao="{{$modoCob->lib_credito}}"
-              data-pagnfe="{{$modoCob->pag_nfe}}" data-status="{{$modoCob->ativo}}"
-              data-observacao="{{$modoCob->observacao}}" data-usucad="{{$modoCob->usuario->nome}}"
-              data-usualt="{{$modoCob->usuarioAlt ? $modoCob->usuarioa->nome : "Sem alteração"}}"
-              data-datacad="{{date('d/m/Y',strtotime($modoCob->dataCad))}}"
-              data-dataalt="{{$modoCob->dataalt ? date('d/m/Y', strtotime($modoCob->dataAlt)) : "Sem alteração"}}">
-              Alterar
-            </button>
+              data-target="#AlterarPrazoModal" data-codigo="{{$prazoPagamento->id_prazo}}"
+              data-descricao="{{$prazoPagamento->descricao}}" data-taxaDiario="{{$prazoPagamento->taxa_diario}}"
+              data-multaAtraso="{{$prazoPagamento->multa_atraso}}"
+              data-acressimo="{{$prazoPagamento->acressimo_financeiro}}"
+              data-descPrazo="{{$prazoPagamento->desc_prazo}}" data-tipo="{{$prazoPagamento->tipo_prazo}}"
+              data-parcelas="{{$prazoPagamento->num_parcelas}}" data-status="{{$prazoPagamento->ativo}}">
+              Alterar</button>
             @endif
             @endforeach
             @foreach ($acessoPerfil as $acesso)
             @if (($acesso->role == 3)&&($acesso->ativo == 1))
             <button type="button" class="btn btn-danger btn-sm fa fa-trash-o" data-toggle="modal"
-              data-target="#modal-danger" data-codigo="{{$modoCob->id_modocob}}">
+              data-target="#modal-danger" data-codigo="{{$prazoPagamento->id_prazo}}">
             </button>
             @endif
             @endforeach
@@ -140,7 +122,7 @@
     <div class="modal-content">
       <div class="add_modalHeader">
         <div class="modal-header">
-          <h5 class="modal-title" id="CadastroModalLabel">Novo Modo de Cobrança</h5>
+          <h5 class="modal-title" id="CadastroModalLabel">Novo Prazo</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -153,17 +135,22 @@
           enctype="multipart/form-data">
           @csrf
           <div class="form-group row">
-            <div class="col-sm-8">
+            <div class="col-sm-4">
               <label class="control-label">Descricao</label>
               <p><input class="form-control" type="text" name="descricaocad" id="nome" maxlength="60" required></p>
             </div>
 
-            <div class="col-sm-2">
-              <label class="control-label">Lib. de Crédito</label>
-              <select class="select-notsearch" tabindex="-1" name="liberacaocad" id="liberacao_cod">
-                <option value="1">Sim</option>
-                <option value="0">Não</option>
-                <option value="2">Obrigatório</option>
+            <div class="col-sm-3">
+              <label class="control-label">Número de Parcelas</label>
+              <p><input class="form-control" type="number" min="1" name="parcelascad" id="parcelas" required></p>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Tipo de Prazo</label>
+              <select class="select-notsearch" tabindex="-1" name="tipocad" id="tipo_cod">
+                <option value="0">A Vista</option>
+                <option value="1">A Prazo</option>
+                <option value="2">Livre de Débito</option>
               </select>
             </div>
 
@@ -175,51 +162,60 @@
                 </select></p>
             </div>
 
-            <div class="col-sm-6">
-              <label class="control-label">Situação</label>
-              <p><select class="select-notsearch" tabindex="-1" name="situacaocad" id="situacao_cod">
-                  @foreach ($situacoesCob as $situacaoCob)
-                  <option value="{{$situacaoCob->id_situacao}}">{{$situacaoCob->descricao}}</option>
-                  @endforeach
-                </select></p>
+            <div class="col-sm-3">
+              <label class="control-label">Taxa de Juros Diário (%)</label>
+              <input class="form-control" type="number" min="0.0001" name="taxajuroscad" id="taxajuros" required>
             </div>
 
-            <div class="col-sm-6">
-              <label class="control-label">Forma Pagamento NF-e</label>
-              <p><select class="select-notsearch" tabindex="-1" name="formacad" id="forma_cod">
-                  <option value="01">Dinheiro</option>
-                  <option value="02">Cheque</option>
-                  <option value="03">Cartão de Crédito</option>
-                  <option value="04">Cartão de Débito</option>
-                  <option value="05">Crédito Loja</option>
-                  <option value="10">Vale Alimentação</option>
-                  <option value="11">Vale Refeição</option>
-                  <option value="12">Vale Presente</option>
-                  <option value="13">Vale Combustivel</option>
-                  <option value="15">Boleto Bancário</option>
-                  <option value="90">Sem Pagamento</option>
-                  <option value="99">Outros</option>
-                </select></p>
+            <div class="col-sm-3">
+              <label class="control-label">Multa por Atraso (%)</label>
+              <input class="form-control" type="number" min="0.0001" name="multacad" id="multa" required>
             </div>
 
+            <div class="col-sm-3">
+              <label class="control-label">Acréscimo Financeiro (%)</label>
+              <input class="form-control" type="number" min="0.0001" name="acrescimocad" id="multa" required>
+            </div>
 
-            <div class="col-sm-12">
-              <label class="control-label">Natureza</label>
-              <p><select class="select2" tabindex="-1" name="naturezacad" id="natureza_cod">
-                  @foreach ($natOperacoes as $natOperacao)
-                  <option value="{{$natOperacao->id_natoperacao}}">{{$natOperacao->descricao}}</option>
-                  @endforeach
-                </select></p>
+            <div class="col-sm-3">
+              <label class="control-label">Desc. Pagto no Prazo (%)</label>
+              <p><input class="form-control" type="number" min="0.0001" name="descontocad" id="desconto" required></p>
             </div>
 
             <div class="col-sm-12">
-              <label class="control-label">Observação</label>
-              <textarea class="form-control" rows="3" name="obscad" maxlength="100"
-                placeholder="Máximo 100 caracteres"></textarea>
+              <label class="control-label">Parcelas</label><br>
+              
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th style="width: 10px">Parcela</th>
+                    <th>Porcentagem</th>
+                    <th>Prazo Vencimento</th>
+                    <th>Tipo de prazo</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="parcelas">
+                  <tr>
+                    <td class="editavel">1</td>
+                    <td class="editavel">50</td>
+                    <td class="editavel">10</td>
+                    <td class="editavel">Dias</td>
+                    <td class="editavel"><button onclick="RemoveTableRow(this)" type="button">Remover</button></td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>50</td>
+                    <td>10</td>
+                    <td>Dias</td>
+                    <td><button onclick="RemoveTableRow(this)" type="button">Remover</button></td>
+                  </tr>
+                </tbody>
+              </table>
+              <button class="btn btn-success fa fa-plus" onclick="AddRow()" type="button">Adicionar</button>
             </div>
 
           </div>
-
       </div>
 
       <div class="modal-footer">
@@ -235,13 +231,13 @@
 </div>
 
 <!-- Modal Alteracao-->
-<div class="modal fade" id="AlterarModCobModal" tabindex="-1" role="dialog" aria-labelledby="AlterarModCobModalLabel"
+<div class="modal fade" id="AlterarPrazoModal" tabindex="-1" role="dialog" aria-labelledby="AlterarPrazoModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="alt_modalHeader">
         <div class="modal-header">
-          <h5 class="modal-title" id="AlterarModCobModalLabel">Alterar Modo de Cobrança</h5>
+          <h5 class="modal-title" id="AlterarPrazoModalLabel">Alterar Modo de Cobrança</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -282,9 +278,7 @@
             <div class="col-sm-6">
               <label class="control-label">Situação</label>
               <p><select class="select-notsearch" tabindex="-1" name="situacaoalt" id="situacao_alt">
-                  @foreach ($situacoesCob as $situacaoCob)
-                  <option value="{{$situacaoCob->id_situacao}}">{{$situacaoCob->descricao}}</option>
-                  @endforeach
+
                 </select></p>
             </div>
 
@@ -292,26 +286,13 @@
               <label class="control-label">Forma Pagamento NF-e</label>
               <p><select class="select-notsearch" tabindex="-1" name="formaalt" id="forma_alt">
                   <option value="1">Dinheiro</option>
-                  <option value="2">Cheque</option>
-                  <option value="3">Cartão de Crédito</option>
-                  <option value="4">Cartão de Débito</option>
-                  <option value="5">Crédito Loja</option>
-                  <option value="10">Vale Alimentação</option>
-                  <option value="11">Vale Refeição</option>
-                  <option value="12">Vale Presente</option>
-                  <option value="13">Vale Combustivel</option>
-                  <option value="15">Boleto Bancário</option>
-                  <option value="90">Sem Pagamento</option>
-                  <option value="99">Outros</option>
                 </select></p>
             </div>
 
             <div class="col-sm-12">
               <label class="control-label">Natureza</label>
               <p><select class="select2" tabindex="-1" name="naturezaalt" id="natureza_alt">
-                  @foreach ($natOperacoes as $natOperacao)
-                  <option value="{{$natOperacao->id_natoperacao}}">{{$natOperacao->descricao}}</option>
-                  @endforeach
+
                 </select></p>
             </div>
 
@@ -367,7 +348,7 @@
 
 <!-- Modal Visualizacao-->
 <div class="modal fade" id="VisualizarModCobModal" tabindex="-1" role="dialog"
-  aria-labelledby="VisualizarModCobModalLabel" aria-hidden="true">
+  aria-labelledby="VisualizarPrazoModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="view_modalHeader">
@@ -414,9 +395,7 @@
             <div class="col-sm-6">
               <label class="control-label">Situação</label>
               <p><select class="select-notsearch" tabindex="-1" name="situacaoview" id="situacao_view" disabled>
-                  @foreach ($situacoesCob as $situacaoCob)
-                  <option value="{{$situacaoCob->id_situacao}}">{{$situacaoCob->descricao}}</option>
-                  @endforeach
+
                 </select></p>
             </div>
 
@@ -424,26 +403,13 @@
               <label class="control-label">Forma Pagamento NF-e</label>
               <p><select class="select-notsearch" tabindex="-1" name="formaview" id="forma_view" disabled>
                   <option value="01">Dinheiro</option>
-                  <option value="02">Cheque</option>
-                  <option value="03">Cartão de Crédito</option>
-                  <option value="04">Cartão de Débito</option>
-                  <option value="05">Crédito Loja</option>
-                  <option value="10">Vale Alimentação</option>
-                  <option value="11">Vale Refeição</option>
-                  <option value="12">Vale Presente</option>
-                  <option value="13">Vale Combustivel</option>
-                  <option value="15">Boleto Bancário</option>
-                  <option value="90">Sem Pagamento</option>
-                  <option value="99">Outros</option>
                 </select></p>
             </div>
 
             <div class="col-sm-12">
               <label class="control-label">Natureza</label>
               <p><select class="select2" tabindex="-1" name="naturezaview" id="natureza_view" disabled>
-                  @foreach ($natOperacoes as $natOperacao)
-                  <option value="{{$natOperacao->id_natoperacao}}">{{$natOperacao->descricao}}</option>
-                  @endforeach
+
                 </select></p>
             </div>
 
@@ -472,7 +438,7 @@
 
 
 @section('js')
-<script src="{{url('/')}}/js/pages/modcob.js"></script>
+<script src="{{url('/')}}/js/pages/prazopag.js"></script>
 <script src="{{url('/')}}/js/plugins/select2/js/select2.full.js"></script>
 <script src="{{url('/')}}/js/plugins/datatables/jquery.dataTables.js"></script>
 <script src="{{url('/')}}/js/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>

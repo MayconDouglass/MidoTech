@@ -147,8 +147,8 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
+                  <a href="{{route('prazoPag')}}" class="nav-link">
+                    <i class="far fa-calendar nav-icon"></i>
                     <p>Prazo de Cobrança</p>
                   </a>
                 </li>
@@ -281,8 +281,6 @@
   <script src="{{url('/')}}/js/plugins/raphael/raphael.min.js"></script>
   <script src="{{url('/')}}/js/plugins/jquery-mapael/jquery.mapael.min.js"></script>
   <script src="{{url('/')}}/js/plugins/jquery-mapael/maps/usa_states.min.js"></script>
-  <!-- ChartJS -->
-  <script src="{{url('/')}}/js/plugins/chart.js/Chart.min.js"></script>
 
   <!-- PAGE SCRIPTS -->
   <script src="{{url('/')}}/js/pages/dashboard2.js"></script>

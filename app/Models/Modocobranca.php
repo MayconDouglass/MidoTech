@@ -22,9 +22,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $pag_nfe
  * @property int $ativo
  * @property Carbon $dataCad
- * @property Carbon $dataAlt
+ * @property Carbon|null $dataAlt
  * @property int $usuCad
- * @property int $usuAlt
+ * @property int|null $usuAlt
  * 
  * @property Situacaomodcob $situacaomodcob
  * @property Usuario $usuario

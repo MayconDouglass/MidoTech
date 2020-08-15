@@ -49,6 +49,13 @@ Route::group(['middleware' => ['auth']], function () {
      Route::post('/modocobranca/update', 'ModCobController@update');
      Route::post('/modocobranca/delete', 'ModCobController@destroy');
 
+     // Prazo de Pagamento
+     Route::get('/prazopagamento', 'PrazoController@create')->name('prazoPag');
+     Route::post('/prazopagamento/cad', 'PrazoController@store');
+     Route::post('/prazopagamento/update', 'PrazoController@update');
+     Route::post('/prazopagamento/delete', 'PrazoController@destroy');
+     Route::post('/prazopagamento/obterparcelas', 'PrazoController@obterParcelas'); 
+
      // Cliente
      Route::get('/clientes', 'ClienteController@create')->name('clientes');
      Route::get('/clientes/new', 'ClienteController@addUser')->name('adduser');
