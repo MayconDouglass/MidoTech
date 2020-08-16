@@ -142,7 +142,7 @@
 
             <div class="col-sm-3">
               <label class="control-label">Número de Parcelas</label>
-              <p><input class="form-control" type="number" min="1" name="parcelascad" id="parcelas" required></p>
+              <p><input class="form-control" type="number" min="1" name="parcelascad" id="rowparcelas" value="1" required></p>
             </div>
 
             <div class="col-sm-3">
@@ -164,28 +164,27 @@
 
             <div class="col-sm-3">
               <label class="control-label">Taxa de Juros Diário (%)</label>
-              <input class="form-control" type="number" min="0.0001" name="taxajuroscad" id="taxajuros" required>
+              <input class="form-control" type="number" min="0.0001" name="taxajuroscad" id="taxajuros" value="0.00" required>
             </div>
 
             <div class="col-sm-3">
               <label class="control-label">Multa por Atraso (%)</label>
-              <input class="form-control" type="number" min="0.0001" name="multacad" id="multa" required>
+              <input class="form-control" type="number" min="0.0001" name="multacad" id="multa" value="0.00" required>
             </div>
 
             <div class="col-sm-3">
               <label class="control-label">Acréscimo Financeiro (%)</label>
-              <input class="form-control" type="number" min="0.0001" name="acrescimocad" id="multa" required>
+              <input class="form-control" type="number" min="0.0001" name="acrescimocad" id="multa" value="0.00" required>
             </div>
 
             <div class="col-sm-3">
               <label class="control-label">Desc. Pagto no Prazo (%)</label>
-              <p><input class="form-control" type="number" min="0.0001" name="descontocad" id="desconto" required></p>
+              <p><input class="form-control" type="number" min="0.0001" name="descontocad" id="desconto" value="0.00" required></p>
             </div>
 
             <div class="col-sm-12">
-              <label class="control-label">Parcelas</label><br>
-              
-              <table class="table table-striped">
+              <p><button class="btn btn-success fa fa-plus " onclick="AddTableRow();EditTableRow();" type="button">Adicionar Parcela</button></p>
+              <table class="table table-striped" id="listaparcelas">
                 <thead>
                   <tr>
                     <th style="width: 10px">Parcela</th>
@@ -195,24 +194,10 @@
                     <th>Ações</th>
                   </tr>
                 </thead>
-                <tbody id="parcelas">
-                  <tr>
-                    <td class="editavel">1</td>
-                    <td class="editavel">50</td>
-                    <td class="editavel">10</td>
-                    <td class="editavel">Dias</td>
-                    <td class="editavel"><button onclick="RemoveTableRow(this)" type="button">Remover</button></td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>50</td>
-                    <td>10</td>
-                    <td>Dias</td>
-                    <td><button onclick="RemoveTableRow(this)" type="button">Remover</button></td>
-                  </tr>
+                <tbody>
                 </tbody>
               </table>
-              <button class="btn btn-success fa fa-plus" onclick="AddRow()" type="button">Adicionar</button>
+
             </div>
 
           </div>

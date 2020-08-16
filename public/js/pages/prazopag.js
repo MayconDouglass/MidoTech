@@ -21,7 +21,7 @@ $(function () {
         minimumResultsForSearch: Infinity
     });
 
-    $(".editavel").dblclick(function () {
+    $(".editave2l").dblclick(function () {
         var conteudoOriginal = $(this).text();
 
         $(this).addClass("celulaEmEdicao");
@@ -42,12 +42,53 @@ $(function () {
         });
     });
 
+
+
     AddTableRow = function () {
-        var newRow = $("<tr>"); var cols = "";
-        cols += '<td>&nbsp;</td>'; cols += '<td >&nbsp;</td>'; cols += '<td>&nbsp;</td>'; cols += '<td>&nbsp;</td>'; cols += '<td>'; cols += '<button onclick="RemoveTableRow(this)" type="button">Remover</button>'; cols += '</td>';
-        newRow.append(cols); $("#Parcelas").append(newRow);
-        return false;
+        var numParcelas = $("input[type=number][name=parcelascad]").val();
+        var linhasTab = $('#listaparcelas').find('tr').length;
+        if ((numParcelas - linhasTab) + 1 > 0) {
+            var newRow = $("<tr>"); var cols = "";
+            cols += '<td class="editavel">1</td>';
+            cols += '<td class="editavel">100</td>';
+            cols += '<td class="editavel">1</td>';
+            cols += '<td class="editavel">Dias</td>';
+            cols += '<td>';
+            cols += '<button class="btn btn-danger btn-sm btn-xs" onclick="RemoveTableRow(this)" type="button"> Remover</button> ';
+            cols += '<td>';
+
+            newRow.append(cols);
+
+            $("#listaparcelas").append(newRow);
+
+            return false;
+        }
     };
+
+    EditTableRow = function () {
+
+        $(".editavel").dblclick(function () {
+            var conteudoOriginal = $(this).text();
+
+
+            $(this).html("<input type='text' value='" + conteudoOriginal + "' />");
+            $(this).children().first().focus().select();
+
+            $(this).children().first().keypress(function (e) {
+                if (e.which == 13 || e.wich == 9) {
+                    var novoConteudo = $(this).val();
+                    $(this).parent().text(novoConteudo);
+
+                }
+            });
+
+            $(this).children().first().blur(function () {
+                $(this).parent().text(conteudoOriginal);
+
+            });
+        });
+
+    }
 
     RemoveTableRow = function (handler) {
         var tr = $(handler).closest('tr');
@@ -59,29 +100,7 @@ $(function () {
         return false;
     };
 
-    AddRow = function () {
 
-        var newRow = $("<tr>");
-        var cols = "";
-        cols += '<td class="editavel">Teste1</td>';
-        cols += '<td class="editavel">Teste1fdg</td>';
-        cols += '<td class="actions">';
-        cols += '<button class="btn btn-danger btn-sm fa fa-trash-o" onclick="RemoveTableRow(this)" type="button">Remover</button>';
-        cols += '</td>';
-
-
-        newRow.append(cols);
-        $("parcelas").append(newRow);
-
-        return false;
-    };
-
-    $(document).on('click', '.teste', function () {
-        var row = "<tr><td class='editavel'>1</td><td class='editavel'>1</td><td class='editavel'>2</td><td class='editavel'><button class='btn btn-danger btn-sm fa fa-trash-o' onclick='RemoveTableRow(this)' type='button'>Remover</button>'</td></tr>"
-        $(this).closest('table').append(row);
-    });
-
-    
 });
 
 $('#modal-danger').on('show.bs.modal', function (event) {
