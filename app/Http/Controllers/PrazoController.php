@@ -54,8 +54,6 @@ class PrazoController extends Controller
     }
 
     public function store(Request $request){
-        $porcento = 'porcentagemcad';
-        $intervalo = 'intervalocad';
 //dd($request->parcelacad);
         $prazoPag = new Prazopagamento;
         $prazoPag->descricao = $request->descricaocad;
@@ -88,7 +86,7 @@ class PrazoController extends Controller
 
         if($saveStatus){  
             
-                return redirect()->action('PrazoController@create')->with('status_success', 'Modo de Cobrança Cadastrada!');
+                return redirect()->action('PrazoController@create')->with('status_success', 'Prazo de pagamento cadastrado!');
         }else{
                 return redirect()->action('PrazoController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
         }
