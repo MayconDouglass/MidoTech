@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id_prazo
  * @property string $descricao
  * @property float $taxa_diario
+ * @property int $intervalodias
  * @property float $multa_atraso
  * @property float $acrescimo_financeiro
  * @property int $desc_prazo
@@ -34,6 +35,7 @@ class Prazopagamento extends Model
 
 	protected $casts = [
 		'taxa_diario' => 'float',
+		'intervalodias' => 'int',
 		'multa_atraso' => 'float',
 		'acrescimo_financeiro' => 'float',
 		'desc_prazo' => 'int',
@@ -45,6 +47,7 @@ class Prazopagamento extends Model
 	protected $fillable = [
 		'descricao',
 		'taxa_diario',
+		'intervalodias',
 		'multa_atraso',
 		'acrescimo_financeiro',
 		'desc_prazo',

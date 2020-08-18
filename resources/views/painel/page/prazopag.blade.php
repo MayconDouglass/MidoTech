@@ -135,14 +135,20 @@
           enctype="multipart/form-data">
           @csrf
           <div class="form-group row">
-            <div class="col-sm-4">
+            <div class="col-sm-3">
               <label class="control-label">Descricao</label>
               <p><input class="form-control" type="text" name="descricaocad" id="nome" maxlength="60" required></p>
             </div>
 
-            <div class="col-sm-3">
-              <label class="control-label">Número de Parcelas</label>
+            <div class="col-sm-2">
+              <label class="control-label">Parcelas</label>
               <p><input class="form-control" type="number" min="1" name="parcelascad" id="rowparcelas" value="1"
+                  required></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">I.Dias</label>
+              <p><input class="form-control" type="number" min="1" name="diascad" id="intDias" value="1"
                   required></p>
             </div>
 
@@ -185,24 +191,6 @@
                   required></p>
             </div>
 
-            <div class="col-sm-12">
-              <p><button class="btn btn-success fa fa-plus " onclick="AddTableRow();EditTableRow();"
-                  type="button">Adicionar Parcela</button></p>
-              <table class="table table-striped" id="listaparcelas">
-                <thead>
-                  <tr>
-                    <th style="width: 10px">Parcela</th>
-                    <th>Porcentagem</th>
-                    <th>Prazo Vencimento</th>
-                    <th>Tipo de prazo</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
-
-            </div>
 
           </div>
       </div>
@@ -210,7 +198,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" id="reset" data-dismiss="modal"><i class="fa fa-times">
             Cancelar</i></button>
-        <button type="submit" class="btn btn-primary" id="btnSalvar" name="btnSalvar"><i class="fa fa-floppy-o">
+        <button type="submit" class="btn btn-primary" id="btnSalvarParcelas" name="btnSalvar"><i class="fa fa-floppy-o">
             Salvar</i></button>
       </div>
       </form>

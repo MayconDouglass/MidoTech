@@ -65,24 +65,27 @@ class PrazoController extends Controller
         $prazoPag->desc_prazo = $request->descontocad;
         $prazoPag->tipo_prazo = $request->tipocad;
         $prazoPag->num_parcelas = $request->parcelascad;
+        $prazoPag->intervalodias = $request->diascad;
         $prazoPag->ativo = $request->statuscad;
         $saveStatus = $prazoPag->save();
+
         foreach (range(1,$request->parcelascad) as $parc => $parcela) {
+            $diasParcela = $request->diascad * $parcela;
             $parcelaPrazo = new ParcelaPrazo();
             $parcelaPrazo->prazopag = $prazoPag->id_prazo;
             $parcelaPrazo->parcela = $parcela;
             if($parcela == $request->parcelascad){
-            $parcelaPrazo->porcentagem = (round(100-(round(100/($request->parcelascad),3)*($request->parcelascad-1)),3)); 
+                $parcelaPrazo->porcentagem = (round(100-(round(100/($request->parcelascad),3)*($request->parcelascad-1)),3)); 
             }else{
-            $parcelaPrazo->porcentagem = round((100/$request->parcelascad),3);
+                $parcelaPrazo->porcentagem = round((100/$request->parcelascad),3);
             }
-            $parcelaPrazo->prazo = $request->intervalocad.$parcela;
+
+            $parcelaPrazo->prazo = $diasParcela;
             $parcelaPrazo->tipo = 1;
            
             $parcelaPrazo->save();
         }
 
-        
         if($saveStatus){  
             
                 return redirect()->action('PrazoController@create')->with('status_success', 'Modo de Cobrança Cadastrada!');

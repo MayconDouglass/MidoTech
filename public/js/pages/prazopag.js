@@ -101,16 +101,16 @@ $(function () {
 
         return false;
     };
-
-    $(document).on("click", "#btnSalvar", function (evt) {
+    //.concat(linhasTab)
+    $(document).on("click", "#btnSalvarParcelas", function (evt) {
         var linhasTab = $('#listaparcelas').find('tr').length;
         $.ajax({
             type: "post",
             url: $server + "/prazopagamento/cad",
             data: {
                 parcela: index,
-                porcentagem: $("#porcentagemcad".concat(linhasTab)).val(),
-                prazo: $("#intervalocad".concat(linhasTab)).val(),
+                porcentagem: $("#porcentagemcad").val(),
+                prazo: $("#intervalocad").val(),
                 tipo: 1
             },
             success: function (data) {
