@@ -131,7 +131,7 @@
       <div class="modal-body">
 
         <!-- Form de cadastro -->
-        <form class="form-horizontal" method="POST" action="{{action('ModCobController@store')}}"
+        <form class="form-horizontal" method="POST" action="{{action('PrazoController@store')}}"
           enctype="multipart/form-data">
           @csrf
           <div class="form-group row">
@@ -142,7 +142,8 @@
 
             <div class="col-sm-3">
               <label class="control-label">Número de Parcelas</label>
-              <p><input class="form-control" type="number" min="1" name="parcelascad" id="rowparcelas" value="1" required></p>
+              <p><input class="form-control" type="number" min="1" name="parcelascad" id="rowparcelas" value="1"
+                  required></p>
             </div>
 
             <div class="col-sm-3">
@@ -164,26 +165,29 @@
 
             <div class="col-sm-3">
               <label class="control-label">Taxa de Juros Diário (%)</label>
-              <input class="form-control" type="number" min="0.0001" name="taxajuroscad" id="taxajuros" value="0.00" required>
+              <input class="form-control" type="number" min="0" name="taxajuroscad" id="taxajuros" value="0.00"
+                required>
             </div>
 
             <div class="col-sm-3">
               <label class="control-label">Multa por Atraso (%)</label>
-              <input class="form-control" type="number" min="0.0001" name="multacad" id="multa" value="0.00" required>
+              <input class="form-control" type="number" min="0" name="multacad" id="multa" value="0.00" required>
             </div>
 
             <div class="col-sm-3">
               <label class="control-label">Acréscimo Financeiro (%)</label>
-              <input class="form-control" type="number" min="0.0001" name="acrescimocad" id="multa" value="0.00" required>
+              <input class="form-control" type="number" min="0" name="acrescimocad" id="multa" value="0.00" required>
             </div>
 
             <div class="col-sm-3">
               <label class="control-label">Desc. Pagto no Prazo (%)</label>
-              <p><input class="form-control" type="number" min="0.0001" name="descontocad" id="desconto" value="0.00" required></p>
+              <p><input class="form-control" type="number" min="0" name="descontocad" id="desconto" value="0.00"
+                  required></p>
             </div>
 
             <div class="col-sm-12">
-              <p><button class="btn btn-success fa fa-plus " onclick="AddTableRow();EditTableRow();" type="button">Adicionar Parcela</button></p>
+              <p><button class="btn btn-success fa fa-plus " onclick="AddTableRow();EditTableRow();"
+                  type="button">Adicionar Parcela</button></p>
               <table class="table table-striped" id="listaparcelas">
                 <thead>
                   <tr>
@@ -316,9 +320,9 @@
         </div>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" method="POST" action="{{action('ModCobController@destroy')}}">
+        <form class="form-horizontal" method="POST" action="{{action('PrazoController@destroy')}}">
           @csrf
-          <input type="text" class="form-control col-form-label-sm" id="iddelete" name="iddelete">
+          <input type="hidden" class="form-control col-form-label-sm" id="iddelete" name="iddelete">
           <label class="b_text_modal_danger">Deseja realmente excluir este registro?</label>
 
           <div class="modal-footer justify-content-between">

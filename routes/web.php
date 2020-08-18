@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth']], function () {
      // Prazo de Pagamento
      Route::get('/prazopagamento', 'PrazoController@create')->name('prazoPag');
      Route::post('/prazopagamento/cad', 'PrazoController@store');
+     Route::post('/prazopagamento/cads', 'PrazoController@storeParcelas');
      Route::post('/prazopagamento/update', 'PrazoController@update');
      Route::post('/prazopagamento/delete', 'PrazoController@destroy');
      Route::post('/prazopagamento/obterparcelas', 'PrazoController@obterParcelas'); 

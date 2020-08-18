@@ -49,9 +49,11 @@ $(function () {
         var linhasTab = $('#listaparcelas').find('tr').length;
         if ((numParcelas - linhasTab) + 1 > 0) {
             var newRow = $("<tr>"); var cols = "";
-            cols += '<td class="editavel">1</td>';
-            cols += '<td class="editavel">100</td>';
-            cols += '<td class="editavel">1</td>';
+            cols += '<td class="editavel" name="parcela" id="idParcela">';
+            cols += linhasTab;
+            cols += '</td>';
+            cols += '<td class="editavel" name="porcentagemcad'.concat(linhasTab) + '" id="porcentPar">100</td>';
+            cols += '<td class="editavel" name="intervalocad'.concat(linhasTab) + '" id="intervaloPar">1</td>';
             cols += '<td class="editavel">Dias</td>';
             cols += '<td>';
             cols += '<button class="btn btn-danger btn-sm btn-xs" onclick="RemoveTableRow(this)" type="button"> Remover</button> ';
@@ -100,8 +102,28 @@ $(function () {
         return false;
     };
 
+    $(document).on("click", "#btnSalvar", function (evt) {
+        var linhasTab = $('#listaparcelas').find('tr').length;
+        $.ajax({
+            type: "post",
+            url: $server + "/prazopagamento/cad",
+            data: {
+                parcela: index,
+                porcentagem: $("#porcentagemcad".concat(linhasTab)).val(),
+                prazo: $("#intervalocad".concat(linhasTab)).val(),
+                tipo: 1
+            },
+            success: function (data) {
+                intel.xdk.notification.alert('Usuário cadastrado');
+            }
+        });
+    });
 
 });
+
+
+
+
 
 $('#modal-danger').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal

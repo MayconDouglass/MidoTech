@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $descricao
  * @property float $taxa_diario
  * @property float $multa_atraso
- * @property float $acressimo_financeiro
+ * @property float $acrescimo_financeiro
  * @property int $desc_prazo
  * @property int $tipo_prazo
  * @property int $num_parcelas
@@ -35,7 +35,7 @@ class Prazopagamento extends Model
 	protected $casts = [
 		'taxa_diario' => 'float',
 		'multa_atraso' => 'float',
-		'acressimo_financeiro' => 'float',
+		'acrescimo_financeiro' => 'float',
 		'desc_prazo' => 'int',
 		'tipo_prazo' => 'int',
 		'num_parcelas' => 'int',
@@ -46,7 +46,7 @@ class Prazopagamento extends Model
 		'descricao',
 		'taxa_diario',
 		'multa_atraso',
-		'acressimo_financeiro',
+		'acrescimo_financeiro',
 		'desc_prazo',
 		'tipo_prazo',
 		'num_parcelas',

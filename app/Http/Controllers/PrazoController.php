@@ -54,23 +54,40 @@ class PrazoController extends Controller
     }
 
     public function store(Request $request){
+        $porcento = 'porcentagemcad';
+        $intervalo = 'intervalocad';
+//dd($request->parcelacad);
+        $prazoPag = new Prazopagamento;
+        $prazoPag->descricao = $request->descricaocad;
+        $prazoPag->taxa_diario = $request->taxajuroscad;
+        $prazoPag->multa_atraso = $request->multacad;
+        $prazoPag->acrescimo_financeiro = $request->acrescimocad;
+        $prazoPag->desc_prazo = $request->descontocad;
+        $prazoPag->tipo_prazo = $request->tipocad;
+        $prazoPag->num_parcelas = $request->parcelascad;
+        $prazoPag->ativo = $request->statuscad;
+        $saveStatus = $prazoPag->save();
+        foreach (range(1,$request->parcelascad) as $parc => $parcela) {
+            $parcelaPrazo = new ParcelaPrazo();
+            $parcelaPrazo->prazopag = $prazoPag->id_prazo;
+            $parcelaPrazo->parcela = $parcela;
+            if($parcela == $request->parcelascad){
+            $parcelaPrazo->porcentagem = (round(100-(round(100/($request->parcelascad),3)*($request->parcelascad-1)),3)); 
+            }else{
+            $parcelaPrazo->porcentagem = round((100/$request->parcelascad),3);
+            }
+            $parcelaPrazo->prazo = $request->intervalocad.$parcela;
+            $parcelaPrazo->tipo = 1;
+           
+            $parcelaPrazo->save();
+        }
 
-        $modCob = new Modocobranca;
-        $modCob->descricao = $request->descricaocad;
-        $modCob->situacao = $request->situacaocad;
-        $modCob->observacao = $request->obscad;
-        $modCob->natureza = $request->naturezacad;
-        $modCob->lib_credito = $request->liberacaocad;
-        $modCob->pag_nfe = $request->formacad;
-        $modCob->ativo = $request->statuscad;
-        $modCob->dataCad = date('Y-m-d H:i:s');
-        $modCob->usuCad = Auth::user()->id_usuario;
-        $saveStatus = $modCob->save();
-
-        if($saveStatus){            
-                return redirect()->action('ModCobController@create')->with('status_success', 'Modo de Cobrança Cadastrada!');
+        
+        if($saveStatus){  
+            
+                return redirect()->action('PrazoController@create')->with('status_success', 'Modo de Cobrança Cadastrada!');
         }else{
-                return redirect()->action('ModCobController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
+                return redirect()->action('PrazoController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
         }
 
 
@@ -101,14 +118,14 @@ class PrazoController extends Controller
 
     public function destroy(Request $request){
         if(empty($request->iddelete)){
-        return redirect()->action('ModCobController@create')->with('status_error', 'Falha!');    
+        return redirect()->action('PrazoController@create')->with('status_error', 'Falha!');    
         }
-            $modCobDel = Modocobranca::find($request->iddelete);
-            $delete=$modCobDel ->delete();
+            $prazoDel = Prazopagamento::find($request->iddelete);
+            $delete= $prazoDel->delete();
             if($delete){
-               return redirect()->action('ModCobController@create')->with('status_success', 'Excluído!');
+               return redirect()->action('PrazoController@create')->with('status_success', 'Excluído!');
             }else{
-            return redirect()->action('ModCobController@create')->with('status_error', 'Não foi possível excluir o registro, possivelmente existem movimentação/cadastros!');    
+            return redirect()->action('PrazoController@create')->with('status_error', 'Não foi possível excluir o registro, possivelmente existem movimentação/cadastros!');    
             }
     }
 
@@ -117,5 +134,24 @@ class PrazoController extends Controller
         $parcelas = ParcelaPrazo::where('prazopag',$request->id)->get();
         return response()->json([$parcelas],200);
 
+    }
+
+    public function storeParcelas(Request $request){
+        foreach (range(1,$request->parcelascad) as $parc => $parcela) {
+            $parcelaPrazo = new ParcelaPrazo();
+            $parcelaPrazo->prazopag = 1;
+            $parcelaPrazo->parcela = $parcela;
+            $parcelaPrazo->porcentagem = round((100/$request->parcelascad),0);
+            $parcelaPrazo->prazo = $request->intervalocad.$parcela;
+            $parcelaPrazo->tipo = 1;
+           
+            $saveStatus= $parcelaPrazo->save();
+            if($saveStatus){  
+            
+                return redirect()->action('PrazoController@create')->with('status_success', 'Modo de Cobrança Cadastrada!');
+        }else{
+                return redirect()->action('PrazoController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
+        }
+        }
     }
 }
