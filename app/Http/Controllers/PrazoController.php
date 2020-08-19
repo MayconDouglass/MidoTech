@@ -95,23 +95,18 @@ class PrazoController extends Controller
     }
 
     public function update(Request $request){
-        //dd($request->all());
-        $modCobAlt = Modocobranca::find($request->idModCob);
-        $modCobAlt->situacao = $request->situacaoalt;
-        $modCobAlt->observacao = $request->obsalt;
-        $modCobAlt->natureza = $request->naturezaalt;
-        $modCobAlt->lib_credito = $request->liberacaoalt;
-        $modCobAlt->pag_nfe = $request->formaalt;
-        $modCobAlt->ativo = $request->statusalt;
-        $modCobAlt->dataAlt = date('Y-m-d H:i:s');
-        $modCobAlt->usuAlt = Auth::user()->id_usuario;
-        
-        $saveStatus = $modCobAlt->save();
+        $prazoPag = Prazopagamento::find($request->idPrazoAlt);
+        $prazoPag->taxa_diario = $request->taxajurosAlt;
+        $prazoPag->multa_atraso = $request->multaAlt;
+        $prazoPag->acrescimo_financeiro = $request->acrescimoAlt;
+        $prazoPag->desc_prazo = $request->descontoAlt;
+        $prazoPag->ativo = $request->statusAlt;
+        $saveStatus = $prazoPag->save();
 
         if($saveStatus){            
-                return redirect()->action('ModCobController@create')->with('status_success', 'Modo de Cobrança Atualizado!');
+                return redirect()->action('PrazoController@create')->with('status_success', 'Prazo Atualizado!');
         }else{
-                return redirect()->action('ModCobController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
+                return redirect()->action('PrazoController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
         }
 
 

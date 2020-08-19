@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $intervalodias
  * @property float $multa_atraso
  * @property float $acrescimo_financeiro
- * @property int $desc_prazo
+ * @property float $desc_prazo
  * @property int $tipo_prazo
  * @property int $num_parcelas
  * @property int $ativo
@@ -38,7 +38,7 @@ class Prazopagamento extends Model
 		'intervalodias' => 'int',
 		'multa_atraso' => 'float',
 		'acrescimo_financeiro' => 'float',
-		'desc_prazo' => 'int',
+		'desc_prazo' => 'float',
 		'tipo_prazo' => 'int',
 		'num_parcelas' => 'int',
 		'ativo' => 'int'

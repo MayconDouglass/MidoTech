@@ -63,6 +63,7 @@
           <th class="idDataTab">ID</th>
           <th>Descrição</th>
           <th>Nº Parcelas</th>
+          <th>Tipo</th>
           <th class="statusDataTab">Status</th>
           <th class="actionDataTab">Ações</th>
         </tr>
@@ -73,6 +74,19 @@
           <td class="idDataTabText">{{$prazoPagamento->id_prazo}}</td>
           <td>{{$prazoPagamento->descricao}}</td>
           <td>{{$prazoPagamento->num_parcelas}}</td>
+          <td>@switch($prazoPagamento->tipo_prazo)
+            @case(0)
+            <span class="badge badge-info">A Vista</span>
+            @break
+            @case(1)
+            <span class="badge badge-warning">A Prazo</span>
+            @break
+            @case(2)
+            <span class="badge badge-success">Livre de Débito</span>
+            @break
+            @default
+            <span class="badge badge-danger">Erro</span>
+            @endswitch</td>
           <td>
             <span @if ($prazoPagamento->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
               @endif>{{$prazoPagamento->ativo ? "Ativo" : "Inativo"}}</span>
@@ -80,10 +94,10 @@
           <td>
             <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal"
               data-target="#VisualizarPrazoModal" data-codigo="{{$prazoPagamento->id_prazo}}"
-              data-descricao="{{$prazoPagamento->descricao}}" data-taxaDiario="{{$prazoPagamento->taxa_diario}}"
-              data-multaAtraso="{{$prazoPagamento->multa_atraso}}"
-              data-acressimo="{{$prazoPagamento->acressimo_financeiro}}"
-              data-descPrazo="{{$prazoPagamento->desc_prazo}}" data-tipo="{{$prazoPagamento->tipo_prazo}}"
+              data-descricao="{{$prazoPagamento->descricao}}" data-taxa_diario="{{$prazoPagamento->taxa_diario}}"
+              data-multa_atraso="{{$prazoPagamento->multa_atraso}}" data-intervalo="{{$prazoPagamento->intervalodias}}"
+              data-acrescimo="{{$prazoPagamento->acrescimo_financeiro}}"
+              data-desc_prazo="{{$prazoPagamento->desc_prazo}}" data-tipo="{{$prazoPagamento->tipo_prazo}}"
               data-parcelas="{{$prazoPagamento->num_parcelas}}" data-status="{{$prazoPagamento->ativo}}">
               Visualizar</button>
 
@@ -91,11 +105,10 @@
             @if (($acesso->role == 2)&&($acesso->ativo == 1))
             <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
               data-target="#AlterarPrazoModal" data-codigo="{{$prazoPagamento->id_prazo}}"
-              data-descricao="{{$prazoPagamento->descricao}}" data-taxaDiario="{{$prazoPagamento->taxa_diario}}"
-              data-multaAtraso="{{$prazoPagamento->multa_atraso}}"
-              data-acressimo="{{$prazoPagamento->acressimo_financeiro}}"
-              data-descPrazo="{{$prazoPagamento->desc_prazo}}" data-tipo="{{$prazoPagamento->tipo_prazo}}"
-              data-parcelas="{{$prazoPagamento->num_parcelas}}" data-status="{{$prazoPagamento->ativo}}">
+              data-descricao="{{$prazoPagamento->descricao}}" data-taxa_diario="{{$prazoPagamento->taxa_diario}}"
+              data-multa_atraso="{{$prazoPagamento->multa_atraso}}"
+              data-acrescimo="{{$prazoPagamento->acrescimo_financeiro}}"
+              data-desc_prazo="{{$prazoPagamento->desc_prazo}}" data-status="{{$prazoPagamento->ativo}}">
               Alterar</button>
             @endif
             @endforeach
@@ -148,8 +161,7 @@
 
             <div class="col-sm-2">
               <label class="control-label">I.Dias</label>
-              <p><input class="form-control" type="number" min="1" name="diascad" id="intDias" value="1"
-                  required></p>
+              <p><input class="form-control" type="number" min="1" name="diascad" id="intDias" value="1" required></p>
             </div>
 
             <div class="col-sm-3">
@@ -191,7 +203,6 @@
                   required></p>
             </div>
 
-
           </div>
       </div>
 
@@ -214,7 +225,7 @@
     <div class="modal-content">
       <div class="alt_modalHeader">
         <div class="modal-header">
-          <h5 class="modal-title" id="AlterarPrazoModalLabel">Alterar Modo de Cobrança</h5>
+          <h5 class="modal-title" id="AlterarPrazoModalLabel">Alterar Prazo de pagamento</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -223,62 +234,47 @@
       <div class="modal-body">
 
         <!-- Form de cadastro -->
-        <form class="form-horizontal" method="POST" action="{{action('ModCobController@update')}}"
+        <form class="form-horizontal" method="POST" action="{{action('PrazoController@update')}}"
           enctype="multipart/form-data">
           @csrf
           <div class="form-group row">
             <div class="col-sm-12">
-              <p><input class="form-control" type="hidden" name="idModCob" id="idModCob"></p>
+              <p><input class="form-control" type="hidden" name="idPrazoAlt" id="idPrazo_alt"></p>
             </div>
+
             <div class="col-sm-8">
               <label class="control-label">Descricao</label>
-              <p><input class="form-control" type="text" name="descricaoalt" id="desc_alt" maxlength="60" disabled></p>
+              <p><input class="form-control" type="text" name="descricaoAlt" id="descricao_alt" disabled>
+              </p>
             </div>
 
-            <div class="col-sm-2">
-              <label class="control-label">Lib. de Crédito</label>
-              <select class="select-notsearch" tabindex="-1" name="liberacaoalt" id="liberacao_alt">
-                <option value="1">Sim</option>
-                <option value="0">Não</option>
-                <option value="2">Obrigatório</option>
-              </select>
-            </div>
-
-            <div class="col-sm-2">
+            <div class="col-sm-4">
               <label class="control-label">Ativo</label>
-              <p><select class="select-notsearch" tabindex="-1" name="statusalt" id="status_alt">
+              <p><select class="select-notsearch" tabindex="-1" name="statusAlt" id="status_alt">
                   <option value="1">Sim</option>
                   <option value="0">Não</option>
                 </select></p>
             </div>
 
-            <div class="col-sm-6">
-              <label class="control-label">Situação</label>
-              <p><select class="select-notsearch" tabindex="-1" name="situacaoalt" id="situacao_alt">
-
-                </select></p>
+            <div class="col-sm-3">
+              <label class="control-label">Taxa de Juros Diário (%)</label>
+              <input class="form-control" type="number" min="0" name="taxajurosAlt" id="taxajuros_alt" required>
             </div>
 
-            <div class="col-sm-6">
-              <label class="control-label">Forma Pagamento NF-e</label>
-              <p><select class="select-notsearch" tabindex="-1" name="formaalt" id="forma_alt">
-                  <option value="1">Dinheiro</option>
-                </select></p>
+            <div class="col-sm-3">
+              <label class="control-label">Multa por Atraso (%)</label>
+              <input class="form-control" type="number" min="0" name="multaAlt" id="multa_alt" required>
             </div>
 
-            <div class="col-sm-12">
-              <label class="control-label">Natureza</label>
-              <p><select class="select2" tabindex="-1" name="naturezaalt" id="natureza_alt">
-
-                </select></p>
+            <div class="col-sm-3">
+              <label class="control-label">Acréscimo Financeiro (%)</label>
+              <input class="form-control" type="number" min="0" name="acrescimoAlt" id="acrescimo_alt" required>
             </div>
 
-            <div class="col-sm-12">
-              <label class="control-label">Observação</label>
-              <textarea class="form-control" rows="3" name="obsalt" maxlength="100" id="obs_alt"
-                placeholder="Máximo 100 caracteres"></textarea>
+            <div class="col-sm-3">
+              <label class="control-label">Desc. Pagto no Prazo (%)</label>
+              <p><input class="form-control" type="number" min="0" name="descontoAlt" id="desconto_alt" required></p>
             </div>
-
           </div>
 
       </div>
@@ -324,13 +320,13 @@
 </div>
 
 <!-- Modal Visualizacao-->
-<div class="modal fade" id="VisualizarModCobModal" tabindex="-1" role="dialog"
+<div class="modal fade" id="VisualizarPrazoModal" tabindex="-1" role="dialog"
   aria-labelledby="VisualizarPrazoModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="view_modalHeader">
         <div class="modal-header">
-          <h5 class="modal-title" id="VisualizarModCobModalLabel"></h5>
+          <h5 class="modal-title" id="VisualizarPrazoModalLabel"></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -344,56 +340,59 @@
           <div class="form-group row">
             <div class="col-sm-2">
               <label class="control-label">ID</label>
-              <p><input class="form-control" type="text" name="descricaoview" id="idModCob" maxlength="60" disabled></p>
+              <p><input class="form-control" type="text" name="idPrazoView" id="idPrazoView" disabled></p>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-3">
               <label class="control-label">Descricao</label>
-              <p><input class="form-control" type="text" name="descricaoview" id="desc_view" maxlength="60" disabled>
-              </p>
+              <p><input class="form-control" type="text" name="descricaoView" id="descricaoView" disabled></p>
             </div>
 
             <div class="col-sm-2">
-              <label class="control-label">Lib. de Crédito</label>
-              <select class="select-notsearch" tabindex="-1" name="liberacaoview" id="liberacao_view" disabled>
-                <option value="1">Sim</option>
-                <option value="0">Não</option>
-                <option value="2">Obrigatório</option>
+              <label class="control-label">Parcelas</label>
+              <p><input class="form-control" type="number" min="1" name="parcelasView" id="parcelasView" value="1"
+                  disabled></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">I.Dias</label>
+              <p><input class="form-control" type="number" min="1" name="diasView" id="diasView" value="1" disabled></p>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Tipo de Prazo</label>
+              <select class="select-notsearch" tabindex="-1" name="tipoView" id="tipoView" disabled>
+                <option value="0">A Vista</option>
+                <option value="1">A Prazo</option>
+                <option value="2">Livre de Débito</option>
               </select>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Taxa de Juros Diário (%)</label>
+              <input class="form-control" type="number" min="0" name="taxajurosView" id="taxajurosView" disabled>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Multa por Atraso (%)</label>
+              <input class="form-control" type="number" min="0" name="multaView" id="multaView" disabled>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Acréscimo Financeiro (%)</label>
+              <input class="form-control" type="number" min="0" name="acrescimoView" id="acrescimoView" disabled>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Desc. Pagto no Prazo (%)</label>
+              <p><input class="form-control" type="number" min="0" name="descontoView" id="descontoView" disabled></p>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Ativo</label>
-              <p><select class="select-notsearch" tabindex="-1" name="statusview" id="status_view" disabled>
+              <p><select class="select-notsearch" tabindex="-1" name="statusView" id="statusView" disabled>
                   <option value="1">Sim</option>
                   <option value="0">Não</option>
                 </select></p>
-            </div>
-
-            <div class="col-sm-6">
-              <label class="control-label">Situação</label>
-              <p><select class="select-notsearch" tabindex="-1" name="situacaoview" id="situacao_view" disabled>
-
-                </select></p>
-            </div>
-
-            <div class="col-sm-6">
-              <label class="control-label">Forma Pagamento NF-e</label>
-              <p><select class="select-notsearch" tabindex="-1" name="formaview" id="forma_view" disabled>
-                  <option value="01">Dinheiro</option>
-                </select></p>
-            </div>
-
-            <div class="col-sm-12">
-              <label class="control-label">Natureza</label>
-              <p><select class="select2" tabindex="-1" name="naturezaview" id="natureza_view" disabled>
-
-                </select></p>
-            </div>
-
-            <div class="col-sm-12">
-              <label class="control-label">Observação</label>
-              <textarea class="form-control" rows="3" name="obsview" maxlength="100" id="obs_view"
-                placeholder="Máximo 100 caracteres" disabled></textarea>
             </div>
 
           </div>
