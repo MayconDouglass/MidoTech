@@ -57,6 +57,12 @@ Route::group(['middleware' => ['auth']], function () {
      Route::post('/prazopagamento/delete', 'PrazoController@destroy');
      Route::post('/prazopagamento/obterparcelas', 'PrazoController@obterParcelas'); 
 
+     // Tabela de Preco
+     Route::get('/tabpreco', 'TabPrecoController@create')->name('tabPreco');
+     Route::post('/tabpreco/cad', 'TabPrecoController@store');
+     Route::post('/tabpreco/update', 'TabPrecoController@update');
+     Route::post('/tabpreco/delete', 'TabPrecoController@destroy');
+
      // Cliente
      Route::get('/clientes', 'ClienteController@create')->name('clientes');
      Route::get('/clientes/new', 'ClienteController@addUser')->name('adduser');

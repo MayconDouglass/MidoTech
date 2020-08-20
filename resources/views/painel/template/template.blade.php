@@ -148,8 +148,14 @@
                 </li>
                 <li class="nav-item">
                   <a href="{{route('prazoPag')}}" class="nav-link">
-                    <i class="far fa-calendar nav-icon"></i>
+                    <i class="fa fa-calendar nav-icon"></i>
                     <p>Prazo de Cobrança</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('tabPreco')}}" class="nav-link">
+                    <i class="fa fa-usd nav-icon"></i>
+                    <p>Tabela de Preço</p>
                   </a>
                 </li>
                 @endif

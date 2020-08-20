@@ -165,7 +165,7 @@
             </div>
 
             <div class="col-sm-3">
-              <label class="control-label">Tipo de Prazo</label>
+              <label class="control-label">Tipo de Prazo*</label>
               <select class="select-notsearch" tabindex="-1" name="tipocad" id="tipo_cod">
                 <option value="0">A Vista</option>
                 <option value="1">A Prazo</option>
@@ -201,6 +201,10 @@
               <label class="control-label">Desc. Pagto no Prazo (%)</label>
               <p><input class="form-control" type="number" min="0" name="descontocad" id="desconto" value="0.00"
                   required></p>
+            </div>
+
+            <div>
+              <label class="control-label">* Caso o tipo de prazo esteja selecionado como "A Vista" sempre será 1 parcela, ignorando o campo Parcelas.</label>
             </div>
 
           </div>

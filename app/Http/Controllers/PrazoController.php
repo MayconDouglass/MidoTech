@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Modocobranca;
-use App\Models\Natoperacao;
 use App\Models\ParcelaPrazo;
 use App\Models\PerfilAcesso;
 use App\Models\Prazopagamento;
-use App\Models\Situacaomodcob;
 
 use Illuminate\Http\Request;
 
@@ -55,6 +52,12 @@ class PrazoController extends Controller
 
     public function store(Request $request){
 //dd($request->parcelacad);
+        if($request->tipocad == 0){
+            $qtdParcelas = 1;
+        }else{
+            $qtdParcelas = $request->parcelascad; 
+        }
+        
         $prazoPag = new Prazopagamento;
         $prazoPag->descricao = $request->descricaocad;
         $prazoPag->taxa_diario = $request->taxajuroscad;
@@ -62,22 +65,21 @@ class PrazoController extends Controller
         $prazoPag->acrescimo_financeiro = $request->acrescimocad;
         $prazoPag->desc_prazo = $request->descontocad;
         $prazoPag->tipo_prazo = $request->tipocad;
-        $prazoPag->num_parcelas = $request->parcelascad;
+        $prazoPag->num_parcelas = $qtdParcelas;
         $prazoPag->intervalodias = $request->diascad;
         $prazoPag->ativo = $request->statuscad;
         $saveStatus = $prazoPag->save();
 
-        foreach (range(1,$request->parcelascad) as $parc => $parcela) {
+        foreach (range(1,$qtdParcelas) as $parc => $parcela) {
             $diasParcela = $request->diascad * $parcela;
             $parcelaPrazo = new ParcelaPrazo();
             $parcelaPrazo->prazopag = $prazoPag->id_prazo;
             $parcelaPrazo->parcela = $parcela;
             if($parcela == $request->parcelascad){
-                $parcelaPrazo->porcentagem = (round(100-(round(100/($request->parcelascad),3)*($request->parcelascad-1)),3)); 
+                $parcelaPrazo->porcentagem = (round(100-(round(100/($qtdParcelas),3)*($qtdParcelas-1)),3)); 
             }else{
-                $parcelaPrazo->porcentagem = round((100/$request->parcelascad),3);
+                $parcelaPrazo->porcentagem = round((100/$qtdParcelas),3);
             }
-
             $parcelaPrazo->prazo = $diasParcela;
             $parcelaPrazo->tipo = 1;
            
