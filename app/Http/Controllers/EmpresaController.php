@@ -37,8 +37,10 @@ class EmpresaController extends Controller
             ->pluck('ativo');
             $acessoPerfil = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
             ->select('role','ativo')->get();
+            $roles = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
+            ->pluck('ativo');
 
-                if ($roleView[0]  == 1){
+                if (($roleView[0]  == 1) && ($roles[4] == 1)){
                     return view('painel.page.empresa',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','atividades','regimetributados','acessoPerfil'));
                 }else{
                     return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','acessoPerfil'));

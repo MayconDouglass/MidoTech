@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\PerfilAcesso;
 use App\Models\Setempresa;
 use App\Models\Tabelapreco;
+use App\Models\Vendedor;
 use Illuminate\Http\Request;
 
 use Auth;
 
-class TabPrecoController extends Controller
+class VendedorController extends Controller
 {
     public function create()
     {
@@ -41,17 +42,17 @@ class TabPrecoController extends Controller
 
                      
             if($roleAdmin[0] == 1){
-                $tabPrecos = Tabelapreco::all();
+                $vendedores = Vendedor::all();
                 $empresas = Setempresa::all();
             }else{
-                $tabPrecos = Tabelapreco::where('emp_cod',$uempresa)->get();
+                $vendedores = Vendedor::where('emp_cod',$uempresa)->get();
                 $empresas = Setempresa::where('id_empresa',$uempresa)->get();
             }
 
             
 
                 if ($roleView[0]  == 1){
-                    return view('painel.page.tabpreco',compact('uperfil','uempresa','unomeperfil','unome','uid','uimagem','acessoPerfil','tabPrecos','empresas'));
+                    return view('painel.page.vendedor',compact('uperfil','uempresa','unomeperfil','unome','uid','uimagem','acessoPerfil','vendedores','empresas'));
                 }else{
                     return view('painel.page.nopermission',compact('uperfil','$uempresa','unomeperfil','unome','uid','uimagem','acessoPerfil'));
                 }  

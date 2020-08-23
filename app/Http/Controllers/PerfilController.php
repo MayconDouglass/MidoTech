@@ -37,8 +37,11 @@ class PerfilController extends Controller
             $perfis = Perfil::all();
            
             $empresas = Setempresa::all();
+            
+            $roles = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
+            ->pluck('ativo');
 
-                if ($roleView[0]  == 1){
+            if (($roleView[0]  == 1) && ($roles[4] == 1)){
                     return view('painel.page.perfil',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','perfis','acessoPerfil'));
                 }else{
                     return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','perfis','acessoPerfil'));

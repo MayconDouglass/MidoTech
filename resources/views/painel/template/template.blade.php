@@ -158,6 +158,12 @@
                     <p>Tabela de Preço</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="{{route('unidade')}}" class="nav-link">
+                    <i class="fa fa-underline nav-icon"></i>
+                    <p>Unidades</p>
+                  </a>
+                </li>
                 @endif
                 @endforeach
               </ul>
@@ -177,7 +183,13 @@
                 <li class="nav-item">
                   <a href="{{route('clientes')}}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>11 . Cadastro</p>
+                    <p>11 . Clientes</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('vendedores')}}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>12 . Vendedores</p>
                   </a>
                 </li>
                 @endif
@@ -228,7 +240,7 @@
               </ul>
             </li>
 
-            
+
 
         </nav>
         <!-- /.sidebar-menu -->

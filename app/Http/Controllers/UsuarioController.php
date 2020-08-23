@@ -41,7 +41,10 @@ class UsuarioController extends Controller
             $acessoPerfil = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
             ->select('role','ativo')->get();
 
-            if ($roleView[0]  == 1){
+            $roles = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
+            ->pluck('ativo');
+
+            if (($roleView[0]  == 1) && ($roles[4] == 1)){
             return view('painel.page.usuario',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','usuarios','perfis','acessoPerfil'));
             }else{
                 return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','perfis','acessoPerfil'));

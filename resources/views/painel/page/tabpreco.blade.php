@@ -73,13 +73,14 @@
           <td class="idDataTabText">{{$tabPreco->id_tabela}}</td>
           <td>{{$tabPreco->setempresa->razao_social}}</td>
           <td>{{$tabPreco->descricao}}</td>
-          <span @if ($tabPreco->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
-            @endif>{{$tabPreco->ativo ? "Ativo" : "Inativo"}}</span>
+          <td>
+            <span @if ($tabPreco->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
+              @endif>{{$tabPreco->ativo ? "Ativo" : "Inativo"}}</span>
           </td>
           <td>
             <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal"
               data-target="#VisualizarTabPrecoModal" data-codigo="{{$tabPreco->id_tabela}}"
-              data-empresa="{{$tabPreco->setempresa->razao_social}}" data-descricao="{{$tabPreco->descricao}}"
+              data-empresa="{{$tabPreco->emp_cod}}" data-descricao="{{$tabPreco->descricao}}"
               data-prevenda="{{$tabPreco->prevenda}}" data-pedidoweb="{{$tabPreco->pedidoweb}}"
               data-status="{{$tabPreco->ativo}}">
               Visualizar</button>
@@ -140,7 +141,8 @@
               <label class="control-label">Empresa</label>
               <p><select class="select-notsearch" tabindex="-1" name="empresacad">
                   @foreach ($empresas as $empresa)
-                  <option value="{{$empresa->id_empresa}}">{{$empresa->id_empresa . ' - ' . $empresa->razao_social}}</option>
+                  <option value="{{$empresa->id_empresa}}">{{$empresa->id_empresa . ' - ' . $empresa->razao_social}}
+                  </option>
                   @endforeach
                 </select></p>
             </div>
@@ -205,24 +207,27 @@
           enctype="multipart/form-data">
           @csrf
           <div class="form-group row">
+
             <div class="col-sm-12">
+              <input class="form-control" type="hidden" name="idTabPrecoAlt" id="idTabPrecoAlt">
               <label class="control-label">Descricao</label>
-              <p><input class="form-control" type="text" name="descricaoalt" id="descricalalt" maxlength="60" disabled>
+              <p><input class="form-control" type="text" name="descricaoalt" id="descrical_alt" maxlength="60" disabled>
               </p>
             </div>
 
             <div class="col-sm-12">
               <label class="control-label">Empresa</label>
-              <p><select class="select-notsearch" tabindex="-1" name="empresaalt" id="empresa_cod" disabled>
+              <p><select class="select-notsearch" tabindex="-1" name="empresaalt" id="empresa_alt" disabled>
                   @foreach ($empresas as $empresa)
-                  <option value="{{$empresa->id_empresa}}">{{$empresa->id_empresa . ' - ' . $empresa->razao_social}}</option>
+                  <option value="{{$empresa->id_empresa}}">{{$empresa->id_empresa . ' - ' . $empresa->razao_social}}
+                  </option>
                   @endforeach
                 </select></p>
             </div>
 
             <div class="col-sm-4">
               <label class="control-label">Ativo</label>
-              <p><select class="select-notsearch" tabindex="-1" name="statusalt" id="status_cod">
+              <p><select class="select-notsearch" tabindex="-1" name="statusalt" id="status_alt">
                   <option value="1">Sim</option>
                   <option value="0">Não</option>
                 </select></p>
@@ -230,7 +235,7 @@
 
             <div class="col-sm-4">
               <label class="control-label">Pré Venda</label>
-              <p><select class="select-notsearch" tabindex="-1" name="prevendaalt" id="prevenda_cod">
+              <p><select class="select-notsearch" tabindex="-1" name="prevendaalt" id="prevenda_alt">
                   <option value="1">Sim</option>
                   <option value="0">Não</option>
                 </select></p>
@@ -238,7 +243,7 @@
 
             <div class="col-sm-4">
               <label class="control-label">Pedido Web</label>
-              <p><select class="select-notsearch" tabindex="-1" name="pedwebalt" id="pedweb_cod">
+              <p><select class="select-notsearch" tabindex="-1" name="pedwebalt" id="pedweb_alt">
                   <option value="1">Sim</option>
                   <option value="0">Não</option>
                 </select></p>
@@ -274,7 +279,7 @@
       <div class="modal-body">
         <form class="form-horizontal" method="POST" action="{{action('TabPrecoController@destroy')}}">
           @csrf
-          <input type="text" class="form-control col-form-label-sm" id="iddelete" name="iddelete">
+          <input type="hidden" class="form-control col-form-label-sm" id="iddelete" name="iddelete">
           <label class="b_text_modal_danger">Deseja realmente excluir este registro?</label>
 
           <div class="modal-footer justify-content-between">
@@ -306,24 +311,30 @@
         <form class="form-horizontal" method="POST">
           @csrf
           <div class="form-group row">
-            <div class="col-sm-12">
+            <div class="col-sm-3">
+              <label class="control-label">ID</label>
+              <p><input class="form-control" type="text" name="idTabPreco_view" id="idTabPreco_view" disabled></p>
+            </div>
+
+            <div class="col-sm-9">
               <label class="control-label">Descricao</label>
-              <p><input class="form-control" type="text" name="descricaoalt" id="descricalview" maxlength="60" disabled>
+              <p><input class="form-control" type="text" name="descricao_view" id="descricao_view" maxlength="60" disabled>
               </p>
             </div>
 
             <div class="col-sm-12">
               <label class="control-label">Empresa</label>
-              <p><select class="select-notsearch" tabindex="-1" name="empresaalt" id="empresa_view" disabled>
+              <p><select class="select-notsearch" tabindex="-1" name="empresa_view" id="empresa_view" disabled>
                   @foreach ($empresas as $empresa)
-                  <option value="{{$empresa->id_empresa}}">{{$empresa->id_empresa . ' - ' . $empresa->razao_social}}</option>
+                  <option value="{{$empresa->id_empresa}}">{{$empresa->id_empresa . ' - ' . $empresa->razao_social}}
+                  </option>
                   @endforeach
                 </select></p>
             </div>
 
             <div class="col-sm-4">
               <label class="control-label">Ativo</label>
-              <p><select class="select-notsearch" tabindex="-1" name="statusalt" id="status_view">
+              <p><select class="select-notsearch" tabindex="-1" name="status_view" id="status_view" disabled>
                   <option value="1">Sim</option>
                   <option value="0">Não</option>
                 </select></p>
@@ -331,7 +342,7 @@
 
             <div class="col-sm-4">
               <label class="control-label">Pré Venda</label>
-              <p><select class="select-notsearch" tabindex="-1" name="prevendaalt" id="prevenda_view">
+              <p><select class="select-notsearch" tabindex="-1" name="prevenda_view" id="prevenda_view" disabled>
                   <option value="1">Sim</option>
                   <option value="0">Não</option>
                 </select></p>
@@ -339,7 +350,7 @@
 
             <div class="col-sm-4">
               <label class="control-label">Pedido Web</label>
-              <p><select class="select-notsearch" tabindex="-1" name="pedwebalt" id="pedweb_view">
+              <p><select class="select-notsearch" tabindex="-1" name="pedweb_view" id="pedweb_view" disabled>
                   <option value="1">Sim</option>
                   <option value="0">Não</option>
                 </select></p>
