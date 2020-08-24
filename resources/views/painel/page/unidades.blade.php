@@ -136,7 +136,7 @@
 
 
 @section('js')
-<script src="{{url('/')}}/js/pages/tabpreco.js"></script>
+<script src="{{url('/')}}/js/pages/unidades.js"></script>
 <script src="{{url('/')}}/js/plugins/select2/js/select2.full.js"></script>
 <script src="{{url('/')}}/js/plugins/datatables/jquery.dataTables.js"></script>
 <script src="{{url('/')}}/js/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>

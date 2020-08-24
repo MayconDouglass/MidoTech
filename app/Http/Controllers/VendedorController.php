@@ -44,15 +44,19 @@ class VendedorController extends Controller
             if($roleAdmin[0] == 1){
                 $vendedores = Vendedor::all();
                 $empresas = Setempresa::all();
+                $supervisores = Vendedor::where('tipo',1)->get();
+                $gerentes = Vendedor::where('tipo',2)->get();
             }else{
                 $vendedores = Vendedor::where('emp_cod',$uempresa)->get();
                 $empresas = Setempresa::where('id_empresa',$uempresa)->get();
+                $supervisores = Vendedor::where('tipo',1)->where('emp_cod',$uempresa)->get();
+                $gerentes = Vendedor::where('tipo',2)->where('emp_cod',$uempresa)->get();
             }
 
             
 
                 if ($roleView[0]  == 1){
-                    return view('painel.page.vendedor',compact('uperfil','uempresa','unomeperfil','unome','uid','uimagem','acessoPerfil','vendedores','empresas'));
+                    return view('painel.page.vendedor',compact('uperfil','uempresa','unomeperfil','unome','uid','uimagem','acessoPerfil','vendedores','empresas','supervisores','gerentes'));
                 }else{
                     return view('painel.page.nopermission',compact('uperfil','$uempresa','unomeperfil','unome','uid','uimagem','acessoPerfil'));
                 }  

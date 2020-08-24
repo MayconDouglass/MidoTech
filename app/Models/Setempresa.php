@@ -44,6 +44,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection|Perfil[] $perfils
  * @property Collection|Tabelapreco[] $tabelaprecos
  * @property Collection|Usuario[] $usuarios
+ * @property Collection|Vendedor[] $vendedors
  *
  * @package App\Models
  */
@@ -123,5 +124,10 @@ class Setempresa extends Model
 	public function usuarios()
 	{
 		return $this->hasMany(Usuario::class, 'empresa');
+	}
+
+	public function vendedors()
+	{
+		return $this->hasMany(Vendedor::class, 'emp_cod');
 	}
 }

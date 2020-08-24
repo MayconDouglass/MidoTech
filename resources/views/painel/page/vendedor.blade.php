@@ -61,6 +61,7 @@
       <thead>
         <tr>
           <th class="idDataTab">ID</th>
+          <th>Empresa</th>
           <th>Nome</th>
           <th class="statusDataTab">Status</th>
           <th class="actionDataTab">Ações</th>
@@ -70,6 +71,7 @@
         @foreach ($vendedores as $vendedor)
         <tr>
           <td class="idDataTabText">{{$vendedor->id_unidade}}</td>
+          <td>{{$vendedor->setempresa->nome}}</td>
           <td>{{$vendedor->descricao}}</td>
           <td>
             <span @if ($vendedor->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
@@ -132,11 +134,11 @@
 <!-- Modal Cadastro-->
 <div class="modal fade" id="CadastroModal" tabindex="-1" role="dialog" aria-labelledby="CadastroModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-sm" role="document">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="add_modalHeader">
         <div class="modal-header">
-          <h5 class="modal-title" id="CadastroModalLabel">Nova Unidade</h5>
+          <h5 class="modal-title" id="CadastroModalLabel">Novo Vendedor</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -145,13 +147,56 @@
       <div class="modal-body">
 
         <!-- Form de cadastro -->
-        <form class="form-horizontal" method="POST" action="{{action('UnidadesController@store')}}"
+        <form class="form-horizontal" method="POST" action="{{action('VendedorController@store')}}"
           enctype="multipart/form-data">
           @csrf
           <div class="form-group row">
-            <div class="col-sm-12">
-              <label class="control-label">Descricao</label>
-              <p><input class="form-control" type="text" name="descricaocad" maxlength="5" required></p>
+
+            <div class="col-sm-5">
+              <label class="control-label">Nome</label>
+              <p><input class="form-control" type="text" name="descricaocad" maxlength="100" required></p>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">CNPJ / CPF</label>
+              <p><input class="form-control" type="text" name="cnpjcpfcad" id="cnpjcpf" maxlength="17" required></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Tipo Pessoa</label>
+              <select class="select-notsearch" tabindex="-1" name="pessoacad" id="pessoa">
+                  <option value="0">Júridica</option>
+                  <option value="1">Física</option>
+                </select>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Tipo de Vendedor</label>
+              <select class="select-notsearch" tabindex="-1" name="tipocad">
+                  <option value="0">Vendedor</option>
+                  <option value="1">Supervisor</option>
+                  <option value="2">Gerente</option>
+                </select>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Supervisor</label>
+              <select class="select-notsearch" tabindex="-1" name="supervisorcad">
+                <option value="0">Nenhum</option>
+                @foreach ($supervisores as $supervisor)
+                <option value={{$supervisor->id_vendedor}}>{{$supervisor->nome}}</option>   
+                @endforeach
+                </select>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Gerente</label>
+              <select class="select-notsearch" tabindex="-1" name="gerentecad">
+                <option value="0">Nenhum</option>
+                @foreach ($gerentes as $gerente)
+                <option value={{$gerente->id_vendedor}}>{{$gerente->nome}}</option>   
+                @endforeach
+                </select>
             </div>
 
             <div class="col-sm-12">
@@ -183,8 +228,9 @@
 
 
 @section('js')
-<script src="{{url('/')}}/js/pages/tabpreco.js"></script>
+<script src="{{url('/')}}/js/pages/vendedores.js"></script>
 <script src="{{url('/')}}/js/plugins/select2/js/select2.full.js"></script>
 <script src="{{url('/')}}/js/plugins/datatables/jquery.dataTables.js"></script>
 <script src="{{url('/')}}/js/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<script src="{{url('/')}}/js/plugins/mask/jquery.mask.min.js" type="text/javascript"></script>
 @endsection

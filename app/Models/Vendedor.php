@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -32,6 +33,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $desconto_max
  * @property float $pedido_min
  * @property int $emp_cod
+ * 
+ * @property Setempresa $setempresa
+ * @property Vendedor $vendedor
+ * @property Collection|Vendedor[] $vendedors
  *
  * @package App\Models
  */
@@ -76,4 +81,19 @@ class Vendedor extends Model
 		'pedido_min',
 		'emp_cod'
 	];
+
+	public function setempresa()
+	{
+		return $this->belongsTo(Setempresa::class, 'emp_cod');
+	}
+
+	public function vendedor()
+	{
+		return $this->belongsTo(Vendedor::class, 'gerente');
+	}
+
+	public function vendedors()
+	{
+		return $this->hasMany(Vendedor::class, 'gerente');
+	}
 }
