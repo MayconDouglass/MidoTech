@@ -199,11 +199,25 @@
                 </select>
             </div>
 
-            <div class="col-sm-12">
+            <div class="col-sm-4">
+              <label class="control-label">Email</label>
+              <input class="form-control" type="email" name="emailcad" id="email" maxlength="200">
+            </div>
+
+            <div class="col-sm-2">
               <label class="control-label">Ativo</label>
-              <select class="select-notsearch" tabindex="-1" name="statuscad">
+              <p><select class="select-notsearch" tabindex="-1" name="statuscad">
                   <option value="1">Sim</option>
                   <option value="0">Não</option>
+                </select></p>
+            </div>
+
+            <div class="col-sm-4">
+              <label class="control-label">Empresa</label>
+              <select class="select-notsearch" tabindex="-1" name="empresacad">
+                @foreach ($empresas as $empresa)
+                <option value={{$empresa->id_empresa}}>{{$empresa->id_empresa . ' - ' . $empresa->razao_social}}</option>    
+                @endforeach  
                 </select>
             </div>
 
