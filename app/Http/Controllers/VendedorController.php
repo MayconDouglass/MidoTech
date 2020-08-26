@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PerfilAcesso;
 use App\Models\Setempresa;
+use App\Models\Setor;
 use App\Models\Tabelapreco;
 use App\Models\Vendedor;
 use Illuminate\Http\Request;
@@ -46,17 +47,19 @@ class VendedorController extends Controller
                 $empresas = Setempresa::all();
                 $supervisores = Vendedor::where('tipo',1)->get();
                 $gerentes = Vendedor::where('tipo',2)->get();
+                $setores = Setor::all();
             }else{
                 $vendedores = Vendedor::where('emp_cod',$uempresa)->get();
                 $empresas = Setempresa::where('id_empresa',$uempresa)->get();
                 $supervisores = Vendedor::where('tipo',1)->where('emp_cod',$uempresa)->get();
                 $gerentes = Vendedor::where('tipo',2)->where('emp_cod',$uempresa)->get();
+                $setores = Setor::where('emp_cod',$uempresa)->get();
             }
 
             
 
                 if ($roleView[0]  == 1){
-                    return view('painel.page.vendedor',compact('uperfil','uempresa','unomeperfil','unome','uid','uimagem','acessoPerfil','vendedores','empresas','supervisores','gerentes'));
+                    return view('painel.page.vendedor',compact('uperfil','uempresa','unomeperfil','unome','uid','uimagem','acessoPerfil','vendedores','empresas','supervisores','gerentes','setores'));
                 }else{
                     return view('painel.page.nopermission',compact('uperfil','$uempresa','unomeperfil','unome','uid','uimagem','acessoPerfil'));
                 }  

@@ -165,18 +165,18 @@
             <div class="col-sm-2">
               <label class="control-label">Tipo Pessoa</label>
               <select class="select-notsearch" tabindex="-1" name="pessoacad" id="pessoa">
-                  <option value="0">Júridica</option>
-                  <option value="1">Física</option>
-                </select>
+                <option value="0">Júridica</option>
+                <option value="1">Física</option>
+              </select>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Tipo de Vendedor</label>
               <select class="select-notsearch" tabindex="-1" name="tipocad">
-                  <option value="0">Vendedor</option>
-                  <option value="1">Supervisor</option>
-                  <option value="2">Gerente</option>
-                </select>
+                <option value="0">Vendedor</option>
+                <option value="1">Supervisor</option>
+                <option value="2">Gerente</option>
+              </select>
             </div>
 
             <div class="col-sm-3">
@@ -184,9 +184,9 @@
               <select class="select-notsearch" tabindex="-1" name="supervisorcad">
                 <option value="0">Nenhum</option>
                 @foreach ($supervisores as $supervisor)
-                <option value={{$supervisor->id_vendedor}}>{{$supervisor->nome}}</option>   
+                <option value={{$supervisor->id_vendedor}}>{{$supervisor->nome}}</option>
                 @endforeach
-                </select>
+              </select>
             </div>
 
             <div class="col-sm-3">
@@ -194,9 +194,9 @@
               <select class="select-notsearch" tabindex="-1" name="gerentecad">
                 <option value="0">Nenhum</option>
                 @foreach ($gerentes as $gerente)
-                <option value={{$gerente->id_vendedor}}>{{$gerente->nome}}</option>   
+                <option value={{$gerente->id_vendedor}}>{{$gerente->nome}}</option>
                 @endforeach
-                </select>
+              </select>
             </div>
 
             <div class="col-sm-4">
@@ -216,9 +216,86 @@
               <label class="control-label">Empresa</label>
               <select class="select-notsearch" tabindex="-1" name="empresacad">
                 @foreach ($empresas as $empresa)
-                <option value={{$empresa->id_empresa}}>{{$empresa->id_empresa . ' - ' . $empresa->razao_social}}</option>    
-                @endforeach  
-                </select>
+                <option value={{$empresa->id_empresa}}>{{$empresa->id_empresa . ' - ' . $empresa->razao_social}}
+                </option>
+                @endforeach
+              </select>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Pedido Mínimo</label>
+              <input class="form-control" type="number" name="pedmincad" min="0.00" id="pedmin" value="0.00">
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Comissão</label>
+              <input class="form-control" type="number" name="comissaocad" min="0.00" id="comissao" value="0.00">
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Pago na emissao(%)</label>
+              <input class="form-control" type="number" name="pagoemissaocad" min="0.00" id="pagoemissao" value="0.00">
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Pago na baixa(%)</label>
+              <p><input class="form-control" type="number" name="pagobaixacad" min="0.00" id="pagobaixa" value="0.00">
+              </p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Desconto máximo(%)</label>
+              <input class="form-control" type="number" name="descontocad" min="0.00" id="desconto" value="0.00">
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Telefone</label>
+              <input class="form-control" type="text" name="telefonecad" id="telefone">
+            </div>
+
+            <div class="col-sm-6">
+              <label class="control-label">Logradouro</label>
+              <input class="form-control" type="text" name="logradourocad" id="logradouro" maxlength="200">
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Número</label>
+              <p><input class="form-control" type="text" name="numerocad" id="numero" maxlength="20"></p>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Complemento</label>
+              <p><input class="form-control" type="text" name="complementocad" id="complemento" maxlength="20"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Bairro</label>
+              <p><input class="form-control" type="text" name="bairrocad" id="bairro" maxlength="60"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Cidade</label>
+              <p><input class="form-control" type="text" name="cidadecad" id="cidade" maxlength="60"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">CEP</label>
+              <p><input class="form-control" type="text" name="cepcad" id="cep" maxlength="9"></p>
+            </div>
+
+            <div class="col-sm-1">
+              <label class="control-label">UF</label>
+              <p><input class="form-control" type="text" name="ufcad" id="uf" maxlength="2"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Setor</label>
+              <p><select class="select-notsearch" tabindex="-1" name="setorcad">
+                  <option value="0">0 - Nenhum</option>
+                  @foreach ($setores as $setor)
+                  <option value={{$setor->id_setor}}>{{$setor->id_setor . ' - ' . $setor->setor}}</option>
+                  @endforeach
+                </select></p>
             </div>
 
           </div>
