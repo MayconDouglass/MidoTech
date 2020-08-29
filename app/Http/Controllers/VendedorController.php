@@ -72,18 +72,21 @@ class VendedorController extends Controller
     }
 
     public function store(Request $request){
-        $tabPreco = new Tabelapreco;
-        $tabPreco->emp_cod = $request->empresacad;
-        $tabPreco->descricao = $request->descricaocad;
-        $tabPreco->prevenda = $request->prevendacad;
+        $vendedor = new Vendedor;
+        $vendedor->emp_cod = $request->empresacad;
+        $vendedor->nome = $request->nomecad;
+        $vendedor->logradouro = $request->logradourocad;
+        $vendedor->complemento = $request->complementocad;
+        $vendedor->numero = $request->numerocad;
+        $vendedor->bairro = $request->bairrocad;
         $tabPreco->pedidoweb = $request->pedwebcad;
         $tabPreco->ativo = $request->statuscad;
         $saveStatus = $tabPreco->save();
       
         if($saveStatus){            
-                return redirect()->action('TabPrecoController@create')->with('status_success', 'Tabela de Preço Cadastrada!');
+                return redirect()->action('VendedorController@create')->with('status_success', 'Vendedor Cadastrado!');
         }else{
-                return redirect()->action('TabPrecoController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
+                return redirect()->action('VendedorController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
         }
 
 

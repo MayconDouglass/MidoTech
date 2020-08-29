@@ -154,7 +154,7 @@
 
             <div class="col-sm-5">
               <label class="control-label">Nome</label>
-              <p><input class="form-control" type="text" name="descricaocad" maxlength="100" required></p>
+              <p><input class="form-control" type="text" name="nomecad" maxlength="100" required></p>
             </div>
 
             <div class="col-sm-3">
