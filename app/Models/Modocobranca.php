@@ -30,6 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Usuario $usuario
  * @property Natoperacao $natoperacao
  * @property Collection|Cliente[] $clientes
+ * @property Collection|Venmodcobranca[] $venmodcobrancas
  *
  * @package App\Models
  */
@@ -86,5 +87,10 @@ class Modocobranca extends Model
 	public function clientes()
 	{
 		return $this->hasMany(Cliente::class, 'modo_cobranca');
+	}
+
+	public function venmodcobrancas()
+	{
+		return $this->hasMany(Venmodcobranca::class, 'modocobranca');
 	}
 }

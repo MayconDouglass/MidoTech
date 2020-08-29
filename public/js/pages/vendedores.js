@@ -25,6 +25,39 @@ $(function () {
     $("#telefone").mask("(999) 99999-9999");
     $("#cep").mask("99999-999");
 
+    $("#pessoa").change(function () {
+        var e = $(this).find('option:selected').attr('value')
+        if (e == '1') {
+            $("#cnpjcpf").unmask().mask("99.999.999/9999-99")
+        } else {
+            $("#cnpjcpf").unmask().mask("999.999.999-99")
+        }
+    });
+
+    $("#tipovendedor").change(function () {
+        var e = $(this).find('option:selected').attr('value')
+
+        if (e == '1') {
+            $("#supervisorcad").prop('disabled', true);
+            $("#gerentecad").prop('disabled', false);
+            $("#supervisorcad").select2({dropdownParent: $("#CadastroModal"), width: '100%',
+                minimumResultsForSearch: Infinity}).val(0).trigger("change");
+        } else if (e == '2') {
+            $("#supervisorcad").prop('disabled', true);
+            $("#gerentecad").prop('disabled', true);
+            $("#supervisorcad").select2({dropdownParent: $("#CadastroModal"), width: '100%',
+            minimumResultsForSearch: Infinity}).val(0).trigger("change");
+            $("#gerentecad").select2({dropdownParent: $("#CadastroModal"), width: '100%',
+                minimumResultsForSearch: Infinity}).val(0).trigger("change");
+        }else if (e == '0') {
+            $("#supervisorcad").prop('disabled', false);
+            $("#gerentecad").prop('disabled', false);
+        }
+
+    });
+
+
+
     function limpa_formulário_cep() {
         // Limpa valores do formulário de cep.
         $("#logradouro").val("");
@@ -33,22 +66,9 @@ $(function () {
         $("#uf").val("");
     }
 
-    $("#pessoa").blur(function(){
-        switch ($("#cnpjcpf").val()) {
-            case 0:
-                $("#cnpjcpf").mask("99.999.999/9999-99");
-                break;
-        
-            case 1:
-                $("#cnpjcpf").mask("999.999.999-99");
-                break;
-        
-            default:
-                break;
-        }
-    });
-    
-    $("#cep").blur(function() {
+
+
+    $("#cep").blur(function () {
 
         //Nova variável "cep" somente com dígitos.
         var cep = $(this).val().replace(/\D/g, '');
@@ -60,7 +80,7 @@ $(function () {
             var validacep = /^[0-9]{8}$/;
 
             //Valida o formato do CEP.
-            if(validacep.test(cep)) {
+            if (validacep.test(cep)) {
 
                 //Preenche os campos com "..." enquanto consulta webservice.
                 $("#logradouro").val("...");
@@ -69,7 +89,7 @@ $(function () {
                 $("#uf").val("...");
 
                 //Consulta o webservice viacep.com.br/
-                $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+                $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function (dados) {
 
                     if (!("erro" in dados)) {
                         //Atualiza os campos com os valores da consulta.

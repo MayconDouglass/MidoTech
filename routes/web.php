@@ -73,9 +73,9 @@ Route::group(['middleware' => ['auth']], function () {
     
     // Vendedor
     Route::get('/vendedores', 'VendedorController@create')->name('vendedores');
-    Route::get('/vendedores/cad', 'VendedorController@store');
-    Route::get('/vendedores/update', 'VendedorController@update');
-    Route::get('/vendedores/delete', 'VendedorController@destroy');
+    Route::post('/vendedores/cad', 'VendedorController@store');
+    Route::post('/vendedores/update', 'VendedorController@update');
+    Route::post('/vendedores/delete', 'VendedorController@destroy');
 
 });
 

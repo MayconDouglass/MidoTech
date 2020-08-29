@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $ativo
  * 
  * @property Collection|ParcelaPrazo[] $parcela_prazos
+ * @property Collection|Venprazopag[] $venprazopags
  *
  * @package App\Models
  */
@@ -59,5 +60,10 @@ class Prazopagamento extends Model
 	public function parcela_prazos()
 	{
 		return $this->hasMany(ParcelaPrazo::class, 'prazopag');
+	}
+
+	public function venprazopags()
+	{
+		return $this->hasMany(Venprazopag::class, 'prazopag');
 	}
 }

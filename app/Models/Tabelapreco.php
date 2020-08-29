@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $ativo
  * 
  * @property Setempresa $setempresa
+ * @property Collection|Ventabelapreco[] $ventabelaprecos
  *
  * @package App\Models
  */
@@ -46,5 +48,10 @@ class Tabelapreco extends Model
 	public function setempresa()
 	{
 		return $this->belongsTo(Setempresa::class, 'emp_cod');
+	}
+
+	public function ventabelaprecos()
+	{
+		return $this->hasMany(Ventabelapreco::class, 'tabpreco');
 	}
 }

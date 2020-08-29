@@ -70,56 +70,30 @@
       <tbody>
         @foreach ($vendedores as $vendedor)
         <tr>
-          <td class="idDataTabText">{{$vendedor->id_unidade}}</td>
-          <td>{{$vendedor->setempresa->nome}}</td>
-          <td>{{$vendedor->descricao}}</td>
+          <td class="idDataTabText">{{$vendedor->id_vendedor}}</td>
+          <td>{{$vendedor->setempresa->Sigla}}</td>
+          <td>{{$vendedor->nome}}</td>
           <td>
             <span @if ($vendedor->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
               @endif>{{$vendedor->ativo ? "Ativo" : "Inativo"}}</span>
           </td>
           <td>
             <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal"
-              data-target="#VisualizarUserModal" data-codigo="{{$usuario->id_usuario}}"
-              data-empresa="{{$usuario->empresa}}" data-perfil="{{$usuario->perfil_fk}}" data-nome="{{$usuario->nome}}"
-              data-email="{{$usuario->email}}" data-status="{{$usuario->ativo}}"
-              data-datacad="{{date('d/m/Y',strtotime($usuario->data_cadastro))}}"
-              data-dataalt="{{$usuario->data_alteracao ? date('d/m/Y', strtotime($usuario->data_alteracao)) : "Sem alteração"}}"
-              data-imgview="<?php 
-            $arquivo = 'storage/img/users/'.$usuario->id_usuario.'.jpg';
-                                    if(file_exists($arquivo)){
-                                    $imagem = $arquivo;
-                                    } else {
-                                    $imagem = 'storage/img/users/default.jpg';
-                                    }
-                                    echo ($imagem);
-            ?>"> Visualizar</button>
+              data-target="#VisualizarUserModal" > Visualizar</button>
             @foreach ($acessoPerfil as $acesso)
             @if (($acesso->role == 2)&&($acesso->ativo == 1))
             <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
-              data-target="#AlterarUserModal" data-codigo="{{$usuario->id_usuario}}"
-              data-empresa="{{$usuario->empresa}}" data-perfil="{{$usuario->perfil_fk}}" data-nome="{{$usuario->nome}}"
-              data-email="{{$usuario->email}}" data-status="{{$usuario->ativo}}"
-              data-datacad="{{date('d/m/Y',strtotime($usuario->data_cadastro))}}"
-              data-dataalt="{{$usuario->data_alteracao ? date('d/m/Y', strtotime($usuario->data_alteracao)) : "Sem alteração"}}"
-              data-imgalt="<?php 
-            $arquivo = 'storage/img/users/'.$usuario->id_usuario.'.jpg';
-                                    if(file_exists($arquivo)){
-                                    $imagem = $arquivo;
-                                    } else {
-                                    $imagem = 'storage/img/users/default.jpg';
-                                    }
-                                    echo ($imagem);
-            ?>"> Alterar</button>
+              data-target="#AlterarUserModal" > Alterar</button>
 
             <button type="button" class="btn btn-info btn-sm fa fa-key" data-toggle="modal"
-              data-target="#modal-password" data-codigo="{{$usuario->id_usuario}}"></button>
+              data-target="#modal-password" ></button>
             @endif
             @endforeach
 
             @foreach ($acessoPerfil as $acesso)
             @if (($acesso->role == 3)&&($acesso->ativo == 1))
             <button type="button" class="btn btn-danger btn-sm fa fa-trash-o" data-toggle="modal"
-              data-target="#modal-danger" data-codigo="{{$usuario->id_usuario}}"></button>
+              data-target="#modal-danger"></button>
             @endif
             @endforeach
           </td>
@@ -165,14 +139,14 @@
             <div class="col-sm-2">
               <label class="control-label">Tipo Pessoa</label>
               <select class="select-notsearch" tabindex="-1" name="pessoacad" id="pessoa">
-                <option value="0">Júridica</option>
-                <option value="1">Física</option>
+                <option value="0">Física</option>
+                <option value="1">Júridica</option>
               </select>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Tipo de Vendedor</label>
-              <select class="select-notsearch" tabindex="-1" name="tipocad">
+              <select class="select-notsearch" tabindex="-1" name="tipocad" id="tipovendedorcad">
                 <option value="0">Vendedor</option>
                 <option value="1">Supervisor</option>
                 <option value="2">Gerente</option>
@@ -181,7 +155,7 @@
 
             <div class="col-sm-3">
               <label class="control-label">Supervisor</label>
-              <select class="select-notsearch" tabindex="-1" name="supervisorcad">
+              <select class="select-notsearch" tabindex="-1" name="supervisorcad" id="supervisorcad">
                 <option value="0">Nenhum</option>
                 @foreach ($supervisores as $supervisor)
                 <option value={{$supervisor->id_vendedor}}>{{$supervisor->nome}}</option>
@@ -191,7 +165,7 @@
 
             <div class="col-sm-3">
               <label class="control-label">Gerente</label>
-              <select class="select-notsearch" tabindex="-1" name="gerentecad">
+              <select class="select-notsearch" tabindex="-1" name="gerentecad" id="gerentecad">
                 <option value="0">Nenhum</option>
                 @foreach ($gerentes as $gerente)
                 <option value={{$gerente->id_vendedor}}>{{$gerente->nome}}</option>
@@ -298,8 +272,34 @@
                 </select></p>
             </div>
 
-          </div>
+            <div class="col-sm-4">
+              <label class="control-label">Tab.Preço</label>
+              <p><select class="select-notsearch" tabindex="-1" name="tabPrecocad[]" multiple="multiple">
+                @foreach ($tabPrecos as $tabPreco)
+                <option value={{$tabPreco->id_tabela}}>{{$tabPreco->id_tabela . ' - ' . $tabPreco->descricao}}</option>
+                @endforeach
+              </select></p>
+            </div>
 
+            <div class="col-sm-4">
+              <label class="control-label">Modo de Cobrança</label>
+              <p><select class="select-notsearch" tabindex="-1" name="modCobcad[]" multiple="multiple">
+                @foreach ($modCobs as $modCob)
+                <option value={{$modCob->id_modocob}}>{{$modCob->id_modocob . ' - ' . $modCob->descricao}}</option>
+                @endforeach
+              </select></p>
+            </div>
+
+            <div class="col-sm-4">
+              <label class="control-label">Prazo de Pagamento</label>
+              <p><select class="select-notsearch" tabindex="-1" name="tabPrazocad[]" multiple="multiple">
+                @foreach ($prazoCobs as $prazoCob)
+                <option value={{$prazoCob->id_prazo}}>{{$prazoCob->id_prazo . ' - ' . $prazoCob->descricao}}</option>
+                @endforeach
+              </select></p>
+            </div>
+
+          </div>
       </div>
 
       <div class="modal-footer">
