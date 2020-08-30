@@ -179,23 +179,22 @@ class VendedorController extends Controller
 
     public function obterModCobVen(Request $request){
         //dd($request);
-        $modCob = Venmodcobranca::where('vendedor',$request->id_vendedor)->pluck('id_venmod');
+        $modCob = Venmodcobranca::where('vendedor',$request->id_vendedor)->pluck('modocobranca');
        
         return response()->json([$modCob],200);
 
     }
 
     public function obterPrazoPagVen(Request $request){
-        //dd($request);
-        $prazoPag = Venprazopag::where('vendedor',$request->id_vendedor)->pluck('id_venprazo');
+        $prazoPag = Venprazopag::where('vendedor',$request->id_vendedor)->pluck('prazopag');
        
         return response()->json([$prazoPag],200);
 
     }
 
     public function obterTabPrecoVen(Request $request){
-        //dd($request);
-        $tabPreco = Ventabelapreco::where('vendedor',$request->id_vendedor)->pluck('id_ventab');
+
+        $tabPreco = Ventabelapreco::where('vendedor',$request->id_vendedor)->pluck('tabpreco');
        
         return response()->json([$tabPreco],200);
 
