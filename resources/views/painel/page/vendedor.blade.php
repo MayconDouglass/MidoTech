@@ -79,7 +79,12 @@
           </td>
           <td>
             <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal"
-              data-target="#VisualizarVenModal" > Visualizar</button>
+              data-target="#VisualizarVenModal" data-codigo="{{$vendedor->id_vendedor}}"
+              data-empCod="{{$vendedor->emp_cod}}" data-nome="{{$vendedor->nome}}" data-logradouro="{{$vendedor->logradouro}}"
+              data-comp="{{$vendedor->complemento}}" data-numero="{{$vendedor->numero}}" data-bairro="{{$vendedor->bairro}}"
+              data-cidade="{{$vendedor->cidade}}" data-uf="{{$vendedor->uf}}" data-cep="{{$vendedor->cep}}"
+              data-pessoa="{{$vendedor->essoa}}" data-uf="{{$vendedor->uf}}" data-cep="{{$vendedor->cep}}"
+              > Visualizar</button>
             @foreach ($acessoPerfil as $acesso)
             @if (($acesso->role == 2)&&($acesso->ativo == 1))
             <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
@@ -334,8 +339,8 @@
           @csrf
           <div class="form-group row">
             
-            <div class="col-sm-2">
-              <label class="control-label">Código Vendedor</label>
+            <div class="col-sm-1">
+              <label class="control-label">ID</label>
               <input class="form-control" type="text" name="idVendedor" id="ven_cod" disabled>
             </div>
 
@@ -344,7 +349,7 @@
               <p><input class="form-control" type="text" name="nomeview" id="nome_view" disabled></p>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-sm-2">
               <label class="control-label">CNPJ / CPF</label>
               <p><input class="form-control" type="text" name="cnpjcpfview" id="cnpjcpf_view" disabled></p>
             </div>
@@ -401,7 +406,7 @@
 
             <div class="col-sm-4">
               <label class="control-label">Empresa</label>
-              <p><select class="select-notsearch" tabindex="-1" name="empresacad" id="empresa_view" disabled>
+              <p><select class="select-notsearch" tabindex="-1" name="empresaview" id="empresa_view" disabled>
                 @foreach ($empresas as $empresa)
                 <option value={{$empresa->id_empresa}}>{{$empresa->id_empresa . ' - ' . $empresa->razao_social}}
                 </option>
@@ -411,74 +416,74 @@
 
             <div class="col-sm-2">
               <label class="control-label">Pedido Mínimo</label>
-              <input class="form-control" type="number" name="pedmincad" min="0.00" id="pedmin" value="0.00">
+              <input class="form-control" type="number" name="pedminview" min="0.00" id="pedmin_view" value="0.00" disabled>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Comissão</label>
-              <input class="form-control" type="number" name="comissaocad" min="0.00" id="comissao" value="0.00">
+              <input class="form-control" type="number" name="comissaoview" min="0.00" id="comissao_view" value="0.00" disabled>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Pago na emissao(%)</label>
-              <input class="form-control" type="number" name="pagoemissaocad" min="0.00" id="pagoemissao" value="0.00">
+              <input class="form-control" type="number" name="pagoemissaoview" min="0.00" id="pagoemissao_view" value="0.00" disabled>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Pago na baixa(%)</label>
-              <input class="form-control" type="number" name="pagobaixacad" min="0.00" id="pagobaixa" value="0.00">
+              <input class="form-control" type="number" name="pagobaixaview" min="0.00" id="pagobaixa_view" value="0.00" disabled>
 
             
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Desconto máximo(%)</label>
-              <input class="form-control" type="number" name="descontocad" min="0.00" id="desconto" value="0.00">
+              <input class="form-control" type="number" name="descontoview" min="0.00" id="desconto_view" value="0.00" disabled>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Telefone</label>
-              <input class="form-control" type="text" name="telefonecad" id="telefone">
+              <input class="form-control" type="text" name="telefoneview" id="telefone_view" disabled>
             </div>
 
             <div class="col-sm-6">
               <label class="control-label">Logradouro</label>
-              <input class="form-control" type="text" name="logradourocad" id="logradouro" maxlength="200">
+              <input class="form-control" type="text" name="logradouroview" id="logradouro_view" maxlength="200" disabled>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Número</label>
-              <p><input class="form-control" type="text" name="numerocad" id="numero" maxlength="20"></p>
+              <p><input class="form-control" type="text" name="numeroview" id="numero_view" maxlength="20" disabled></p>
             </div>
 
             <div class="col-sm-3">
               <label class="control-label">Complemento</label>
-              <p><input class="form-control" type="text" name="complementocad" id="complemento" maxlength="20"></p>
+              <p><input class="form-control" type="text" name="complementoview" id="complemento_view" maxlength="20" disabled></p>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Bairro</label>
-              <p><input class="form-control" type="text" name="bairrocad" id="bairro" maxlength="60"></p>
+              <p><input class="form-control" type="text" name="bairroview" id="bairro_view" maxlength="60" disabled></p>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Cidade</label>
-              <p><input class="form-control" type="text" name="cidadecad" id="cidade" maxlength="60"></p>
+              <p><input class="form-control" type="text" name="cidadeview" id="cidade_view" maxlength="60" disabled></p>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">CEP</label>
-              <p><input class="form-control" type="text" name="cepcad" id="cep" maxlength="9"></p>
+              <p><input class="form-control" type="text" name="cepview" id="cep_view" maxlength="9" disabled></p>
             </div>
 
             <div class="col-sm-1">
               <label class="control-label">UF</label>
-              <p><input class="form-control" type="text" name="ufcad" id="uf" maxlength="2"></p>
+              <p><input class="form-control" type="text" name="ufcadview" id="uf_view" maxlength="2" disabled></p>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Setor</label>
-              <p><select class="select-notsearch" tabindex="-1" name="setorcad">
+              <p><select class="select-notsearch" tabindex="-1" name="setorview" id="setor_view" disabled>
                   <option value="0">0 - Nenhum</option>
                   @foreach ($setores as $setor)
                   <option value={{$setor->id_setor}}>{{$setor->id_setor . ' - ' . $setor->setor}}</option>
@@ -488,7 +493,7 @@
 
             <div class="col-sm-4">
               <label class="control-label">Tab.Preço</label>
-              <p><select class="select-notsearch" tabindex="-1" name="tabPrecocad[]" multiple="multiple">
+              <p><select class="select-notsearch" tabindex="-1" name="tabPrecocad[]" id="tabPreco_view" multiple="multiple" disabled>
                 @foreach ($tabPrecos as $tabPreco)
                 <option value={{$tabPreco->id_tabela}}>{{$tabPreco->id_tabela . ' - ' . $tabPreco->descricao}}</option>
                 @endforeach
@@ -497,7 +502,7 @@
 
             <div class="col-sm-4">
               <label class="control-label">Modo de Cobrança</label>
-              <p><select class="select-notsearch" tabindex="-1" name="modCobcad[]" multiple="multiple">
+              <p><select class="select-notsearch" tabindex="-1" name="modCobcad[]" multiple="multiple" id="modCob_view" disabled>
                 @foreach ($modCobs as $modCob)
                 <option value={{$modCob->id_modocob}}>{{$modCob->id_modocob . ' - ' . $modCob->descricao}}</option>
                 @endforeach
@@ -506,7 +511,7 @@
 
             <div class="col-sm-4">
               <label class="control-label">Prazo de Pagamento</label>
-              <p><select class="select-notsearch" tabindex="-1" name="tabPrazocad[]" multiple="multiple">
+              <p><select class="select-notsearch" tabindex="-1" name="tabPrazocad[]" multiple="multiple" id="tabPrazo_view" disabled>
                 @foreach ($prazoCobs as $prazoCob)
                 <option value={{$prazoCob->id_prazo}}>{{$prazoCob->id_prazo . ' - ' . $prazoCob->descricao}}</option>
                 @endforeach

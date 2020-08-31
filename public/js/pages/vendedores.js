@@ -160,7 +160,7 @@ $('#AlterarTabPrecoModal').on('show.bs.modal', function (event) {
     modal.find('#descrical_alt').val(descricaoAlt)
 })
 
-$('#VisualizarTabPrecoModal').on('show.bs.modal', function (event) {
+$('#VisualizarVenModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
     var tabPrecoCod = button.data('codigo')
     var descricaoView = button.data('descricao')
@@ -170,19 +170,11 @@ $('#VisualizarTabPrecoModal').on('show.bs.modal', function (event) {
     var statusView = button.data('status')
 
     $("#empresa_view").select2({
-        dropdownParent: $("#VisualizarTabPrecoModal"), width: '100%',
+        dropdownParent: $("#VisualizarVenModal"), width: '100%',
     }).val(empCodView).trigger("change");
 
-    $("#prevenda_view").select2({
-        dropdownParent: $("#VisualizarTabPrecoModal"), width: '100%',
-    }).val(preVendaView).trigger("change");
-
-    $("#pedweb_view").select2({
-        dropdownParent: $("#VisualizarTabPrecoModal"), width: '100%',
-    }).val(pedWebView).trigger("change");
-
     $("#status_view").select2({
-        dropdownParent: $("#VisualizarTabPrecoModal"), width: '100%',
+        dropdownParent: $("#VisualizarVenModal"), width: '100%',
     }).val(statusView).trigger("change");
 
     $(this).find('form').trigger('reset');
