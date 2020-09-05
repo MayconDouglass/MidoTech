@@ -39,8 +39,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $ativo
  * 
  * @property Setempresa $setempresa
- * @property Vendedor $vendedor
- * @property Collection|Vendedor[] $vendedors
  * @property Collection|Venmodcobranca[] $venmodcobrancas
  * @property Collection|Venprazopag[] $venprazopags
  * @property Collection|Ventabelapreco[] $ventabelaprecos
@@ -98,21 +96,6 @@ class Vendedor extends Model
 	public function setempresa()
 	{
 		return $this->belongsTo(Setempresa::class, 'emp_cod');
-	}
-
-	public function vendedor()
-	{
-		return $this->belongsTo(Vendedor::class, 'gerente');
-	}
-
-	public function setor()
-	{
-		return $this->belongsTo(Setor::class, 'setor');
-	}
-
-	public function vendedors()
-	{
-		return $this->hasMany(Vendedor::class, 'gerente');
 	}
 
 	public function venmodcobrancas()

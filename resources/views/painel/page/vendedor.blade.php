@@ -80,18 +80,35 @@
           <td>
             <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal"
               data-target="#VisualizarVenModal" data-codigo="{{$vendedor->id_vendedor}}"
-              data-empCod="{{$vendedor->emp_cod}}" data-nome="{{$vendedor->nome}}" data-logradouro="{{$vendedor->logradouro}}"
-              data-comp="{{$vendedor->complemento}}" data-numero="{{$vendedor->numero}}" data-bairro="{{$vendedor->bairro}}"
+              data-emp-cod="{{$vendedor->emp_cod}}" data-nome="{{$vendedor->nome}}"
+              data-logradouro="{{$vendedor->logradouro}}" data-comp="{{$vendedor->complemento}}"
+              data-numero="{{$vendedor->numero}}" data-bairro="{{$vendedor->bairro}}"
               data-cidade="{{$vendedor->cidade}}" data-uf="{{$vendedor->uf}}" data-cep="{{$vendedor->cep}}"
-              data-pessoa="{{$vendedor->essoa}}" data-uf="{{$vendedor->uf}}" data-cep="{{$vendedor->cep}}"
-              > Visualizar</button>
+              data-pessoa="{{$vendedor->pessoa}}" data-cnpjcpf="{{$vendedor->cnpjcpf}}" data-tipo="{{$vendedor->tipo}}"
+              data-supervisor="{{$vendedor->supervisor}}" data-gerente="{{$vendedor->gerente}}"
+              data-email="{{$vendedor->email}}" data-comissao="{{$vendedor->comissao}}"
+              data-pago-emissao="{{$vendedor->pago_emissao}}" data-pago-baixa="{{$vendedor->pago_baixa}}"
+              data-desconto="{{$vendedor->desconto_max}}" data-pedido-min="{{$vendedor->pedido_min}}"
+              data-setor="{{$vendedor->setor}}" data-status="{{$vendedor->ativo}}"
+              data-telefone="{{$vendedor->telefone}}"> Visualizar</button>
             @foreach ($acessoPerfil as $acesso)
             @if (($acesso->role == 2)&&($acesso->ativo == 1))
             <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
-              data-target="#AlterarUserModal" > Alterar</button>
+              data-target="#AlterarVenModal" data-codigo="{{$vendedor->id_vendedor}}"
+              data-emp-cod="{{$vendedor->emp_cod}}" data-nome="{{$vendedor->nome}}"
+              data-logradouro="{{$vendedor->logradouro}}" data-comp="{{$vendedor->complemento}}"
+              data-numero="{{$vendedor->numero}}" data-bairro="{{$vendedor->bairro}}"
+              data-cidade="{{$vendedor->cidade}}" data-uf="{{$vendedor->uf}}" data-cep="{{$vendedor->cep}}"
+              data-pessoa="{{$vendedor->pessoa}}" data-cnpjcpf="{{$vendedor->cnpjcpf}}" data-tipo="{{$vendedor->tipo}}"
+              data-supervisor="{{$vendedor->supervisor}}" data-gerente="{{$vendedor->gerente}}"
+              data-email="{{$vendedor->email}}" data-comissao="{{$vendedor->comissao}}"
+              data-pago-emissao="{{$vendedor->pago_emissao}}" data-pago-baixa="{{$vendedor->pago_baixa}}"
+              data-desconto="{{$vendedor->desconto_max}}" data-pedido-min="{{$vendedor->pedido_min}}"
+              data-setor="{{$vendedor->setor}}" data-status="{{$vendedor->ativo}}"
+              data-telefone="{{$vendedor->telefone}}"> Alterar</button>
 
             <button type="button" class="btn btn-info btn-sm fa fa-key" data-toggle="modal"
-              data-target="#modal-password" ></button>
+              data-target="#modal-password"></button>
             @endif
             @endforeach
 
@@ -280,28 +297,29 @@
             <div class="col-sm-4">
               <label class="control-label">Tab.Preço</label>
               <p><select class="select-notsearch" tabindex="-1" name="tabPrecocad[]" multiple="multiple">
-                @foreach ($tabPrecos as $tabPreco)
-                <option value={{$tabPreco->id_tabela}}>{{$tabPreco->id_tabela . ' - ' . $tabPreco->descricao}}</option>
-                @endforeach
-              </select></p>
+                  @foreach ($tabPrecos as $tabPreco)
+                  <option value={{$tabPreco->id_tabela}}>{{$tabPreco->id_tabela . ' - ' . $tabPreco->descricao}}
+                  </option>
+                  @endforeach
+                </select></p>
             </div>
 
             <div class="col-sm-4">
               <label class="control-label">Modo de Cobrança</label>
               <p><select class="select-notsearch" tabindex="-1" name="modCobcad[]" multiple="multiple">
-                @foreach ($modCobs as $modCob)
-                <option value={{$modCob->id_modocob}}>{{$modCob->id_modocob . ' - ' . $modCob->descricao}}</option>
-                @endforeach
-              </select></p>
+                  @foreach ($modCobs as $modCob)
+                  <option value={{$modCob->id_modocob}}>{{$modCob->id_modocob . ' - ' . $modCob->descricao}}</option>
+                  @endforeach
+                </select></p>
             </div>
 
             <div class="col-sm-4">
               <label class="control-label">Prazo de Pagamento</label>
               <p><select class="select-notsearch" tabindex="-1" name="tabPrazocad[]" multiple="multiple">
-                @foreach ($prazoCobs as $prazoCob)
-                <option value={{$prazoCob->id_prazo}}>{{$prazoCob->id_prazo . ' - ' . $prazoCob->descricao}}</option>
-                @endforeach
-              </select></p>
+                  @foreach ($prazoCobs as $prazoCob)
+                  <option value={{$prazoCob->id_prazo}}>{{$prazoCob->id_prazo . ' - ' . $prazoCob->descricao}}</option>
+                  @endforeach
+                </select></p>
             </div>
 
           </div>
@@ -326,7 +344,7 @@
     <div class="modal-content">
       <div class="view_modalHeader">
         <div class="modal-header">
-          <h5 class="modal-title" id="VisualizarUserModalLabel"></h5>
+          <h5 class="modal-title" id="VisualizarVenModalLabel"></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -338,10 +356,10 @@
         <form class="form-horizontal" method="POST">
           @csrf
           <div class="form-group row">
-            
+
             <div class="col-sm-1">
               <label class="control-label">ID</label>
-              <input class="form-control" type="text" name="idVendedor" id="ven_cod" disabled>
+              <input class="form-control" type="text" name="idVendedor" id="vencod_view" disabled>
             </div>
 
             <div class="col-sm-5">
@@ -407,38 +425,38 @@
             <div class="col-sm-4">
               <label class="control-label">Empresa</label>
               <p><select class="select-notsearch" tabindex="-1" name="empresaview" id="empresa_view" disabled>
-                @foreach ($empresas as $empresa)
-                <option value={{$empresa->id_empresa}}>{{$empresa->id_empresa . ' - ' . $empresa->razao_social}}
-                </option>
-                @endforeach
-              </select></p>
+                  @foreach ($empresas as $empresa)
+                  <option value={{$empresa->id_empresa}}>{{$empresa->id_empresa . ' - ' . $empresa->razao_social}}
+                  </option>
+                  @endforeach
+                </select></p>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Pedido Mínimo</label>
-              <input class="form-control" type="number" name="pedminview" min="0.00" id="pedmin_view" value="0.00" disabled>
+              <input class="form-control" type="number" name="pedminview" id="pedmin_view" disabled>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Comissão</label>
-              <input class="form-control" type="number" name="comissaoview" min="0.00" id="comissao_view" value="0.00" disabled>
+              <input class="form-control" type="number" name="comissaoview" id="comissao_view" disabled>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Pago na emissao(%)</label>
-              <input class="form-control" type="number" name="pagoemissaoview" min="0.00" id="pagoemissao_view" value="0.00" disabled>
+              <input class="form-control" type="number" name="pagoemissaoview" id="pagoemissao_view" disabled>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Pago na baixa(%)</label>
-              <input class="form-control" type="number" name="pagobaixaview" min="0.00" id="pagobaixa_view" value="0.00" disabled>
+              <input class="form-control" type="number" name="pagobaixaview" id="pagobaixa_view" disabled>
 
-            
+
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Desconto máximo(%)</label>
-              <input class="form-control" type="number" name="descontoview" min="0.00" id="desconto_view" value="0.00" disabled>
+              <input class="form-control" type="number" name="descontoview" id="desconto_view" disabled>
             </div>
 
             <div class="col-sm-2">
@@ -448,7 +466,8 @@
 
             <div class="col-sm-6">
               <label class="control-label">Logradouro</label>
-              <input class="form-control" type="text" name="logradouroview" id="logradouro_view" maxlength="200" disabled>
+              <input class="form-control" type="text" name="logradouroview" id="logradouro_view" maxlength="200"
+                disabled>
             </div>
 
             <div class="col-sm-2">
@@ -458,7 +477,8 @@
 
             <div class="col-sm-3">
               <label class="control-label">Complemento</label>
-              <p><input class="form-control" type="text" name="complementoview" id="complemento_view" maxlength="20" disabled></p>
+              <p><input class="form-control" type="text" name="complementoview" id="complemento_view" maxlength="20"
+                  disabled></p>
             </div>
 
             <div class="col-sm-2">
@@ -493,29 +513,33 @@
 
             <div class="col-sm-4">
               <label class="control-label">Tab.Preço</label>
-              <p><select class="select-notsearch" tabindex="-1" name="tabPrecocad[]" id="tabPreco_view" multiple="multiple" disabled>
-                @foreach ($tabPrecos as $tabPreco)
-                <option value={{$tabPreco->id_tabela}}>{{$tabPreco->id_tabela . ' - ' . $tabPreco->descricao}}</option>
-                @endforeach
-              </select></p>
+              <p><select class="select-notsearch" tabindex="-1" name="tabPrecocad[]" id="tabPreco_view"
+                  multiple="multiple" disabled>
+                  @foreach ($tabPrecos as $tabPreco)
+                  <option value={{$tabPreco->id_tabela}}>{{$tabPreco->id_tabela . ' - ' . $tabPreco->descricao}}
+                  </option>
+                  @endforeach
+                </select></p>
             </div>
 
             <div class="col-sm-4">
               <label class="control-label">Modo de Cobrança</label>
-              <p><select class="select-notsearch" tabindex="-1" name="modCobcad[]" multiple="multiple" id="modCob_view" disabled>
-                @foreach ($modCobs as $modCob)
-                <option value={{$modCob->id_modocob}}>{{$modCob->id_modocob . ' - ' . $modCob->descricao}}</option>
-                @endforeach
-              </select></p>
+              <p><select class="select-notsearch" tabindex="-1" name="modCobcad[]" multiple="multiple" id="modCob_view"
+                  disabled>
+                  @foreach ($modCobs as $modCob)
+                  <option value={{$modCob->id_modocob}}>{{$modCob->id_modocob . ' - ' . $modCob->descricao}}</option>
+                  @endforeach
+                </select></p>
             </div>
 
             <div class="col-sm-4">
               <label class="control-label">Prazo de Pagamento</label>
-              <p><select class="select-notsearch" tabindex="-1" name="tabPrazocad[]" multiple="multiple" id="tabPrazo_view" disabled>
-                @foreach ($prazoCobs as $prazoCob)
-                <option value={{$prazoCob->id_prazo}}>{{$prazoCob->id_prazo . ' - ' . $prazoCob->descricao}}</option>
-                @endforeach
-              </select></p>
+              <p><select class="select-notsearch" tabindex="-1" name="tabPrazocad[]" multiple="multiple"
+                  id="tabPrazo_view" disabled>
+                  @foreach ($prazoCobs as $prazoCob)
+                  <option value={{$prazoCob->id_prazo}}>{{$prazoCob->id_prazo . ' - ' . $prazoCob->descricao}}</option>
+                  @endforeach
+                </select></p>
             </div>
 
           </div>
@@ -523,6 +547,43 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" id="reset" data-dismiss="modal"><i class="fa fa-times">
                 Cancelar</i></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Alteracao-->
+<div class="modal fade" id="AlterarVenModal" tabindex="-1" role="dialog" aria-labelledby="AlterarVenModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="alt_modalHeader">
+        <div class="modal-header">
+          <h5 class="modal-title" id="AlterarVenModalLabel">Nova Empresa</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+
+        <!-- Form de cadastro -->
+        <form class="form-horizontal" method="POST" action="{{action('VendedorController@update')}}"
+          enctype="multipart/form-data">
+          @csrf
+          <div class="form-group row">
+
+
+
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="reset" data-dismiss="modal"><i class="fa fa-times">
+                Cancelar</i></button>
+            <button type="submit" class="btn btn-primary" id="btnSalvar" name="btnSalvar"><i class="fa fa-floppy-o">
+                Salvar</i></button>
           </div>
         </form>
       </div>

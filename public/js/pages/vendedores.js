@@ -40,16 +40,22 @@ $(function () {
         if (e == '1') {
             $("#supervisorcad").prop('disabled', true);
             $("#gerentecad").prop('disabled', false);
-            $("#supervisorcad").select2({dropdownParent: $("#CadastroModal"), width: '100%',
-                minimumResultsForSearch: Infinity}).val(0).trigger("change");
+            $("#supervisorcad").select2({
+                dropdownParent: $("#CadastroModal"), width: '100%',
+                minimumResultsForSearch: Infinity
+            }).val(0).trigger("change");
         } else if (e == '2') {
             $("#supervisorcad").prop('disabled', true);
             $("#gerentecad").prop('disabled', true);
-            $("#supervisorcad").select2({dropdownParent: $("#CadastroModal"), width: '100%',
-            minimumResultsForSearch: Infinity}).val(0).trigger("change");
-            $("#gerentecad").select2({dropdownParent: $("#CadastroModal"), width: '100%',
-                minimumResultsForSearch: Infinity}).val(0).trigger("change");
-        }else if (e == '0') {
+            $("#supervisorcad").select2({
+                dropdownParent: $("#CadastroModal"), width: '100%',
+                minimumResultsForSearch: Infinity
+            }).val(0).trigger("change");
+            $("#gerentecad").select2({
+                dropdownParent: $("#CadastroModal"), width: '100%',
+                minimumResultsForSearch: Infinity
+            }).val(0).trigger("change");
+        } else if (e == '0') {
             $("#supervisorcad").prop('disabled', false);
             $("#gerentecad").prop('disabled', false);
         }
@@ -126,47 +132,32 @@ $('#modal-danger').on('show.bs.modal', function (event) {
     modal.find('.b_text_modal_title_danger').text('Excluir Registro')
 })
 
-$('#AlterarTabPrecoModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Botão que acionou o modal
-    var tabPrecoCod = button.data('codigo')
-    var descricaoAlt = button.data('descricao')
-    var empCodAlt = button.data('empresa')
-    var preVendaAlt = button.data('prevenda')
-    var pedWebAlt = button.data('pedidoweb')
-    var statusAlt = button.data('status')
-
-    $("#empresa_alt").select2({
-        dropdownParent: $("#AlterarTabPrecoModal"), width: '100%',
-    }).val(empCodAlt).trigger("change");
-
-    $("#prevenda_alt").select2({
-        dropdownParent: $("#AlterarTabPrecoModal"), width: '100%',
-        minimumResultsForSearch: Infinity
-    }).val(preVendaAlt).trigger("change");
-
-    $("#pedweb_alt").select2({
-        dropdownParent: $("#AlterarTabPrecoModal"), width: '100%',
-        minimumResultsForSearch: Infinity
-    }).val(pedWebAlt).trigger("change");
-
-    $("#status_alt").select2({
-        dropdownParent: $("#AlterarTabPrecoModal"), width: '100%',
-        minimumResultsForSearch: Infinity
-    }).val(statusAlt).trigger("change");
-
-    var modal = $(this)
-    modal.find('.modal-title').text('Alterar Registro')
-    modal.find('#idTabPrecoAlt').val(tabPrecoCod)
-    modal.find('#descrical_alt').val(descricaoAlt)
-})
 
 $('#VisualizarVenModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
-    var tabPrecoCod = button.data('codigo')
-    var descricaoView = button.data('descricao')
-    var empCodView = button.data('empresa')
-    var preVendaView = button.data('prevenda')
-    var pedWebView = button.data('pedidoweb')
+    var venCodView = button.data('codigo')
+    var empCodView = button.data('emp-cod')
+    var nomeView = button.data('nome')
+    var cnpjcpfView = button.data('cnpjcpf')
+    var pessoaView = button.data('pessoa')
+    var tipoView = button.data('tipo')
+    var supervisorView = button.data('supervisor')
+    var gerenteView = button.data('gerente')
+    var emailView = button.data('email')
+    var pedminView = button.data('pedido-min')
+    var comissaoView = button.data('comissao')
+    var pagoEmissaoView = button.data('pago-emissao')
+    var pagoBaixaView = button.data('pago-baixa')
+    var descontoMaxView = button.data('desconto')
+    var telefoneView = button.data('telefone')
+    var logradouroView = button.data('logradouro')
+    var numeroView = button.data('numero')
+    var bairroView = button.data('bairro')
+    var compView = button.data('comp')
+    var cidadeView = button.data('cidade')
+    var cepView = button.data('cep')
+    var ufView = button.data('uf')
+    var setorView = button.data('setor')
     var statusView = button.data('status')
 
     $("#empresa_view").select2({
@@ -177,9 +168,102 @@ $('#VisualizarVenModal').on('show.bs.modal', function (event) {
         dropdownParent: $("#VisualizarVenModal"), width: '100%',
     }).val(statusView).trigger("change");
 
+    $("#setor_view").select2({
+        dropdownParent: $("#VisualizarVenModal"), width: '100%',
+    }).val(setorView).trigger("change");
+
+    $.ajax({
+        type: 'post',
+        dataType: 'json',
+        url: 'vendedores/ModCob',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            'id': venCodView
+        },
+        success: function (result) {
+            
+            $("#modCob_view").val(result[0]).trigger("change");
+
+        },
+        error: function (resultError) {
+
+            console.log('Erro na consulta');
+
+        }
+
+    })
+
+    $.ajax({
+        type: 'post',
+        dataType: 'json',
+        url: 'vendedores/PrazoPag',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            'id': venCodView
+        },
+        success: function (result) {
+            
+            $("#tabPrazo_view").val(result[0]).trigger("change");
+
+        },
+        error: function (resultError) {
+
+            console.log('Erro na consulta');
+
+        }
+
+    })
+
+    $.ajax({
+        type: 'post',
+        dataType: 'json',
+        url: 'vendedores/TabPreco',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {
+            'id': venCodView
+        },
+        success: function (result) {
+            
+            $("#tabPreco_view").val(result[0]).trigger("change");
+
+        },
+        error: function (resultError) {
+
+            console.log('Erro na consulta');
+
+        }
+
+    })
+
     $(this).find('form').trigger('reset');
     var modal = $(this)
     modal.find('.modal-title').text('Visualizar Registro')
-    modal.find('#idTabPreco_view').val(tabPrecoCod)
-    modal.find('#descricao_view').val(descricaoView)
+    modal.find('#vencod_view').val(venCodView)
+    modal.find('#nome_view').val(nomeView)
+    modal.find('#cnpjcpf_view').val(cnpjcpfView)
+    modal.find('#pessoa_view').val(pessoaView)
+    modal.find('#tipovendedor_view').val(tipoView)
+    modal.find('#supervisor_view').val(supervisorView)
+    modal.find('#gerente_view').val(gerenteView)
+    modal.find('#email_view').val(emailView)
+    modal.find('#pedmin_view').val(pedminView)
+    modal.find('#comissao_view').val(comissaoView)
+    modal.find('#pagoemissao_view').val(pagoEmissaoView)
+    modal.find('#pagobaixa_view').val(pagoBaixaView)
+    modal.find('#desconto_view').val(descontoMaxView)
+    modal.find('#telefone_view').val(telefoneView)
+    modal.find('#logradouro_view').val(logradouroView)
+    modal.find('#numero_view').val(numeroView)
+    modal.find('#complemento_view').val(compView)
+    modal.find('#bairro_view').val(bairroView)
+    modal.find('#cidade_view').val(cidadeView)
+    modal.find('#uf_view').val(ufView)
+    modal.find('#cep_view').val(cepView)
+
 })

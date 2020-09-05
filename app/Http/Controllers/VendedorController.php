@@ -165,28 +165,33 @@ class VendedorController extends Controller
     }
 
     public function destroy(Request $request){
+
         if(empty($request->iddelete)){
-        return redirect()->action('TabPrecoController@create')->with('status_error', 'Falha!');    
+
+        return redirect()->action('VendedorController@create')->with('status_error', 'Falha!');
+
         }
-            $tabPrecoDel = Tabelapreco::find($request->iddelete);
-            $delete=$tabPrecoDel ->delete();
+            $vendedorDel = Vendedor::find($request->iddelete);
+            $delete=$vendedorDel ->delete();
+
             if($delete){
-               return redirect()->action('TabPrecoController@create')->with('status_success', 'Excluído!');
+                return redirect()->action('VendedorController@create')->with('status_success', 'Excluído!');
             }else{
-            return redirect()->action('TabPrecoController@create')->with('status_error', 'Não foi possível excluir o registro, possivelmente existem movimentação/cadastros!');    
+                return redirect()->action('VendedorController@create')->with('status_error', 'Não foi possível excluir o registro, possivelmente existem movimentação/cadastros!');    
             }
     }
 
     public function obterModCobVen(Request $request){
-        //dd($request);
-        $modCob = Venmodcobranca::where('vendedor',$request->id_vendedor)->pluck('modocobranca');
+
+        $modCob = Venmodcobranca::where('vendedor',$request->id)->pluck('modocobranca');
        
         return response()->json([$modCob],200);
 
     }
 
     public function obterPrazoPagVen(Request $request){
-        $prazoPag = Venprazopag::where('vendedor',$request->id_vendedor)->pluck('prazopag');
+
+        $prazoPag = Venprazopag::where('vendedor',$request->id)->pluck('prazopag');
        
         return response()->json([$prazoPag],200);
 
@@ -194,7 +199,7 @@ class VendedorController extends Controller
 
     public function obterTabPrecoVen(Request $request){
 
-        $tabPreco = Ventabelapreco::where('vendedor',$request->id_vendedor)->pluck('tabpreco');
+        $tabPreco = Ventabelapreco::where('vendedor',$request->id)->pluck('tabpreco');
        
         return response()->json([$tabPreco],200);
 

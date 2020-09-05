@@ -76,6 +76,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/vendedores/cad', 'VendedorController@store');
     Route::post('/vendedores/update', 'VendedorController@update');
     Route::post('/vendedores/delete', 'VendedorController@destroy');
+    Route::post('/vendedores/ModCob', 'VendedorController@obterModCobVen');
+    Route::post('/vendedores/PrazoPag', 'VendedorController@obterPrazoPagVen');
+    Route::post('/vendedores/TabPreco', 'VendedorController@obterTabPrecoVen');
 
 });
 
