@@ -83,7 +83,7 @@
               data-emp-cod="{{$vendedor->emp_cod}}" data-nome="{{$vendedor->nome}}"
               data-logradouro="{{$vendedor->logradouro}}" data-comp="{{$vendedor->complemento}}"
               data-numero="{{$vendedor->numero}}" data-bairro="{{$vendedor->bairro}}"
-              data-cidade="{{$vendedor->cidade}}" data-uf="{{$vendedor->uf}}" data-cep="{{$vendedor->cep}}"
+              data-cidade="{{$vendedor->cidade}}" data-estado="{{$vendedor->uf}}" data-cep="{{$vendedor->cep}}"
               data-pessoa="{{$vendedor->pessoa}}" data-cnpjcpf="{{$vendedor->cnpjcpf}}" data-tipo="{{$vendedor->tipo}}"
               data-supervisor="{{$vendedor->supervisor}}" data-gerente="{{$vendedor->gerente}}"
               data-email="{{$vendedor->email}}" data-comissao="{{$vendedor->comissao}}"
@@ -98,7 +98,7 @@
               data-emp-cod="{{$vendedor->emp_cod}}" data-nome="{{$vendedor->nome}}"
               data-logradouro="{{$vendedor->logradouro}}" data-comp="{{$vendedor->complemento}}"
               data-numero="{{$vendedor->numero}}" data-bairro="{{$vendedor->bairro}}"
-              data-cidade="{{$vendedor->cidade}}" data-uf="{{$vendedor->uf}}" data-cep="{{$vendedor->cep}}"
+              data-cidade="{{$vendedor->cidade}}" data-estado="{{$vendedor->uf}}" data-cep="{{$vendedor->cep}}"
               data-pessoa="{{$vendedor->pessoa}}" data-cnpjcpf="{{$vendedor->cnpjcpf}}" data-tipo="{{$vendedor->tipo}}"
               data-supervisor="{{$vendedor->supervisor}}" data-gerente="{{$vendedor->gerente}}"
               data-email="{{$vendedor->email}}" data-comissao="{{$vendedor->comissao}}"
@@ -108,14 +108,14 @@
               data-telefone="{{$vendedor->telefone}}"> Alterar</button>
 
             <button type="button" class="btn btn-info btn-sm fa fa-key" data-toggle="modal"
-              data-target="#modal-password"></button>
+              data-target="#modal-password" data-codigo="{{$vendedor->id_vendedor}}"></button>
             @endif
             @endforeach
 
             @foreach ($acessoPerfil as $acesso)
             @if (($acesso->role == 3)&&($acesso->ativo == 1))
             <button type="button" class="btn btn-danger btn-sm fa fa-trash-o" data-toggle="modal"
-              data-target="#modal-danger"></button>
+              data-target="#modal-danger" data-codigo="{{$vendedor->id_vendedor}}"></button>
             @endif
             @endforeach
           </td>
@@ -220,28 +220,28 @@
 
             <div class="col-sm-2">
               <label class="control-label">Pedido Mínimo</label>
-              <input class="form-control" type="number" name="pedmincad" min="0.00" id="pedmin" value="0.00">
+              <input class="form-control" type="number" name="pedmincad" id="pedmin" value="0.00" step="0.01" min="0">
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Comissão</label>
-              <input class="form-control" type="number" name="comissaocad" min="0.00" id="comissao" value="0.00">
+              <input class="form-control" type="number" name="comissaocad" id="comissao" value="0.00" step="0.01" min="0">
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Pago na emissao(%)</label>
-              <input class="form-control" type="number" name="pagoemissaocad" min="0.00" id="pagoemissao" value="0.00">
+              <input class="form-control" type="number" name="pagoemissaocad" id="pagoemissao" value="0.00" step="0.01" min="0">
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Pago na baixa(%)</label>
-              <p><input class="form-control" type="number" name="pagobaixacad" min="0.00" id="pagobaixa" value="0.00">
+              <p><input class="form-control" type="number" name="pagobaixacad" id="pagobaixa" value="0.00" step="0.01" min="0">
               </p>
             </div>
 
             <div class="col-sm-2">
               <label class="control-label">Desconto máximo(%)</label>
-              <input class="form-control" type="number" name="descontocad" min="0.00" id="desconto" value="0.00">
+              <input class="form-control" type="number" name="descontocad" id="desconto" value="0.00" step="0.01" min="0">
             </div>
 
             <div class="col-sm-2">
@@ -561,7 +561,7 @@
     <div class="modal-content">
       <div class="alt_modalHeader">
         <div class="modal-header">
-          <h5 class="modal-title" id="AlterarVenModalLabel">Nova Empresa</h5>
+          <h5 class="modal-title" id="AlterarVenModalLabel">Alterar</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -575,9 +575,182 @@
           @csrf
           <div class="form-group row">
 
+            <div class="col-sm-5">
+              <input class="form-control" type="hidden" name="idVendedor" id="vencod_alt">
+              <label class="control-label">Nome</label>
+              <p><input class="form-control" type="text" name="nomealt" id="nome_alt"></p>
+            </div>
 
+            <div class="col-sm-3">
+              <label class="control-label">CNPJ / CPF</label>
+              <p><input class="form-control" type="text" name="cnpjcpfalt" id="cnpjcpf_alt" disabled></p>
+            </div>
 
-            
+            <div class="col-sm-2">
+              <label class="control-label">Tipo Pessoa</label>
+              <select class="select-notsearch" tabindex="-1" name="pessoaalt" id="pessoa_alt" disabled>
+                <option value="0">Física</option>
+                <option value="1">Júridica</option>
+              </select>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Tipo de Vendedor</label>
+              <select class="select-notsearch" tabindex="-1" name="tipoalt" id="tipovendedor_alt">
+                <option value="0">Vendedor</option>
+                <option value="1">Supervisor</option>
+                <option value="2">Gerente</option>
+              </select>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Supervisor</label>
+              <select class="select-notsearch" tabindex="-1" name="supervisoralt" id="supervisor_alt">
+                <option value="0">Nenhum</option>
+                @foreach ($supervisores as $supervisor)
+                <option value={{$supervisor->id_vendedor}}>{{$supervisor->nome}}</option>
+                @endforeach
+              </select>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Gerente</label>
+              <select class="select-notsearch" tabindex="-1" name="gerentealt" id="gerente_alt">
+                <option value="0">Nenhum</option>
+                @foreach ($gerentes as $gerente)
+                <option value={{$gerente->id_vendedor}}>{{$gerente->nome}}</option>
+                @endforeach
+              </select>
+            </div>
+
+            <div class="col-sm-4">
+              <label class="control-label">Email</label>
+              <p><input class="form-control" type="email" name="emailalt" id="email_alt"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Ativo</label>
+              <p><select class="select-notsearch" tabindex="-1" name="statusalt" id="status_alt">
+                  <option value="1">Sim</option>
+                  <option value="0">Não</option>
+                </select></p>
+            </div>
+
+            <div class="col-sm-4">
+              <label class="control-label">Empresa</label>
+              <p><select class="select-notsearch" tabindex="-1" name="empresaalt" id="empresa_alt">
+                  @foreach ($empresas as $empresa)
+                  <option value={{$empresa->id_empresa}}>{{$empresa->id_empresa . ' - ' . $empresa->razao_social}}
+                  </option>
+                  @endforeach
+                </select></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Pedido Mínimo</label>
+              <input class="form-control" type="number" name="pedminalt" id="pedmin_alt" step="0.01" min="0">
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Comissão</label>
+              <input class="form-control" type="number" name="comissaoalt" id="comissao_alt" step="0.01" min="0">
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Pago na emissao(%)</label>
+              <input class="form-control" type="number" name="pagoemissaoalt" id="pagoemissao_alt" step="0.01" min="0">
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Pago na baixa(%)</label>
+              <input class="form-control" type="number" name="pagobaixaalt" id="pagobaixa_alt" step="0.01" min="0">
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Desconto máximo(%)</label>
+              <input class="form-control" type="number" name="descontoalt" id="desconto_alt" step="0.01" min="0">
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Telefone</label>
+              <input class="form-control" type="text" name="telefonealt" id="telefone_alt">
+            </div>
+
+            <div class="col-sm-6">
+              <label class="control-label">Logradouro</label>
+              <input class="form-control" type="text" name="logradouroalt" id="logradouro_alt" maxlength="200">
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Número</label>
+              <p><input class="form-control" type="text" name="numeroalt" id="numero_alt" maxlength="20"></p>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Complemento</label>
+              <p><input class="form-control" type="text" name="complementoalt" id="complemento_alt" maxlength="20"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Bairro</label>
+              <p><input class="form-control" type="text" name="bairroalt" id="bairro_alt" maxlength="60"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Cidade</label>
+              <p><input class="form-control" type="text" name="cidadealt" id="cidade_alt" maxlength="60"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">CEP</label>
+              <p><input class="form-control" type="text" name="cepalt" id="cep_alt" maxlength="9"></p>
+            </div>
+
+            <div class="col-sm-1">
+              <label class="control-label">UF</label>
+              <p><input class="form-control" type="text" name="ufalt" id="uf_alt" maxlength="2"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Setor</label>
+              <p><select class="select-notsearch" tabindex="-1" name="setoralt" id="setor_alt">
+                  <option value="0">0 - Nenhum</option>
+                  @foreach ($setores as $setor)
+                  <option value={{$setor->id_setor}}>{{$setor->id_setor . ' - ' . $setor->setor}}</option>
+                  @endforeach
+                </select></p>
+            </div>
+
+            <div class="col-sm-4">
+              <label class="control-label">Tab.Preço</label>
+              <p><select class="select-notsearch" tabindex="-1" name="tabPrecoalt[]" id="tabPreco_alt"
+                  multiple="multiple">
+                  @foreach ($tabPrecos as $tabPreco)
+                  <option value={{$tabPreco->id_tabela}}>{{$tabPreco->id_tabela . ' - ' . $tabPreco->descricao}}
+                  </option>
+                  @endforeach
+                </select></p>
+            </div>
+
+            <div class="col-sm-4">
+              <label class="control-label">Modo de Cobrança</label>
+              <p><select class="select-notsearch" tabindex="-1" name="modCobalt[]" multiple="multiple" id="modCob_alt">
+                  @foreach ($modCobs as $modCob)
+                  <option value={{$modCob->id_modocob}}>{{$modCob->id_modocob . ' - ' . $modCob->descricao}}</option>
+                  @endforeach
+                </select></p>
+            </div>
+
+            <div class="col-sm-4">
+              <label class="control-label">Prazo de Pagamento</label>
+              <p><select class="select-notsearch" tabindex="-1" name="tabPrazoalt[]" multiple="multiple"
+                  id="tabPrazo_alt">
+                  @foreach ($prazoCobs as $prazoCob)
+                  <option value={{$prazoCob->id_prazo}}>{{$prazoCob->id_prazo . ' - ' . $prazoCob->descricao}}</option>
+                  @endforeach
+                </select></p>
+            </div>
+
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" id="reset" data-dismiss="modal"><i class="fa fa-times">
@@ -590,6 +763,65 @@
     </div>
   </div>
 </div>
+
+<!-- Modal Resetar Senha-->
+<div class="modal fade" id="modal-password">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="password_modalHeader">
+        <div class="modal-header">
+          <h4 class="b_text_modal_title_password"></h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" method="POST" action="{{action('VendedorController@resetPassword')}}">
+          @csrf
+          <input type="hidden" class="form-control col-form-label-sm" id="idVendedor" name="idVendedor">
+          <label class="b_text_modal_password">Deseja realmente resetar a senha deste vendedor? <br> A senha padrão será:
+            123</label>
+
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-secondary btn-sm fa fa-times" data-dismiss="modal"> Cancelar</button>
+            <button type="submit" class="btn btn-info btn-sm fa fa-trash-o"> Confirmar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal de Exclusao-->
+<div class="modal fade" id="modal-danger">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="delete_modalHeader">
+        <div class="modal-header">
+          <h4 class="b_text_modal_title_danger"></h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" method="POST" action="{{action('VendedorController@destroy')}}">
+          @csrf
+          <input type="text" class="form-control col-form-label-sm" id="iddelete" name="iddelete">
+          <label class="b_text_modal_danger">Deseja realmente excluir este registro?</label>
+
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-secondary btn-sm fa fa-times" data-dismiss="modal"> Cancelar</button>
+            <button type="submit" class="btn btn-danger btn-sm fa fa-trash-o"> Confirmar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 @endsection
 

@@ -99,8 +99,16 @@ class VendedorController extends Controller
         $vendedor->pessoa = $request->pessoacad;
         $vendedor->cnpjcpf = $request->cnpjcpfcad;
         $vendedor->tipo = $request->tipocad;
+        if($request->supervisorcad != null){
         $vendedor->supervisor = $request->supervisorcad;
+        }else{
+        $vendedor->supervisor =  0;
+        }
+        if($request->gerentecad != null){
         $vendedor->gerente = $request->gerentecad;
+        }else{
+        $vendedor->gerente = 0;
+        }
         $vendedor->telefone = $request->telefonecad;
         $vendedor->email = $request->emailcad;
         $vendedor->senha = bcrypt('123');
@@ -108,7 +116,6 @@ class VendedorController extends Controller
         $vendedor->pago_emissao = $request->pagoemissaocad;
         $vendedor->pago_baixa = $request->pagobaixacad;
         $vendedor->desconto_max = $request->descontocad;
-        $vendedor->pedido_min = $request->pedmincad;
         $vendedor->pedido_min = $request->pedmincad;
         $vendedor->setor = $request->setorcad;
         $vendedor->ativo = $request->statuscad;
@@ -149,18 +156,81 @@ class VendedorController extends Controller
     }
 
     public function update(Request $request){
-        $tabPreco = Tabelapreco::find($request->idTabPrecoAlt);
-        $tabPreco->prevenda = $request->prevendaalt;
-        $tabPreco->pedidoweb = $request->pedwebalt;
-        $tabPreco->ativo = $request->statusalt;
-        $saveStatus = $tabPreco->save();
-
-        if($saveStatus){            
-                return redirect()->action('TabPrecoController@create')->with('status_success', 'Tabela de Preço Atualizada!');
+        $vendedor = Vendedor::find($request->idVendedor);
+        $vendedor->nome = $request->nomealt;
+        $vendedor->logradouro = $request->logradouroalt;
+        $vendedor->complemento = $request->complementoalt;
+        $vendedor->numero = $request->numeroalt;
+        $vendedor->bairro = $request->bairroalt;
+        $vendedor->cidade = $request->cidadealt;
+        $vendedor->uf = $request->ufalt;
+        $vendedor->cep = $request->cepalt;
+        $vendedor->tipo = $request->tipoalt;
+        if($request->supervisoralt != null){
+        $vendedor->supervisor = $request->supervisoralt;
         }else{
-                return redirect()->action('TabPrecoController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
+        $vendedor->supervisor = 0;   
         }
+        if($request->gerentealt != null){
+        $vendedor->gerente = $request->gerentealt;
+        }else{
+        $vendedor->gerente = 0;
+        }
+        $vendedor->telefone = $request->telefonealt;
+        $vendedor->email = $request->emailalt;
+        $vendedor->comissao = $request->comissaoalt;
+        $vendedor->pago_emissao = $request->pagoemissaoalt;
+        $vendedor->pago_baixa = $request->pagobaixaalt;
+        $vendedor->desconto_max = $request->descontoalt;
+        $vendedor->pedido_min = $request->pedminalt;
+        $vendedor->setor = $request->setoralt;
+        $vendedor->ativo = $request->statusalt;
+        $saveUpdate = $vendedor->save();
+      
+        if($saveUpdate){            
+            $tabPrecoExist = Ventabelapreco::where('vendedor',$request->idVendedor)->delete();
+            foreach ($request->tabPrecoalt as $tabPreco) {
+                $Exist = Ventabelapreco::where('tabpreco',$tabPreco)->where('vendedor',$request->idVendedor)->get()->count('tabpreco');
+                if($Exist < 1){
+                $venTabPreco = new Ventabelapreco();
+                $venTabPreco->vendedor = $request->idVendedor;
+                $venTabPreco->tabpreco = $tabPreco;
+                $venTabPreco->save();
+                }
+            }
+            if($tabPrecoExist){
+                $modCobExist = Venmodcobranca::where('vendedor',$request->idVendedor)->delete();
+                foreach ($request->modCobalt as $modCob) {
+                    $Exist = Venmodcobranca::where('modocobranca',$modCob)->where('vendedor',$request->idVendedor)->get()->count('modocobranca');
+                    if($Exist < 1){
+                    $venModCob = new Venmodcobranca();
+                    $venModCob->vendedor = $request->idVendedor;
+                    $venModCob->modocobranca = $modCob;
+                    $venModCob->save();
+                    }
+                }
 
+                if($modCobExist){
+                    $prazoPagExist = Venprazopag::where('vendedor',$request->idVendedor)->delete();
+                    foreach ($request->tabPrazoalt as $tabPrazo) {
+                        $Exist = Venprazopag::where('prazopag',$tabPrazo)->where('vendedor',$request->idVendedor)->get()->count('tabPrazo');
+                        if($Exist < 1){
+                        $venPrazo= new Venprazopag();
+                        $venPrazo->vendedor = $request->idVendedor;
+                        $venPrazo->prazopag = $tabPrazo;
+                        $venPrazo->save();
+                        }
+                    }
+                }
+            
+            }
+
+            return redirect()->action('VendedorController@create')->with('status_success', 'Vendedor Atualizado!');
+
+        }else{
+
+            return redirect()->action('VendedorController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
+        }
 
     }
 
@@ -172,7 +242,7 @@ class VendedorController extends Controller
 
         }
             $vendedorDel = Vendedor::find($request->iddelete);
-            $delete=$vendedorDel ->delete();
+            $delete=$vendedorDel->delete();
 
             if($delete){
                 return redirect()->action('VendedorController@create')->with('status_success', 'Excluído!');
@@ -181,6 +251,25 @@ class VendedorController extends Controller
             }
     }
 
+    public function resetPassword(Request $request){
+
+        if(empty($request->idVendedor)){
+ 
+             return redirect()->action('VendedorController@create')->with('status_error', 'Falha!');  
+ 
+        }
+        
+        $vendedor = Vendedor::find($request->idVendedor);
+        $vendedor->senha = bcrypt('123');
+        
+        if($vendedor->save()){
+            return redirect()->action('VendedorController@create')->with('status_success', 'Senha resetada!');
+        }else{
+            return redirect()->action('VendedorController@create')->with('status_error', 'OPS! Tente novamente!');
+        }
+ 
+    }
+ 
     public function obterModCobVen(Request $request){
 
         $modCob = Venmodcobranca::where('vendedor',$request->id)->pluck('modocobranca');

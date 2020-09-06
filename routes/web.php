@@ -63,7 +63,7 @@ Route::group(['middleware' => ['auth']], function () {
      Route::post('/tabpreco/update', 'TabPrecoController@update');
      Route::post('/tabpreco/delete', 'TabPrecoController@destroy');
 
-    // Tabela de Preco
+    // Tabela de Unidade
     Route::get('/unidades', 'UnidadesController@create')->name('unidade');
     Route::post('/unidades/cad', 'UnidadesController@store');
 
@@ -79,6 +79,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/vendedores/ModCob', 'VendedorController@obterModCobVen');
     Route::post('/vendedores/PrazoPag', 'VendedorController@obterPrazoPagVen');
     Route::post('/vendedores/TabPreco', 'VendedorController@obterTabPrecoVen');
+    Route::post('/vendedores/resetPassword', 'VendedorController@resetPassword');
+
+    // Setor
+    Route::get('/setores', 'SetorController@create')->name('setores');
+    Route::post('/setores/cad', 'SetorController@store');
 
 });
 

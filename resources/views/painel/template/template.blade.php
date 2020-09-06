@@ -173,7 +173,7 @@
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-circle"></i>
                 <p>
-                  1 . Clientes
+                  Clientes
                   <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
@@ -183,13 +183,19 @@
                 <li class="nav-item">
                   <a href="{{route('clientes')}}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>11 . Clientes</p>
+                    <p>Clientes</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="{{route('vendedores')}}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>12 . Vendedores</p>
+                    <p>Vendedores</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('setores')}}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Setores</p>
                   </a>
                 </li>
                 @endif
@@ -198,7 +204,7 @@
                   <a href="#" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>
-                      12 . Relatórios
+                      Relatórios
                       <i class="right fas fa-angle-left"></i>
                     </p>
                   </a>
