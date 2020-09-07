@@ -52,7 +52,7 @@ class VendedorController extends Controller
                 $empresas = Setempresa::all();
                 $supervisores = Vendedor::where('tipo',1)->get();
                 $gerentes = Vendedor::where('tipo',2)->get();
-                $setores = Setor::all();
+                $setores = Setor::where('ativo',1)->get();
                 $tabPrecos = Tabelapreco::where('ativo',1)->get();
                 $modCobs = Modocobranca::where('ativo',1)->get();
                 $prazoCobs = Prazopagamento::where('ativo',1)->get();
@@ -61,10 +61,10 @@ class VendedorController extends Controller
                 $empresas = Setempresa::where('id_empresa',$uempresa)->get();
                 $supervisores = Vendedor::where('tipo',1)->where('emp_cod',$uempresa)->get();
                 $gerentes = Vendedor::where('tipo',2)->where('emp_cod',$uempresa)->get();
-                $setores = Setor::where('emp_cod',$uempresa)->get();
+                $setores = Setor::where('emp_cod',$uempresa)->where('ativo',1)->get();
                 $tabPrecos = Tabelapreco::where('emp_cod',$uempresa)->where('ativo',1)->get();
                 $modCobs = Modocobranca::where('ativo',1)->get();
-                $prazoCobs = Prazopagamento::where('ativo',1)->where('emp_cod',$uempresa)->get();
+                $prazoCobs = Prazopagamento::where('ativo',1)->get();
             }
 
             

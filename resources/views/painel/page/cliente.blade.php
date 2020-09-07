@@ -15,7 +15,7 @@
         <h1 class="m-0 text-dark">Clientes
           @foreach ($acessoPerfil as $acesso)
           @if (($acesso->role == 2)&&($acesso->ativo == 1))
-          <a href="{{route('adduser')}}">
+          <a href="{{route('adduser') }}">
             <button type="button" class="btn btn-primary fa fa-user-plus" data-toggle="modal">
               Cadastrar
             </button>
@@ -29,7 +29,7 @@
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="index">Home</a></li>
           <li class="breadcrumb-item active">Clientes</li>
-          <li class="breadcrumb-item active">11 - Cadastro</li>
+          <li class="breadcrumb-item active">Cadastro</li>
         </ol>
       </div>
     </div>

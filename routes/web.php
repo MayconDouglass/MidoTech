@@ -70,6 +70,7 @@ Route::group(['middleware' => ['auth']], function () {
     // Cliente
     Route::get('/clientes', 'ClienteController@create')->name('clientes');
     Route::get('/clientes/new', 'ClienteController@addUser')->name('adduser');
+    Route::post('/clientes', 'ClienteController@store');
     
     // Vendedor
     Route::get('/vendedores', 'VendedorController@create')->name('vendedores');
@@ -84,6 +85,8 @@ Route::group(['middleware' => ['auth']], function () {
     // Setor
     Route::get('/setores', 'SetorController@create')->name('setores');
     Route::post('/setores/cad', 'SetorController@store');
+    Route::post('/setores/update', 'SetorController@update');
+    Route::post('/setores/delete', 'SetorController@destroy');
 
 });
 

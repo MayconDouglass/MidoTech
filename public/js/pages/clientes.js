@@ -15,7 +15,7 @@ $(function () {
         width: '100%'
     });
     $('.select-notsearch').select2({
-        dropdownParent: $(".card-body"),
+        dropdownParent: $("#pessoa"),
         width: '100%',
         minimumResultsForSearch: Infinity
     });

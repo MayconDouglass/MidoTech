@@ -82,5 +82,30 @@ class SetorController extends Controller
 
     }
 
+    public function update(Request $request){
+        $setor = Setor::find($request->idSetor);
+        $setor->ativo = $request->statusalt;
+        $saveUpdate = $setor->save();
+      
+        if($saveUpdate){            
+                return redirect()->action('SetorController@create')->with('status_success', 'Setor Atualizado!');
+        }else{
+                return redirect()->action('SetorController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
+        }
+    }
+
+    public function destroy(Request $request){
+        if(empty($request->iddelete)){
+        return redirect()->action('SetorController@create')->with('status_error', 'Falha!');    
+        }
+            $setorDel = Setor::find($request->iddelete);
+            $delete=$setorDel ->delete();
+            if($delete){
+               return redirect()->action('SetorController@create')->with('status_success', 'Excluído!');
+            }else{
+            return redirect()->action('SetorController@create')->with('status_error', 'Não foi possível excluir o registro, possivelmente existem movimentação/cadastros!');    
+            }
+    }
+
 
 }

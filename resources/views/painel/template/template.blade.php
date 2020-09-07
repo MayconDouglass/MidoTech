@@ -182,19 +182,19 @@
                 @if (($acesso->role == 1)&&($acesso->ativo == 1))
                 <li class="nav-item">
                   <a href="{{route('clientes')}}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
+                    <i class="fa fa-user-o nav-icon"></i>
                     <p>Clientes</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="{{route('vendedores')}}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
+                    <i class="fa fa-address-card nav-icon"></i>
                     <p>Vendedores</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="{{route('setores')}}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
+                    <i class="fa fa-map-marker nav-icon"></i>
                     <p>Setores</p>
                   </a>
                 </li>
