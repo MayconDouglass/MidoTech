@@ -8,6 +8,7 @@ use App\Models\PerfilAcesso;
 use App\Models\Prazopagamento;
 use App\Models\Setempresa;
 use App\Models\Tabelapreco;
+use App\Models\Vendedor;
 use Illuminate\Http\Request;
 
 use Auth;
@@ -97,17 +98,19 @@ class ClienteController extends Controller
                 $modCobs = Modocobranca::where('ativo',1)->get();
                 $tabPrecos = Tabelapreco::where('ativo',1)->where('emp_cod',$uempresa)->get();
                 $prazoCobs = Prazopagamento::where('ativo',1)->get();
+                $vendedores = Vendedor::where('ativo',1)->get();
             }else{  
                 $modCobs = Modocobranca::where('ativo',1)->get();
                 $tabPrecos = Tabelapreco::where('ativo',1)->where('emp_cod',$uempresa)->get();
                 $prazoCobs = Prazopagamento::where('ativo',1)->get();
+                $vendedores = Vendedor::where('ativo',1)->where('emp_cod',$uempresa)->get();
             }
 
             $empresas = Setempresa::all();
 
                 if ($roleView[0]  == 1){
                     return view('painel.page.Clientes.clienteadd',compact('uperfil','unomeperfil','uempresa',
-                    'unome','uid','uimagem','empresas','acessoPerfil','modCobs','tabPrecos','prazoCobs'));
+                    'unome','uid','uimagem','empresas','acessoPerfil','modCobs','tabPrecos','prazoCobs','vendedores'));
                 }else{
                     return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','acessoPerfil'));
                 }  

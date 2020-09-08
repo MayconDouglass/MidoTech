@@ -18,10 +18,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $cep
  * @property string $endereco
  * @property string $numero
- * @property int $bairro
- * @property int $cidade
+ * @property string $bairro
+ * @property string $cidade
+ * @property string $IBGE
  * @property string $UF
- * @property int $Pais
  * @property string|null $referencia
  *
  * @package App\Models
@@ -35,10 +35,7 @@ class Clilogradouro extends Model
 	protected $casts = [
 		'emp_cod' => 'int',
 		'cli_cod' => 'int',
-		'tipo' => 'int',
-		'bairro' => 'int',
-		'cidade' => 'int',
-		'Pais' => 'int'
+		'tipo' => 'int'
 	];
 
 	protected $fillable = [
@@ -50,8 +47,8 @@ class Clilogradouro extends Model
 		'numero',
 		'bairro',
 		'cidade',
+		'IBGE',
 		'UF',
-		'Pais',
 		'referencia'
 	];
 }

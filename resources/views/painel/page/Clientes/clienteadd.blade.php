@@ -156,6 +156,85 @@
             </select></p>
         </div>
 
+        <div class="col-sm-3">
+          <label class="control-label">Transportadora Padrão</label>
+          <p><select class="form-control" tabindex="-1" name="transpcad" id="transp">
+              <option value="0">Nenhuma</option>
+              <option value="1">FAZER CRUD</option>    
+            </select></p>
+        </div>
+
+        <div class="col-sm-3">
+          <label class="control-label">Orçamento</label>
+          <p><select class="form-control" tabindex="-1" name="orccad" id="orc">
+              <option value="0">Sem ou Com Orçamento</option>
+              <option value="1">Com Orçamento</option>    
+              <option value="2">Sem Orçamento</option>    
+            </select></p>
+        </div>
+
+        <div class="col-sm-3">
+          <label class="control-label">Tipo de Saída</label>
+          <p><select class="form-control" tabindex="-1" name="tescad" id="tes">
+              <option value="0">FAZER CRUD</option>  
+            </select></p>
+        </div>
+
+        <div class="col-sm-3">
+          <label class="control-label">Vendedor</label>
+          <p><select class="form-control" tabindex="-1" name="vencad" id="vendedor">
+            @foreach ($vendedores as $vendedor)
+            <option value="{{$vendedor->id_vendedor}}">{{$vendedor->id_vendedor . ' - ' .explode(" ", $vendedor->nome)[0]}}</option>                  
+            @endforeach
+            </select></p>
+        </div>
+
+        <div class="col-sm-3">
+          <label class="control-label">Tipo de Endereço</label>
+          <p><select class="select2" tabindex="-1" name="tipologcad" id="tipolog">
+              <option value="0">Endereço Comercial</option>  
+              <option value="1">Endereço Cobrança</option>  
+              <option value="1">Endereço Entrega</option>  
+            </select></p>
+        </div>
+
+        <div class="col-sm-4">
+          <label class="control-label">Logradouro</label>
+          <input class="form-control" type="hidden" name="ibgecad" id="ibge" maxlength="20">
+          <p><input class="form-control" type="text" name="logcad" id="logradouro" maxlength="250"></p>
+        </div>
+
+        <div class="col-sm-2">
+          <label class="control-label">Número</label>
+          <p><input class="form-control" type="text" name="numcad" id="numero" maxlength="6"></p>
+        </div>
+
+        <div class="col-sm-3">
+          <label class="control-label">Bairro</label>
+          <p><input class="form-control" type="text" name="bairrocad" id="bairro" maxlength="30"></p>
+        </div>
+
+        <div class="col-sm-4">
+          <label class="control-label">Cidade</label>
+          <p><input class="form-control" type="text" name="cidadecad" id="cidade" maxlength="40"></p>
+        </div>
+
+        <div class="col-sm-1">
+          <label class="control-label">UF</label>
+          <p><input class="form-control" type="text" name="ufcad" id="uf" maxlength="2"></p>
+        </div>
+
+        <div class="col-sm-2">
+          <label class="control-label">CEP</label>
+          <p><input class="form-control" type="text" name="cepcad" id="cep" maxlength="9"></p>
+        </div>
+
+        <div class="col-sm-12">
+          <label class="control-label">Observação</label>
+          <textarea class="form-control" rows="3" name="obscad" maxlength="200" id="obs"
+            placeholder="Máximo 200 caracteres"></textarea>
+        </div>
+
 
       </div>
 
