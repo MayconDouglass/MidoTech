@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\Clilogradouro;
 use App\Models\Modocobranca;
 use App\Models\PerfilAcesso;
 use App\Models\Prazopagamento;
@@ -109,8 +110,10 @@ class ClienteController extends Controller
             $empresas = Setempresa::all();
 
                 if ($roleView[0]  == 1){
-                    return view('painel.page.Clientes.clienteadd',compact('uperfil','unomeperfil','uempresa',
-                    'unome','uid','uimagem','empresas','acessoPerfil','modCobs','tabPrecos','prazoCobs','vendedores'));
+                    return view('painel.page.clienteadd',
+                    compact('uperfil','unomeperfil','uempresa',
+                    'unome','uid','uimagem','empresas','acessoPerfil',
+                    'modCobs','tabPrecos','prazoCobs','vendedores'));
                 }else{
                     return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','acessoPerfil'));
                 }  
@@ -121,4 +124,61 @@ class ClienteController extends Controller
 
         }
     }
+
+    public function store(Request $request){
+        $cliente = new Cliente;
+        $cliente->emp_cod = $request->empcod;
+        $cliente->razao_social = $request->razao;
+        $cliente->nome_fantasia = $request->fantasia;
+        $cliente->tipo_pessoa = $request->pessoa;
+        $cliente->grupo = $request->grupo;
+        $cliente->cpf_cnpj = $request->cpfcnpj;
+        $cliente->status = $request->status;
+        $cliente->insc_estadual = $request->iestadual;
+        $cliente->email = $request->email;
+        $cliente->cnpj_sefaz = $request->cnpjsefaz;
+        $cliente->limite_cred = $request->limitecred;
+        $cliente->venc_limite_cred = $request->venccred;
+        $cliente->cModCob = $request->cModCob;
+        $cliente->modo_cobranca = $request->modcob;
+        $cliente->cPrazoPag = $request->cPrazoPag;
+        $cliente->prazo_pagamento = $request->prazocob;
+        $cliente->cTabPreco = $request->cTabPreco;
+        $cliente->tab_cod = $request->tabpreco;
+        $cliente->tipo_contribuinte = $request->pessoa;
+        $cliente->transp_cod = $request->transp;
+        $cliente->flag_orc = $request->orc;
+        $cliente->tes_cod = $request->tes;
+        $cliente->ven_cod = $request->vendedor;
+        $cliente->observacoes = $request->obs;
+        $saveStatus = $cliente->save();
+
+        if($saveStatus){    
+            $clienteEnd = new Clilogradouro;
+            $clienteEnd->emp_cod = $request->$request->empcod;        
+            $clienteEnd->cli_cod = $cliente->id_cliente;        
+            $clienteEnd->tipo = $request->tipolog;   
+            $clienteEnd->cep = $request->cep;   
+            $clienteEnd->IBGE = $request->ibge;   
+            $clienteEnd->endereco = $request->logradouro;   
+            $clienteEnd->complemento = $request->complemento;   
+            $clienteEnd->numero = $request->numero;   
+            $clienteEnd->bairro = $request->bairro;   
+            $clienteEnd->cidade = $request->cidade;   
+            $clienteEnd->UF = $request->uf;   
+            $clienteEnd->referencia = $request->referencia;   
+            $saveEnd = $clienteEnd->save();
+
+            if($saveEnd){
+                return redirect()->action('ClienteController@create')->with('status_success', 'Cliente Cadastrado!');
+            }else{
+                return redirect()->action('ClienteController@create')->with('status_warning', 'OPS! Algum erro no Cadastrado, o Cliente foi salvo mas o Endereço não!');
+            }
+
+        }else{
+            return redirect()->action('ClienteController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
+        }
+
+    }
+
 }

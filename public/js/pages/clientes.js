@@ -15,20 +15,29 @@ $(function () {
         width: '100%'
     });
     $('.select-notsearch').select2({
-        dropdownParent: $("#pessoa"),
         width: '100%',
         minimumResultsForSearch: Infinity
     });
 
     $("#cep").mask("99999-999");
+    $("#cnpjcpf").mask("99.999.999/9999-99");
+    $("#cnpjsefaz").mask("99.999.999/9999-99");
+
+    $("#pessoa").change(function () {
+        var e = $(this).find('option:selected').attr('value')
+        if (e == '2') {
+            $("#cnpjcpf").unmask().mask("999.999.999-99")
+        } else {
+            $("#cnpjcpf").unmask().mask("99.999.999/9999-99")
+        }
+    });
 
     function limpa_formulário_cep() {
         // Limpa valores do formulário de cep.
-        $("#logradouro").val("");
-        $("#bairro").val("");
-        $("#cidade").val("");
-        $("#uf").val("");
-        $("#ibge").val("");
+        $("#logradouro_alt").val("");
+        $("#bairro_alt").val("");
+        $("#cidade_alt").val("");
+        $("#uf_alt").val("");
     }
 
     $("#cep").blur(function () {
@@ -81,4 +90,54 @@ $(function () {
             limpa_formulário_cep();
         }
     });
+
+    $("#cnpjcpf").blur(function () {
+        var cnpj = $("#cnpjcpf").val().replace(/\D/g, '');
+
+        var e = $("#pessoa").find('option:selected').attr('value')
+        if ((e < '2')) {
+            $.ajax({
+                url: 'https://www.receitaws.com.br/v1/cnpj/' + cnpj,
+                method: 'GET',
+                dataType: 'jsonp', // Em requisições AJAX para outro domínio é necessário usar o formato "jsonp" que é o único aceito pelos navegadores por questão de segurança
+                complete: function (xhr) {
+
+                    // Aqui recuperamos o json retornado
+                    response = xhr.responseJSON;
+
+                    // Na documentação desta API tem esse campo status que retorna "OK" caso a consulta tenha sido efetuada com sucesso
+                    if (response.status == 'OK') {
+
+                        // Agora preenchemos os campos com os valores retornados
+                        $('#razao').val(response.nome);
+                        $('#fantasia').val(response.fantasia);
+                        $('#logradouro').val(response.logradouro);
+                        $('#cep').val(response.cep);
+                        $('#cep').focus();
+                        $('#cidade').val(response.municipio);
+                        $('#bairro').val(response.bairro);
+                        $('#numero').val(response.numero);
+                        $('#numero').val(response.numero);
+                        $('#uf').val(response.uf);
+                        $('#complemento').val(response.complemento);
+                        $('#email').val(response.email);
+                        $('#razao').focus();
+                        if (response.telefone != null) {
+                            $('#obs').val("Telefone: " + response.telefone + ";");
+                        }
+
+
+                        // Aqui exibimos uma mensagem caso tenha ocorrido algum erro
+                    } else {
+                        alert(response.message); // Neste caso estamos imprimindo a mensagem que a própria API retorna
+                    }
+                }
+            });
+        } else {
+            $("#iestadual").val('ISENTO')
+        }
+
+
+    });
+
 });

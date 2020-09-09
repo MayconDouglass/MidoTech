@@ -71,6 +71,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/clientes', 'ClienteController@create')->name('clientes');
     Route::get('/clientes/new', 'ClienteController@addUser')->name('adduser');
     Route::post('/clientes', 'ClienteController@store');
+    Route::get('/clientes/teste', 'ClienteController@teste');
     
     // Vendedor
     Route::get('/vendedores', 'VendedorController@create')->name('vendedores');

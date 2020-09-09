@@ -100,7 +100,10 @@
   </div>
 </div>
 
-
+<div class="col-sm-2">
+  <label class="control-label">CEP</label>
+  <p><input class="form-control" type="text" name="cepcad" id="cep" maxlength="9"></p>
+</div>
 
 
 @endsection

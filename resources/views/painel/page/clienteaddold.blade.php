@@ -192,10 +192,10 @@
         <div class="col-sm-3">
           <label class="control-label">Tipo de Endereço</label>
           <p><select class="select2" tabindex="-1" name="tipologcad" id="tipolog">
-              <option value="0">Endereço Comercial</option>  
-              <option value="1">Endereço Cobrança</option>  
-              <option value="1">Endereço Entrega</option>  
-            </select></p>
+            <option value="0">Endereço Comercial</option>  
+            <option value="1">Endereço Cobrança</option>  
+            <option value="1">Endereço Entrega</option>  
+          </select></p>
         </div>
 
         <div class="col-sm-4">
