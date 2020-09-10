@@ -69,9 +69,11 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Cliente
     Route::get('/clientes', 'ClienteController@create')->name('clientes');
-    Route::get('/clientes/new', 'ClienteController@addUser')->name('adduser');
+    Route::get('/clientes/new', 'ClienteController@addUser')->name('addUser');
+    Route::get('/clientes/alt/{id}', 'ClienteController@view')->name('altUser');
+    Route::get('/clientes/api/lista1/{id}', 'ClienteController@obterCliente');
     Route::post('/clientes', 'ClienteController@store');
-    Route::get('/clientes/teste', 'ClienteController@teste');
+    Route::post('/clientes/update', 'ClienteController@update');
     
     // Vendedor
     Route::get('/vendedores', 'VendedorController@create')->name('vendedores');

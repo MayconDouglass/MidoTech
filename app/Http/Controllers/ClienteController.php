@@ -132,18 +132,36 @@ class ClienteController extends Controller
         $cliente->nome_fantasia = $request->fantasia;
         $cliente->tipo_pessoa = $request->pessoa;
         $cliente->grupo = $request->grupo;
-        $cliente->cpf_cnpj = $request->cpfcnpj;
+        $cliente->cpf_cnpj = $request->cnpjcpf;
         $cliente->status = $request->status;
         $cliente->insc_estadual = $request->iestadual;
         $cliente->email = $request->email;
         $cliente->cnpj_sefaz = $request->cnpjsefaz;
         $cliente->limite_cred = $request->limitecred;
         $cliente->venc_limite_cred = $request->venccred;
-        $cliente->cModCob = $request->cModCob;
+
+        if($request->cModCob == 'on'){
+        $cliente->cModCob = 1;
+        }else{
+        $cliente->cModCob = 0;     
+        }
+
         $cliente->modo_cobranca = $request->modcob;
-        $cliente->cPrazoPag = $request->cPrazoPag;
+
+        if($request->cPrazoPag == 'on'){
+        $cliente->cPrazoPag = 1;
+        }else{
+        $cliente->cPrazoPag = 0;     
+        }
+
         $cliente->prazo_pagamento = $request->prazocob;
-        $cliente->cTabPreco = $request->cTabPreco;
+
+        if($request->cTabPreco == 'on'){
+        $cliente->cTabPreco = 1;
+        }else{
+        $cliente->cTabPreco = 0;     
+        }
+        
         $cliente->tab_cod = $request->tabpreco;
         $cliente->tipo_contribuinte = $request->pessoa;
         $cliente->transp_cod = $request->transp;
@@ -155,7 +173,7 @@ class ClienteController extends Controller
 
         if($saveStatus){    
             $clienteEnd = new Clilogradouro;
-            $clienteEnd->emp_cod = $request->$request->empcod;        
+            $clienteEnd->emp_cod = $request->empcod;        
             $clienteEnd->cli_cod = $cliente->id_cliente;        
             $clienteEnd->tipo = $request->tipolog;   
             $clienteEnd->cep = $request->cep;   
@@ -179,6 +197,147 @@ class ClienteController extends Controller
             return redirect()->action('ClienteController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
         }
 
+    }
+
+    public function update(Request $request){
+        $cliente = Cliente::find($request->idCliente);
+        $cliente->razao_social = $request->razao;
+        $cliente->nome_fantasia = $request->fantasia;
+        $cliente->tipo_pessoa = $request->pessoa;
+        $cliente->grupo = $request->grupo;
+        $cliente->cpf_cnpj = $request->cnpjcpf;
+        $cliente->status = $request->status;
+        $cliente->insc_estadual = $request->iestadual;
+        $cliente->email = $request->email;
+        $cliente->cnpj_sefaz = $request->cnpjsefaz;
+        $cliente->limite_cred = $request->limitecred;
+        $cliente->venc_limite_cred = $request->venccred;
+
+        if($request->cModCob == 'on'){
+        $cliente->cModCob = 1;
+        }else{
+        $cliente->cModCob = 0;     
+        }
+
+        $cliente->modo_cobranca = $request->modcob;
+
+        if($request->cPrazoPag == 'on'){
+        $cliente->cPrazoPag = 1;
+        }else{
+        $cliente->cPrazoPag = 0;     
+        }
+
+        $cliente->prazo_pagamento = $request->prazocob;
+
+        if($request->cTabPreco == 'on'){
+        $cliente->cTabPreco = 1;
+        }else{
+        $cliente->cTabPreco = 0;     
+        }
+        
+        $cliente->tab_cod = $request->tabpreco;
+        $cliente->tipo_contribuinte = $request->pessoa;
+        $cliente->transp_cod = $request->transp;
+        $cliente->flag_orc = $request->orc;
+        $cliente->tes_cod = $request->tes;
+        $cliente->ven_cod = $request->vendedor;
+        $cliente->observacoes = $request->obs;
+        $saveStatus = $cliente->save();
+
+        if($saveStatus){    
+            $clienteEnd = Clilogradouro::where('cli_cod',$request->idCliente)->get();
+            $clienteEnd->emp_cod = $request->empcod;        
+            $clienteEnd->cli_cod = $cliente->id_cliente;        
+            $clienteEnd->tipo = $request->tipolog;   
+            $clienteEnd->cep = $request->cep;   
+            $clienteEnd->IBGE = $request->ibge;   
+            $clienteEnd->endereco = $request->logradouro;   
+            $clienteEnd->complemento = $request->complemento;   
+            $clienteEnd->numero = $request->numero;   
+            $clienteEnd->bairro = $request->bairro;   
+            $clienteEnd->cidade = $request->cidade;   
+            $clienteEnd->UF = $request->uf;   
+            $clienteEnd->referencia = $request->referencia;   
+            $saveEnd = $clienteEnd->save();
+
+            if($saveEnd){
+                return redirect()->action('ClienteController@create')->with('status_success', 'Cliente Atualizado!');
+            }else{
+                return redirect()->action('ClienteController@create')->with('status_warning', 'OPS! Algum erro no Cadastrado, o Cliente foi salvo mas o Endereço não!');
+            }
+
+        }else{
+            return redirect()->action('ClienteController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
+        }
+
+    }
+
+    public function view($id){
+        if (Auth::user()){
+            
+            $uid= Auth::user()->id_usuario;
+            $unome= Auth::user()->nome;
+            $uperfil= Auth::user()->perfil_fk;
+            $unomeperfil= Auth::user()->perfil->nome;
+            $uempresa= Auth::user()->empresa;
+
+            $arquivo = 'storage/img/users/'.$uid.'.jpg';
+            if(file_exists($arquivo)){
+            $uimagem = '/storage/img/users/'.$uid.'.jpg';
+            } else {
+            $uimagem = '/storage/img/users/default.jpg';
+            }
+            
+            $roleView = PerfilAcesso::where('perfil_cod',$uperfil)
+                                    ->where('role',1)
+                                    ->pluck('ativo');
+            
+            $acessoPerfil = PerfilAcesso::where('perfil_cod',$uperfil)
+                                        ->select('role','ativo')->get();
+            
+            $roleAdmin = PerfilAcesso::where('perfil_cod',$uperfil)
+                                        ->where('role',5)
+                                        ->pluck('ativo');
+
+            if($roleAdmin = 1){
+                $modCobs = Modocobranca::where('ativo',1)->get();
+                $tabPrecos = Tabelapreco::where('ativo',1)->where('emp_cod',$uempresa)->get();
+                $prazoCobs = Prazopagamento::where('ativo',1)->get();
+                $vendedores = Vendedor::where('ativo',1)->get();
+            }else{  
+                $modCobs = Modocobranca::where('ativo',1)->get();
+                $tabPrecos = Tabelapreco::where('ativo',1)->where('emp_cod',$uempresa)->get();
+                $prazoCobs = Prazopagamento::where('ativo',1)->get();
+                $vendedores = Vendedor::where('ativo',1)->where('emp_cod',$uempresa)->get();
+            }
+
+            $empresas = Setempresa::all();
+            $cliente = Cliente::where('id_cliente',$id)->first();
+
+                if ($roleView[0]  == 1){
+                    return view('painel.page.clientealt',
+                    compact('uperfil','unomeperfil','uempresa',
+                    'unome','uid','uimagem','empresas','acessoPerfil',
+                    'modCobs','tabPrecos','prazoCobs','vendedores','cliente'));
+                }else{
+                    return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','acessoPerfil'));
+                }  
+
+        }else{
+
+            return view('login');
+
+        }
+    }
+
+    public function obterCliente(Request $request){
+
+        $cliente = Cliente::where('id_cliente',$request->id)->get();
+        return json_encode($cliente);
+    }
+
+    public function show($id){
+        return Cliente::findOrFail($id);
     }
 
 }

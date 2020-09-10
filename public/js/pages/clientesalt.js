@@ -99,10 +99,10 @@ $(function () {
             $.ajax({
                 url: 'https://www.receitaws.com.br/v1/cnpj/' + cnpj,
                 method: 'GET',
-                dataType: 'jsonp', 
+                dataType: 'jsonp',
                 complete: function (xhr) {
 
-                    
+
                     response = xhr.responseJSON;
 
                     // Na documentação desta API tem esse campo status que retorna "OK" caso a consulta tenha sido efetuada com sucesso
@@ -139,5 +139,41 @@ $(function () {
 
 
     });
+
+
+    var idCliente = $("#idCliente").val();
+    $.ajax({
+        type: 'get',
+        dataType: 'json',
+        url: '/clientes/api/lista1/' + idCliente,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        
+        success: function (result) {
+            $("#razao").val(result[0].razao_social).trigger("change");
+            $("#fantasia").val(result[0].nome_fantasia).trigger("change");
+            $("#pessoa").val(result[0].tipo_pessoa).trigger("change");
+            $("#grupo").val(result[0].grupo).trigger("change");
+            $("#cnpjcpf").val(result[0].cpf_cnpj).trigger("change");
+            $("#status").val(result[0].status).trigger("change");
+            $("#iestadual").val(result[0].insc_estadual).trigger("change");
+            $("#email").val(result[0].email).trigger("change");
+            $("#cnpjsefaz").val(result[0].cnpj_sefaz).trigger("change");
+            $("#limitecred").val(result[0].limite_cred).trigger("change");
+            $("#venccred").val((result[0].venc_limite_cred).split(' ')[0]).trigger("change");
+            $("#cModCob").val(result[0].cModCob).trigger("change");
+
+            
+
+        },
+        error: function (resultError) {
+
+            console.log('Erro na consulta');
+
+        }
+
+    })
+
 
 });

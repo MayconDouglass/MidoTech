@@ -1,6 +1,6 @@
 @extends('painel.template.template')
 
-@section('title','Adicionar Cliente')
+@section('title','Alterar Cliente')
 
 @section('css')
 <link rel="stylesheet" href="{{url('/')}}/js/plugins/select2/css/select2m.css">
@@ -11,14 +11,14 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0 text-dark">Cadastro: Cliente</h1>
+        <h1 class="m-0 text-dark">Alterar: Cliente</h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="index">Home</a></li>
           <li class="breadcrumb-item active">Clientes</li>
           <li class="breadcrumb-item"><a href="{{route('clientes')}}">Listar Clientes</a></li>
-          <li class="breadcrumb-item active">Novo</li>
+          <li class="breadcrumb-item active">Alteração</li>
         </ol>
       </div>
     </div>
@@ -46,13 +46,13 @@
 <div class="card">
   <div class="card-body">
 
-    <form class="form-horizontal" method="POST" action="{{action('ClienteController@store')}}">
+    <form class="form-horizontal" method="POST" action="{{action('ClienteController@update')}}">
       @csrf
       <div class="form-group row">
-
         <div class="col-sm-6">
           <label class="control-label">Razão Social (*)</label>
-          <input class="form-control" type="hidden" id="empcod" name="empcod" value="{{$uempresa}}">
+          <input class="form-control" type="hidden" id="empcod" name="empcod" value="{{$cliente->emp_cod}}">
+          <input class="form-control" type="hidden" id="idCliente" name="idCliente" value="{{$cliente->id_cliente}}">
           <p><input class="form-control" type="text" id="razao" name="razao" autocomplete="off" required></p>
         </div>
 
@@ -63,7 +63,7 @@
 
         <div class="col-sm-3">
           <label class="control-label">Tipo Pessoa</label>
-          <select class="form-control" tabindex="-1" name="pessoa" id="pessoa">
+          <select class="form-control" tabindex="-1" name="pessoa" id="pessoa" >
             <option value="0">Júridica</option>
             <option value="1">Júridica Não Contribuinte</option>
             <option value="2">Física</option>
@@ -78,7 +78,7 @@
 
         <div class="col-sm-3">
           <label class="control-label">Insc. Estadual (*)</label>
-          <p><input class="form-control" type="text" name="iestadual" id="iestadual" maxlength="13" value='ISENTO'
+          <p><input class="form-control" type="text" name="iestadual" id="iestadual" maxlength="13"
               autocomplete="off" required>
           </p>
         </div>
@@ -290,7 +290,7 @@
 
 
 @section('js')
-<script src="{{url('/')}}/js/pages/clientes.js"></script>
+<script src="{{url('/')}}/js/pages/clientesalt.js"></script>
 <script src="{{url('/')}}/js/plugins/select2/js/select2.full.js"></script>
 <script src="{{url('/')}}/js/plugins/mask/jquery.mask.min.js"></script>
 <script src="{{url('/')}}/js/plugins/datatables/jquery.dataTables.js"></script>

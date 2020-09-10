@@ -15,7 +15,7 @@
         <h1 class="m-0 text-dark">Clientes
           @foreach ($acessoPerfil as $acesso)
           @if (($acesso->role == 2)&&($acesso->ativo == 1))
-          <a href="{{route('adduser') }}">
+          <a href="{{route('addUser') }}">
             <button type="button" class="btn btn-primary fa fa-user-plus" data-toggle="modal">
               Cadastrar
             </button>
@@ -63,8 +63,8 @@
       <thead>
         <tr>
           <th class="idDataTab">ID</th>
+          <th>Empresa</th>
           <th>Razão Social</th>
-          <th>CPF/CNPJ</th>
           <th class="statusDataTab">Status</th>
           <th class="actionDataTab">Ações</th>
         </tr>
@@ -72,17 +72,34 @@
       <tbody>
         @foreach ($clientes as $cliente)
         <tr>
-          <td class="idDataTabText">{{$cliente->id_cliente}}</td>
+          <td class="idDataTabText" name="idCliente">{{$cliente->id_cliente}}</td>
           <td>{{$cliente->setempresa->Sigla}}</td>
           <td>{{$cliente->razao_social}}</td>
-          <td><span @if ($cliente->status > 0) class="badge badge-success" @else class="badge badge-danger"
-              @endif>{{$cliente->status ? "Ativo" : "Inativo"}}</span></td>
+          <td>@switch($cliente->status)
+            @case(0)
+            <span class="badge badge-success">Normal</span>
+            @break
+            @case(1)
+            <span class="badge badge-warning">Venda Suspensa</span>
+            @break
+            @case(2)
+            <span class="badge badge-repfinanceiro">Bloqueado</span>
+            @break
+            @case(3)
+            <span class="badge badge-danger">Inativo</span>
+            @break
+            <span class="badge badge-info">ERRO</span>
+            @default
+
+            @endswitch
+          </td>
           <td>
             <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal"> Visualizar</button>
             @foreach ($acessoPerfil as $acesso)
             @if (($acesso->role == 2)&&($acesso->ativo == 1))
-            <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal">
-              Alterar</button>
+            <a href="{{ route('altUser',$cliente->id_cliente) }}"><button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o"
+                data-toggle="modal">
+                Alterar</button></a>
             @endif
             @endforeach
 
@@ -99,12 +116,6 @@
     </table>
   </div>
 </div>
-
-<div class="col-sm-2">
-  <label class="control-label">CEP</label>
-  <p><input class="form-control" type="text" name="cepcad" id="cep" maxlength="9"></p>
-</div>
-
 
 @endsection
 
