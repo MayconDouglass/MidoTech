@@ -7,11 +7,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Cliente
+ * Class VwClientesFull
  * 
  * @property int $id_cliente
  * @property int $emp_cod
@@ -38,20 +37,27 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|null $observacoes
  * @property int $tes_cod
  * @property int $ven_cod
- * 
- * @property Setempresa $setempresa
- * @property Modocobranca $modocobranca
- * @property Collection|Clilogradouro[] $clilogradouros
+ * @property int $tipo
+ * @property string $cep
+ * @property string $endereco
+ * @property string $bairro
+ * @property string $cidade
+ * @property string|null $complemento
+ * @property string|null $IBGE
+ * @property string $numero
+ * @property string|null $referencia
+ * @property string $UF
  *
  * @package App\Models
  */
-class Cliente extends Model
+class VwClientesFull extends Model
 {
-	protected $table = 'cliente';
-	protected $primaryKey = 'id_cliente';
+	protected $table = 'vw_clientes_full';
+	public $incrementing = false;
 	public $timestamps = false;
 
 	protected $casts = [
+		'id_cliente' => 'int',
 		'emp_cod' => 'int',
 		'tipo_pessoa' => 'int',
 		'grupo' => 'int',
@@ -67,7 +73,8 @@ class Cliente extends Model
 		'transp_cod' => 'int',
 		'flag_orc' => 'int',
 		'tes_cod' => 'int',
-		'ven_cod' => 'int'
+		'ven_cod' => 'int',
+		'tipo' => 'int'
 	];
 
 	protected $dates = [
@@ -75,6 +82,7 @@ class Cliente extends Model
 	];
 
 	protected $fillable = [
+		'id_cliente',
 		'emp_cod',
 		'razao_social',
 		'nome_fantasia',
@@ -98,21 +106,16 @@ class Cliente extends Model
 		'flag_orc',
 		'observacoes',
 		'tes_cod',
-		'ven_cod'
+		'ven_cod',
+		'tipo',
+		'cep',
+		'endereco',
+		'bairro',
+		'cidade',
+		'complemento',
+		'IBGE',
+		'numero',
+		'referencia',
+		'UF'
 	];
-
-	public function setempresa()
-	{
-		return $this->belongsTo(Setempresa::class, 'emp_cod');
-	}
-
-	public function modocobranca()
-	{
-		return $this->belongsTo(Modocobranca::class, 'modo_cobranca');
-	}
-
-	public function clilogradouros()
-	{
-		return $this->hasMany(Clilogradouro::class, 'cli_cod');
-	}
 }

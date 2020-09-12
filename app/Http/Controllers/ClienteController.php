@@ -200,7 +200,7 @@ class ClienteController extends Controller
     }
 
     public function update(Request $request){
-        $cliente = Cliente::find($request->idCliente);
+        $cliente = Cliente::findOrFail($request->idCliente);
         $cliente->razao_social = $request->razao;
         $cliente->nome_fantasia = $request->fantasia;
         $cliente->tipo_pessoa = $request->pessoa;
@@ -244,6 +244,7 @@ class ClienteController extends Controller
         $cliente->observacoes = $request->obs;
         $saveStatus = $cliente->save();
 
+       
         if($saveStatus){    
             $clienteEnd = Clilogradouro::where('cli_cod',$request->idCliente)->get();
             $clienteEnd->emp_cod = $request->empcod;        
@@ -313,7 +314,7 @@ class ClienteController extends Controller
 
             $empresas = Setempresa::all();
             $cliente = Cliente::where('id_cliente',$id)->first();
-
+            if($cliente != null){
                 if ($roleView[0]  == 1){
                     return view('painel.page.clientealt',
                     compact('uperfil','unomeperfil','uempresa',
@@ -322,7 +323,9 @@ class ClienteController extends Controller
                 }else{
                     return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','acessoPerfil'));
                 }  
-
+            }else{
+                return redirect()->action('ClienteController@create')->with('status_error', 'Erro #C01: Nenhum Cliente com este ID!');
+            }
         }else{
 
             return view('login');
@@ -334,10 +337,6 @@ class ClienteController extends Controller
 
         $cliente = Cliente::where('id_cliente',$request->id)->get();
         return json_encode($cliente);
-    }
-
-    public function show($id){
-        return Cliente::findOrFail($id);
     }
 
 }

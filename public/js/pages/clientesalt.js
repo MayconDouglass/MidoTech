@@ -145,26 +145,44 @@ $(function () {
     $.ajax({
         type: 'get',
         dataType: 'json',
-        url: '/clientes/api/lista1/' + idCliente,
+        url: '/api/clientes/' + idCliente,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        
-        success: function (result) {
-            $("#razao").val(result[0].razao_social).trigger("change");
-            $("#fantasia").val(result[0].nome_fantasia).trigger("change");
-            $("#pessoa").val(result[0].tipo_pessoa).trigger("change");
-            $("#grupo").val(result[0].grupo).trigger("change");
-            $("#cnpjcpf").val(result[0].cpf_cnpj).trigger("change");
-            $("#status").val(result[0].status).trigger("change");
-            $("#iestadual").val(result[0].insc_estadual).trigger("change");
-            $("#email").val(result[0].email).trigger("change");
-            $("#cnpjsefaz").val(result[0].cnpj_sefaz).trigger("change");
-            $("#limitecred").val(result[0].limite_cred).trigger("change");
-            $("#venccred").val((result[0].venc_limite_cred).split(' ')[0]).trigger("change");
-            $("#cModCob").val(result[0].cModCob).trigger("change");
 
-            
+        success: function (result) {
+            $("#razao").val(result.razao_social).trigger("change");
+            $("#fantasia").val(result.nome_fantasia).trigger("change");
+            $("#pessoa").val(result.tipo_pessoa).trigger("change");
+            $("#grupo").val(result.grupo).trigger("change");
+            $("#cnpjcpf").val(result.cpf_cnpj).trigger("change");
+            $("#status").val(result.status).trigger("change");
+            $("#iestadual").val(result.insc_estadual).trigger("change");
+            $("#email").val(result.email).trigger("change");
+            $("#cnpjsefaz").val(result.cnpj_sefaz).trigger("change");
+            $("#limitecred").val(result.limite_cred).trigger("change");
+            $("#venccred").val((result.venc_limite_cred).split(' ')[0]).trigger("change");
+            $("#modcob").val(result.modo_cobranca).trigger("change");
+            $("#prazocob").val(result.prazo_pagamento).trigger("change");
+            $("#tabpreco").val(result.tab_cod).trigger("change");
+            $("#grupo").val(result.grupo).trigger("change");
+            $("#transp").val(result.transp_cod).trigger("change");
+            $("#orc").val(result.flag_orc).trigger("change");
+            $("#tes").val(result.tes_cod).trigger("change");
+            $("#vendedor").val(result.ven_cod).trigger("change");
+            $("#tipolog").val(result.tipo).trigger("change");
+            $("#ibge").val(result.IBGE).trigger("change");
+            $("#logradouro").val(result.endereco).trigger("change");
+            $("#numero").val(result.numero).trigger("change");
+            $("#complemento").val(result.complemento).trigger("change");
+            $("#bairro").val(result.bairro).trigger("change");
+            $("#cidade").val(result.cidade).trigger("change");
+            $("#uf").val(result.UF).trigger("change");
+            $("#cep").val(result.cep).trigger("change");
+            $("#referencia").val(result.referencia).trigger("change");
+            $("#obs").val(result.observacoes).trigger("change");
+
+
 
         },
         error: function (resultError) {
@@ -173,7 +191,68 @@ $(function () {
 
         }
 
-    })
+    });
 
+
+    $('#formId').submit(function (e) {
+        e.preventDefault();
+        var formData = $('#fantasia').serialize();
+        var cModCob = 0, cPrazoPag = 0, cTabPreco = 0;
+        if ($('#cModCob').prop('checked')) {
+            cModCob = 1;
+        } else {
+            cModCob = 0;
+        }
+        if ($('#cPrazoPag').prop('checked')) {
+            cPrazoPag = 1;
+        } else {
+            cPrazoPag = 0;
+        }
+        if ($('#cTabPreco').prop('checked')) {
+            cTabPreco = 1;
+        } else {
+            cTabPreco = 0;
+        }
+        var formAction = $(this).attr('/api/clientes/' + idCliente);
+
+        $.ajax({
+            url: '/api/clientes/' + idCliente,
+            data: {
+                razao_social: $('#razao').val(),
+                nome_fantasia: $('#fantasia').val(),
+                tipo_pessoa: $('#pessoa').val(),
+                grupo: $('#grupo').val(),
+                cpf_cnpj: $('#cnpjcpf').val(),
+                status: $('#status').val(),
+                insc_estadual: $('#iestadual').val(),
+                email: $('#email').val(),
+                cnpj_sefaz: $('#cnpjsefaz').val(),
+                limite_cred: $('#limitecred').val(),
+                venc_limite_cred: $('#venccred').val(),
+                cModCob: cModCob,
+                modo_cobranca: $('#modcob').val(),
+                cPrazoPag: cPrazoPag,
+                prazo_pagamento: $('#prazocob').val(),
+                cTabPreco: cTabPreco,
+                tab_cod: $('#tabpreco').val(),
+                tipo_contribuinte: $('#pessoa').val(),
+                transp_cod: $('#transp').val(),
+                flag_orc: $('#orc').val(),
+                observacoes: $('#obs').val(),
+                tes_cod: $('#tes').val(),
+                ven_cod: $('#vendedor').val(),
+                endereco: $('#logradouro').val()
+            },
+            type: 'put',
+            success: function (data) {
+                console.log(data);
+                sessionStorage.setItem("status", "Cliente atualizado!");
+                //window.location.href='/clientes/?atualizado=1';
+                window.location.href='/clientes';
+               
+            }
+        })
+
+    });
 
 });

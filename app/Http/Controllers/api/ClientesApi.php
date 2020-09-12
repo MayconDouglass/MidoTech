@@ -4,14 +4,16 @@ namespace App\Http\Controllers\api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\VwClientesFull;
 use App\Models\Cliente;
+use App\Models\Clilogradouro;
 
-class ClientesController extends Controller
+class ClientesApi extends Controller
 {
     
     public function index()
     {
-        return Cliente::all();
+      return VwClientesFull::all();
     }
 
     public function create()
@@ -26,9 +28,13 @@ class ClientesController extends Controller
 
     public function show($id)
     {
-
-        return Cliente::findOrFail($id);
+        $cliente = VwClientesFull::where('id_cliente',$id)->first();
+        if(!$cliente)
+            return response()->json(['code'=>'404','erro'=>'Nenhum cliente com esse ID.'], 404);
+            
+        return $cliente;    
         
+        //return Cliente::findOrFail($id);        
     }
 
     public function edit($id)
@@ -39,7 +45,10 @@ class ClientesController extends Controller
     public function update(Request $request, $id)
     {
         $cliente = Cliente::findOrFail($id);
+        if(!$cliente)
+            return response()->json(['code'=>'404','erro'=>'Nenhum cliente com esse ID.'], 404);
         $cliente->update($request->all());
+        
     }
 
     public function destroy($id)
@@ -47,4 +56,5 @@ class ClientesController extends Controller
         $cliente = Cliente::findOrFail($id);
         $cliente->delete();
     }
+
 }

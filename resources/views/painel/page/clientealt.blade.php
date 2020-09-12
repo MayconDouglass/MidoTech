@@ -46,7 +46,7 @@
 <div class="card">
   <div class="card-body">
 
-    <form class="form-horizontal" method="POST" action="{{action('ClienteController@update')}}">
+    <form class="form-horizontal" id="formId"  >
       @csrf
       <div class="form-group row">
         <div class="col-sm-6">
@@ -63,7 +63,7 @@
 
         <div class="col-sm-3">
           <label class="control-label">Tipo Pessoa</label>
-          <select class="form-control" tabindex="-1" name="pessoa" id="pessoa" >
+          <select class="form-control" tabindex="-1" name="pessoa" id="pessoa">
             <option value="0">Júridica</option>
             <option value="1">Júridica Não Contribuinte</option>
             <option value="2">Física</option>
@@ -78,8 +78,8 @@
 
         <div class="col-sm-3">
           <label class="control-label">Insc. Estadual (*)</label>
-          <p><input class="form-control" type="text" name="iestadual" id="iestadual" maxlength="13"
-              autocomplete="off" required>
+          <p><input class="form-control" type="text" name="iestadual" id="iestadual" maxlength="13" autocomplete="off"
+              required>
           </p>
         </div>
 
@@ -106,7 +106,8 @@
 
         <div class="col-sm-2">
           <label class="control-label">Limite de Crédito (*)</label>
-          <p><input class="form-control" type="number" name="limitecred" id="limitecred" autocomplete="off" value="0.00" step="0.01" min="0" required></p>
+          <p><input class="form-control" type="number" name="limitecred" id="limitecred" autocomplete="off" value="0.00"
+              step="0.01" min="0.00" required></p>
         </div>
 
         <div class="col-sm-3">
@@ -119,7 +120,7 @@
           <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text">
-                <input type="checkbox" name="cModCob" id="cModCob">
+                <input type="checkbox" name="cModCob" id="cModCob" @if ($cliente->cModCob) checked @endif>
               </span>
             </div>
             <select class="form-control" tabindex="-1" name="modcob" id="modcob">
@@ -136,7 +137,7 @@
           <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text">
-                <input type="checkbox" name="cPrazoPag" id="cPrazoPag">
+                <input type="checkbox" name="cPrazoPag" id="cPrazoPag" @if ($cliente->cPrazoPag) checked @endif>
               </span>
             </div>
             <select class="form-control" tabindex="-1" name="prazocob" id="prazocob">
@@ -154,7 +155,7 @@
           <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text">
-                <input type="checkbox" name="cTabPreco" id="cTabPreco">
+                <input type="checkbox" name="cTabPreco" id="cTabPreco" @if ($cliente->cTabPreco) checked @endif>
               </span>
             </div>
             <select class="form-control" tabindex="-1" name="tabpreco" id="tabpreco">
@@ -222,8 +223,7 @@
         <div class="col-sm-4">
           <label class="control-label">Logradouro (*)</label>
           <input class="form-control" type="hidden" name="ibge" id="ibge" maxlength="20">
-          <p><input class="form-control" type="text" name="logradouro" id="logradouro" maxlength="250"
-              required></p>
+          <p><input class="form-control" type="text" name="logradouro" id="logradouro" maxlength="250" required></p>
         </div>
 
         <div class="col-sm-3">

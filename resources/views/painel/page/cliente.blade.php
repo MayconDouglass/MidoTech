@@ -51,6 +51,9 @@
   {{ session('status_warning') }}
 </div>
 @endif
+<div id="div_status" class="alert alert-success d-none">
+  Atualizado com sucesso!
+</div>
 @endsection
 
 @section('content')

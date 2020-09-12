@@ -1,4 +1,23 @@
 $(function () {
+
+    /*let cadastradoSucesso = new URLSearchParams(window.location.search);
+    if(cadastradoSucesso.has("atualizado")){
+        let atualizado = cadastradoSucesso.get("atualizado");
+        if(atualizado==1){
+            setInterval(exibirAtualizadoSucesso(),10);
+            
+        }
+    }*/
+
+    if (sessionStorage.getItem("status") != null) {
+        exibirAtualizadoSucesso();
+        alert(sessionStorage.getItem("status"));
+        setTimeout(function () {
+            exibirAtualizadoSucesso();
+            $('#div_status').hide();
+        }, 8000);
+        sessionStorage.removeItem("status");
+    }
     $("#tableBase").DataTable({
         "autoWidth": false
     });
@@ -99,10 +118,10 @@ $(function () {
             $.ajax({
                 url: 'https://www.receitaws.com.br/v1/cnpj/' + cnpj,
                 method: 'GET',
-                dataType: 'jsonp', 
+                dataType: 'jsonp',
                 complete: function (xhr) {
 
-                    
+
                     response = xhr.responseJSON;
 
                     // Na documentação desta API tem esse campo status que retorna "OK" caso a consulta tenha sido efetuada com sucesso
@@ -139,5 +158,10 @@ $(function () {
 
 
     });
+
+    function exibirAtualizadoSucesso() {
+
+        $("#div_status").removeClass("d-none");
+    }
 
 });
