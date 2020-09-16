@@ -39,10 +39,10 @@ $('#VisualizarSetorModal').on('show.bs.modal', function (event) {
     var empCodView = button.data('empresa')
     var statusView = button.data('status')
 
-    $("#empresaalt").select2({
+    $("#empresaview").select2({
         dropdownParent: $("#VisualizarSetorModal"), width: '100%',
     }).val(empCodView).trigger("change");
-    $("#statusalt").select2({
+    $("#statusview").select2({
         dropdownParent: $("#VisualizarSetorModal"), width: '100%',
     }).val(statusView).trigger("change");
 
@@ -50,8 +50,8 @@ $('#VisualizarSetorModal').on('show.bs.modal', function (event) {
     var modal = $(this)
     modal.find('.modal-title').text('Visualizar Registro')
     modal.find('#idSetor').val(setorCod)
-    modal.find('#setoralt').val(setorView)
-    modal.find('#ufalt').val(ufView)
+    modal.find('#setorview').val(setorView)
+    modal.find('#ufview').val(ufView)
 })
 
 

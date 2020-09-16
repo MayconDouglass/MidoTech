@@ -241,7 +241,16 @@ $(function () {
                 observacoes: $('#obs').val(),
                 tes_cod: $('#tes').val(),
                 ven_cod: $('#vendedor').val(),
-                endereco: $('#logradouro').val()
+                endereco: $('#logradouro').val(),
+                complemento: $('#complemento').val(),
+                numero: $('#numero').val(),
+                bairro: $('#bairro').val(),
+                cidade: $('#cidade').val(),
+                IBGE: $('#ibge').val(),
+                UF: $('#uf').val(),
+                referencia: $('#referencia').val(),
+                tipo: $('#tipolog').val(),
+                cep: $('#cep').val()
             },
             type: 'put',
             success: function (data) {
@@ -254,5 +263,6 @@ $(function () {
         })
 
     });
+
 
 });

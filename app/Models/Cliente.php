@@ -42,6 +42,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Setempresa $setempresa
  * @property Modocobranca $modocobranca
  * @property Collection|Clilogradouro[] $clilogradouros
+ * @property Collection|Climov[] $climovs
  *
  * @package App\Models
  */
@@ -114,5 +115,10 @@ class Cliente extends Model
 	public function clilogradouros()
 	{
 		return $this->hasMany(Clilogradouro::class, 'cli_cod');
+	}
+
+	public function climovs()
+	{
+		return $this->hasMany(Climov::class, 'cli_cod');
 	}
 }

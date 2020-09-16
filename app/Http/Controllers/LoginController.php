@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
 use Illuminate\Http\Request;
 //use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Models\PerfilAcesso;
+use App\Models\Vendedor;
 use Auth;
 use Hash;
 
@@ -19,6 +21,7 @@ class LoginController extends Controller
             $unome= Auth::user()->nome;
             $uperfil= Auth::user()->perfil_fk;
             $unomeperfil= Auth::user()->perfil->nome;
+            $uempresa= Auth::user()->empresa;
 
             //dd();
             $arquivo = 'storage/img/users/'.$uid.'.jpg';
@@ -31,11 +34,27 @@ class LoginController extends Controller
             $roleView = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
                                     ->where('role',1)
                                     ->pluck('ativo');
+            $roleAdmin = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
+                                    ->where('role',5)
+                                    ->pluck('ativo');
+
             $acessoPerfil = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
             ->select('role','ativo')->get();
             
+            if($roleAdmin[0] == 1){
+
+                $clientes = Cliente::all()->count();
+                $vendedores = Vendedor::all()->count();
+                
+            }else{
+
+                $clientes = Cliente::where('emp_cod',$uempresa)->count();
+                $vendedores = Vendedor::where('emp_cod',$uempresa)->count();
+
+            }
+            
             if ($roleView[0]  == 1){
-                return view('painel.page.index',compact('uperfil','unomeperfil','unome','uid','uimagem','acessoPerfil'));
+                return view('painel.page.index',compact('uperfil','unomeperfil','unome','uid','uimagem','acessoPerfil','clientes','vendedores'));
             }else{
                 return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','perfis','acessoPerfil'));
             }  

@@ -8,10 +8,10 @@ $(function () {
             
         }
     }*/
+    
 
     if (sessionStorage.getItem("status") != null) {
         exibirAtualizadoSucesso();
-        alert(sessionStorage.getItem("status"));
         setTimeout(function () {
             exibirAtualizadoSucesso();
             $('#div_status').hide();
@@ -50,6 +50,8 @@ $(function () {
             $("#cnpjcpf").unmask().mask("99.999.999/9999-99")
         }
     });
+
+    
 
     function limpa_formulário_cep() {
         // Limpa valores do formulário de cep.
@@ -120,8 +122,7 @@ $(function () {
                 method: 'GET',
                 dataType: 'jsonp',
                 complete: function (xhr) {
-
-
+                    
                     response = xhr.responseJSON;
 
                     // Na documentação desta API tem esse campo status que retorna "OK" caso a consulta tenha sido efetuada com sucesso
@@ -160,8 +161,15 @@ $(function () {
     });
 
     function exibirAtualizadoSucesso() {
-
         $("#div_status").removeClass("d-none");
     }
 
 });
+
+$('#modal-danger').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Botão que acionou o modal
+    var iddelete = button.data('codigo')
+    $("#iddelete").val(iddelete);
+    var modal = $(this)
+    modal.find('.b_text_modal_title_danger').text('Excluir Registro')
+})

@@ -16,16 +16,6 @@ class ClientesApi extends Controller
       return VwClientesFull::all();
     }
 
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
     public function show($id)
     {
         $cliente = VwClientesFull::where('id_cliente',$id)->first();
@@ -33,22 +23,19 @@ class ClientesApi extends Controller
             return response()->json(['code'=>'404','erro'=>'Nenhum cliente com esse ID.'], 404);
             
         return $cliente;    
-        
-        //return Cliente::findOrFail($id);        
-    }
-
-    public function edit($id)
-    {
-        //
+            
     }
 
     public function update(Request $request, $id)
     {
-        $cliente = Cliente::findOrFail($id);
+        $cliente = Cliente::find($id);
         if(!$cliente)
             return response()->json(['code'=>'404','erro'=>'Nenhum cliente com esse ID.'], 404);
+
         $cliente->update($request->all());
-        
+
+        $logradouro = Clilogradouro::where('cli_cod',$id)->first();
+        $logradouro->update($request->all());        
     }
 
     public function destroy($id)

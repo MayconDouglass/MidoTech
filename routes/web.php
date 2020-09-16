@@ -72,8 +72,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/clientes/new', 'ClienteController@addUser')->name('addUser');
     Route::get('/clientes/alt/{id}', 'ClienteController@view')->name('altUser');
     Route::get('/clientes/api/lista1/{id}', 'ClienteController@obterCliente');
+    Route::get('/clientes/view/{id}', 'ClienteController@historico')->name('historico');
     Route::post('/clientes', 'ClienteController@store');
     Route::post('/clientes/update', 'ClienteController@update');
+    Route::post('/clientes/delete', 'ClienteController@destroy');
     
     // Vendedor
     Route::get('/vendedores', 'VendedorController@create')->name('vendedores');

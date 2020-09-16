@@ -124,6 +124,52 @@ class ClienteController extends Controller
 
         }
     }
+    public function historico($id)
+    {
+       
+        if (Auth::user()){
+            
+            $uid= Auth::user()->id_usuario;
+            $unome= Auth::user()->nome;
+            $uperfil= Auth::user()->perfil_fk;
+            $unomeperfil= Auth::user()->perfil->nome;
+            $uempresa= Auth::user()->empresa;
+
+            //dd();
+            $arquivo = 'storage/img/users/'.$uid.'.jpg';
+            if(file_exists($arquivo)){
+            $uimagem = '/storage/img/users/'.$uid.'.jpg';
+            } else {
+            $uimagem = '/storage/img/users/default.jpg';
+            }
+            
+            $roleView = PerfilAcesso::where('perfil_cod',$uperfil)
+                                    ->where('role',1)
+                                    ->pluck('ativo');
+            
+            $acessoPerfil = PerfilAcesso::where('perfil_cod',$uperfil)
+                                        ->select('role','ativo')->get();
+            
+            $roleAdmin = PerfilAcesso::where('perfil_cod',$uperfil)
+                                        ->where('role',5)
+                                        ->pluck('ativo');
+
+            $cliente = Cliente::where('id_cliente',$id)->pluck('id_cliente');
+            //dd($cliente);
+                if ($roleView[0]  == 1){
+                    return view('painel.page.clienteview',
+                    compact('uperfil','unomeperfil','uempresa',
+                    'unome','uid','uimagem','acessoPerfil','cliente'));
+                }else{
+                    return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','acessoPerfil'));
+                }  
+
+        }else{
+
+            return view('login');
+
+        }
+    }
 
     public function store(Request $request){
         $cliente = new Cliente;
@@ -339,4 +385,16 @@ class ClienteController extends Controller
         return json_encode($cliente);
     }
 
+    public function destroy(Request $request){
+        if(empty($request->iddelete)){
+        return redirect()->action('ClienteController@create')->with('status_error', 'Falha!');    
+        }
+            $setorDel = Cliente::find($request->iddelete);
+            $delete=$setorDel ->delete();
+            if($delete){
+               return redirect()->action('ClienteController@create')->with('status_success', 'Excluído!');
+            }else{
+            return redirect()->action('ClienteController@create')->with('status_error', 'Não foi possível excluir o registro, possivelmente existem movimentação/cadastros!');    
+            }
+    }
 }

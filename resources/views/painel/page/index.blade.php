@@ -25,7 +25,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">Clientes</span>
-                    <span class="info-box-number">10</span>
+                    <span class="info-box-number">{{$clientes}}</span>
                 </div>
             </div>
         </div>
@@ -223,7 +223,7 @@
 
         <div class="info-box-content">
           <span class="info-box-text">Vendedores</span>
-          <span class="info-box-number">1</span>
+          <span class="info-box-number">{{$vendedores}}</span>
         </div>
         <!-- /.info-box-content -->
       </div>

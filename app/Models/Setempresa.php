@@ -42,6 +42,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Setatividade $setatividade
  * @property Collection|Cliente[] $clientes
  * @property Collection|Clilogradouro[] $clilogradouros
+ * @property Collection|Climov[] $climovs
  * @property Collection|Perfil[] $perfils
  * @property Collection|Setor[] $setors
  * @property Collection|Tabelapreco[] $tabelaprecos
@@ -116,6 +117,11 @@ class Setempresa extends Model
 	public function clilogradouros()
 	{
 		return $this->hasMany(Clilogradouro::class, 'emp_cod');
+	}
+
+	public function climovs()
+	{
+		return $this->hasMany(Climov::class, 'emp_cod');
 	}
 
 	public function perfils()

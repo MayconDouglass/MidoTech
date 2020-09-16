@@ -276,3 +276,59 @@
 .custom-switch-b .custom-control-input:disabled:checked~.custom-control-label::before {
     background-color: #035f3cec
 }
+
+/* Financeiro */
+.vencido {
+    color: red;
+    text-align: center;
+}
+
+.dentro-do-prazo {
+    color: green;
+    text-align: center;
+}
+
+.vencToday {
+    color: rgb(212, 212, 18);
+    text-align: center;
+}
+
+.textSimples {
+    text-align: center;
+    color: rgb(26, 26, 27);
+}
+
+/*nota fiscal - status*/
+.status-1 {
+    color: rgb(7, 112, 250);
+    font-weight: bolder;
+}
+
+.status-2 {
+    font-weight: bolder;
+}
+
+.status-3 {
+    color: rgb(250, 84, 7);
+    font-weight: bolder;
+}
+
+.status-4 {
+    color: rgb(143, 121, 0);
+    font-weight: bolder;
+}
+
+.status-5 {
+    color: rgb(33, 143, 0);
+    font-weight: bolder;
+}
+
+.status-6 {
+    color: rgb(212, 4, 4);
+    font-weight: bolder;
+}
+
+.status-7 {
+    color: rgb(116, 21, 194);
+    font-weight: bolder;
+}
