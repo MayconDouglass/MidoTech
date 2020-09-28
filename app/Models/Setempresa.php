@@ -46,6 +46,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection|Perfil[] $perfils
  * @property Collection|Setor[] $setors
  * @property Collection|Tabelapreco[] $tabelaprecos
+ * @property Collection|Te[] $tes
  * @property Collection|Usuario[] $usuarios
  * @property Collection|Vendedor[] $vendedors
  *
@@ -137,6 +138,11 @@ class Setempresa extends Model
 	public function tabelaprecos()
 	{
 		return $this->hasMany(Tabelapreco::class, 'emp_cod');
+	}
+
+	public function tes()
+	{
+		return $this->hasMany(Te::class, 'emp_cod');
 	}
 
 	public function usuarios()

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class Operacaofiscal
  * 
  * @property int $id_operacao
- * @property int $emp_cod
+ * @property string $tipo
  * @property int $cfop
  * @property string $descricao
  * @property int $ativo
@@ -26,13 +26,12 @@ class Operacaofiscal extends Model
 	public $timestamps = false;
 
 	protected $casts = [
-		'emp_cod' => 'int',
 		'cfop' => 'int',
 		'ativo' => 'int'
 	];
 
 	protected $fillable = [
-		'emp_cod',
+		'tipo',
 		'cfop',
 		'descricao',
 		'ativo'

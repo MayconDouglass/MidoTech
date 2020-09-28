@@ -93,5 +93,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/setores/update', 'SetorController@update');
     Route::post('/setores/delete', 'SetorController@destroy');
 
+    // TES
+    Route::get('/tes', 'TESController@create')->name('tes');
+    Route::post('/tes/cad', 'TESController@store');
+    Route::post('/tes/update', 'TESController@update');
+    Route::post('/tes/delete', 'TESController@destroy');
+
 });
 

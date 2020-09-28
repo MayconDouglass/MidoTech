@@ -159,6 +159,12 @@
                   </a>
                 </li>
                 <li class="nav-item">
+                  <a href="{{route('tes')}}" class="nav-link">
+                    <i class="fa fa-exchange nav-icon"></i>
+                    <p>Tipo de Entrada/Saída</p>
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a href="{{route('unidade')}}" class="nav-link">
                     <i class="fa fa-underline nav-icon"></i>
                     <p>Unidades</p>
