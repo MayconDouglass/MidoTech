@@ -85,13 +85,13 @@
           </td>
           <td>
             <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal"
-              data-target="#VisualizarSetorModal" >
+              data-target="#VisualizarSetorModal">
               Visualizar</button>
 
             @foreach ($acessoPerfil as $acesso)
             @if (($acesso->role == 2)&&($acesso->ativo == 1))
             <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
-              data-target="#AlterarSetorModal" >
+              data-target="#AlterarSetorModal">
               Alterar
             </button>
             @endif
@@ -115,11 +115,11 @@
 <!-- Modal Cadastro-->
 <div class="modal fade" id="CadastroModal" tabindex="-1" role="dialog" aria-labelledby="CadastroModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="add_modalHeader">
         <div class="modal-header">
-          <h5 class="modal-title" id="CadastroModalLabel">Novo Setor</h5>
+          <h5 class="modal-title" id="CadastroModalLabel">Novo TES</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -132,45 +132,374 @@
           enctype="multipart/form-data">
           @csrf
           <div class="form-group row">
-            
+
             <div class="col-sm-1">
               <label class="control-label">Código</label>
               <p><input class="form-control" type="text" name="codigocad" maxlength="3" required></p>
             </div>
 
             <div class="col-sm-3">
-              <label class="control-label">Descricao</label>
+              <label class="control-label">Descrição</label>
               <p><input class="form-control" type="text" name="descricaocad" maxlength="20" required></p>
             </div>
-
-            <div class="col-sm-8">
-              <label class="control-label">CFOP</label>
-              <select class="select2" tabindex="-1" name="cfopcad">
-                @foreach ($cfops as $cfop)
-                <option value="{{$cfop->cfop}}">{{$cfop->cfop .' - '. $cfop->descricao}}</option>   
-                @endforeach
-              </select>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Ativo</label>
-              <select class="select-notsearch" tabindex="-1" name="statuscad">
-                <option value="1">Sim</option>
-                <option value="0">Não</option>
-              </select>
-            </div>
-
             <div class="col-sm-2">
               <label class="control-label">Tipo</label>
-              <select class="select-notsearch" tabindex="-1" name="tipocad">
-                <option value="0">Entrada</option>
-                <option value="1">Saída</option>
-              </select>
+              <p><select class="select-notsearch" tabindex="-1" name="tipocad">
+                  <option value="0">Entrada</option>
+                  <option value="1">Saída</option>
+                </select></p>
+            </div>
+
+            <div class="col-sm-6">
+              <label class="control-label">CFOP</label>
+              <p><select class="select2" tabindex="-1" name="cfopcad">
+                  @foreach ($cfops as $cfop)
+                  <option value="{{$cfop->cfop}}">{{$cfop->cfop .' - '. $cfop->descricao}}</option>
+                  @endforeach
+                </select></p>
+            </div>
+
+            <div class="col-sm-1">
+              <label class="control-label">Ativo</label>
+              <p><select class="select-notsearch" tabindex="-1" name="statuscad">
+                  <option value="1">Sim</option>
+                  <option value="0">Não</option>
+                </select></p>
             </div>
 
             <div class="col-sm-1">
               <label class="control-label">Série</label>
               <p><input class="form-control" type="text" name="seriecad" maxlength="4" required></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Almoxarifado Padrão</label>
+              <p><select class="select-notsearch" tabindex="-1" name="alcodcad">
+                  <option value="1">AMC</option>
+                </select></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Emitir Boleto</label>
+              <p><select class="select-notsearch" tabindex="-1" name="boleto_cad">
+                  <option value="0">Não</option>
+                  <option value="1">Sim</option>
+                  <option value="2">Duplicata</option>
+                </select></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">INSS(%)</label>
+              <p><input class="form-control" type="number" name="aliq_inss_cad" value="0.00" min="0.00" step="0.01"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">INSS - NFe Superior</label>
+              <p><input class="form-control" type="number" name="inss_cad" value="0.00" min="0.00" step="0.01"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">ISS(%)</label>
+              <p><input class="form-control" type="number" name="aliq_iss_cad" value="0.00" min="0.00" step="0.01"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">ISS - NFe Superior</label>
+              <p><input class="form-control" type="number" name="iss_cad" value="0.00" min="0.00" step="0.01"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Alíquota IRRF(%)</label>
+              <p><input class="form-control" type="number" name="aliq_irrf_cad" value="0.00" min="0.00" step="0.01"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">IRRF - NFe Superior</label>
+              <p><input class="form-control" type="number" name="irrf_cad" value="0.00" min="0.00" step="0.01"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Retenção PIS</label>
+              <p><input class="form-control" type="number" name="ret_pis_cad" value="0.00" min="0.00" step="0.01"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">PIS - NFe Superior</label>
+              <p><input class="form-control" type="number" name="pis_nf_cad" value="0.00" min="0.00" step="0.01"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Retenção COFINS</label>
+              <p><input class="form-control" type="number" name="ret_cofins_cad" value="0.00" min="0.00" step="0.01">
+              </p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">COFINS - NFe Superior</label>
+              <p><input class="form-control" type="number" name="cofins_nf_cad" value="0.00" min="0.00" step="0.01"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Retenção CSLL</label>
+              <p><input class="form-control" type="number" name="ret_csll_cad" value="0.00" min="0.00" step="0.01"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Abat. Suframa - PIS</label>
+              <p><input class="form-control" type="number" name="abat_suframa_pis_cad" value="0.00" min="0.00"
+                  step="0.01"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Abat. Suframa - COFINS</label>
+              <p><input class="form-control" type="number" name="abat_suframa_cofins_cad" value="0.00" min="0.00"
+                  step="0.01"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Simples Nacional</label>
+              <p><select class="select-notsearch" tabindex="-1" name="simples_cad">
+                  <option value="0">Não</option>
+                  <option value="1">Sim</option>
+                </select></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Simples Nacional (%)</label>
+              <p><input class="form-control" type="number" name="aliq_simples_cad" value="0.00" min="0.00" step="0.01">
+              </p>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" name="calc_icms_cad" id="calc_icms_cad">
+                <label for="calc_icms_cad" class="custom-control-label">Calcular ICMS</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" name="calc_ipi_cad" id="calc_ipi_cad">
+                <label for="calc_ipi_cad" class="custom-control-label">Calcular IPI</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" name="cred_icm_cad" id="cred_icm_cad">
+                <label for="cred_icm_cad" class="custom-control-label">Creditar ICM</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" name="cred_ipi_cad" id="cred_ipi_cad">
+                <label for="cred_ipi_cad" class="custom-control-label">Creditar IPI</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" name="cred_piscofins_cad" id="cred_piscofins_cad">
+                <label for="cred_piscofins_cad" class="custom-control-label">Creditar PIS e COFINS</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" name="financeiro_cad" id="financeiro_cad">
+                <label for="financeiro_cad" class="custom-control-label">Gera Financeiro</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" name="emissao_cad" id="emissao_cad">
+                <label for="emissao_cad" class="custom-control-label">Emissão</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" name="mov_est_cad" id="mov_est_cad">
+                <label for="mov_est_cad" class="custom-control-label">Movimentar Estoque</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" name="dest_ipi_cad" id="dest_ipi_cad">
+                <label for="dest_ipi_cad" class="custom-control-label">Destacar IPI</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" name="incide_ipi_cad" id="incide_ipi_cad">
+                <label for="incide_ipi_cad" class="custom-control-label">Incide IPI na Base ICMS</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" name="incide_frete_cad" id="incide_frete_cad">
+                <label for="incide_frete_cad" class="custom-control-label">Incide Frete na B. ICMS</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" name="incide_despesas_cad" id="incide_despesas_cad">
+                <label for="incide_despesas_cad" class="custom-control-label">Outras Desp. na B. ICMS</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" name="incide_base_ipi_cad" id="incide_base_ipi_cad">
+                <label for="incide_base_ipi_cad" class="custom-control-label">Frete/Despesas/Seguro na B. IPI</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" name="calc_iss_cad" id="calc_iss_cad">
+                <label for="calc_iss_cad" class="custom-control-label">Calcular ISS</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" name="at_custo_cad" id="at_custo_cad">
+                <label for="at_custo_cad" class="custom-control-label">Atualizar Custo</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" name="at_custo_medio_cad" id="at_custo_medio_cad">
+                <label for="at_custo_medio_cad" class="custom-control-label">Atualizar C. Médio</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" name="at_custo_aq_cad" id="at_custo_aq_cad">
+                <label for="at_custo_aq_cad" class="custom-control-label">Atualizar C. Aquisição</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" name="at_preco_cad" id="at_preco_cad">
+                <label for="at_preco_cad" class="custom-control-label">Atualizar P. de Venda</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" name="soma_cad" id="soma_cad">
+                <label for="soma_cad" class="custom-control-label">Influencia em Relatórios</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" id="espelho_cad" name="espelho_cad">
+                <label for="espelho_cad" class="custom-control-label">Imprime Espelho NFe</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" id="comissao_cad" name="comissao_cad">
+                <label for="comissao_cad" class="custom-control-label">Comissão</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" id="calc_import_cad" name="calc_import_cad">
+                <label for="calc_import_cad" class="custom-control-label">Calc. Importação</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" id="soma_import_cad" name="soma_import_cad">
+                <label for="soma_import_cad" class="custom-control-label">Soma ICMS Importação no total</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" id="lanc_ipi_cad" name="lanc_ipi_cad">
+                <label for="lanc_ipi_cad" class="custom-control-label">Lançar IPI na 1ª Parcela (*)</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" id="incide_icms_pci_cad" name="incide_icms_pci_cad">
+                <label for="incide_icms_pci_cad" class="custom-control-label">ICMS na B. PIS e COFINS Imp.</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" id="incide_despesas_pc_cad"
+                  name="incide_despesas_pc_cad">
+                <label for="incide_despesas_pc_cad" class="custom-control-label">Outras Desp. na B. PIS e COFINS</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" id="ded_icms_pc_cad" name="ded_icms_pc_cad">
+                <label for="ded_icms_pc_cad" class="custom-control-label">Deduzir ICMS na B. PIS e COFINS</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" id="calc_fecp_cad" name="calc_fecp_cad">
+                <label for="calc_fecp_cad" class="custom-control-label">Calcular FECP</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" id="calc_difal_cad" name="calc_difal_cad">
+                <label for="calc_difal_cad" class="custom-control-label">Calcular Partilha (Difal)</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" id="dup_st_cad" name="dup_st_cad">
+                <label for="dup_st_cad" class="custom-control-label">Gerar Duplicata ST</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" id="desc_icms_cad" name="desc_icms_cad">
+                <label for="desc_icms_cad" class="custom-control-label">Não incide desconto B. ICMS</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" id="desc_icms_des_cad" name="desc_icms_des_cad">
+                <label for="desc_icms_des_cad" class="custom-control-label">Subtrair Desoneração na Nota</label>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" id="desc_icms_ipi_cad" name="desc_icms_ipi_cad">
+                <label for="desc_icms_ipi_cad" class="custom-control-label">Deduz Desconto na B. IPI</label>
+              </div>
             </div>
 
           </div>
@@ -218,9 +547,9 @@
 </div>
 
 <!-- Modal Visualizacao-->
-<div class="modal fade" id="VisualizarSetorModal" tabindex="-1" role="dialog" aria-labelledby="VisualizarSetorModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="VisualizarSetorModal" tabindex="-1" role="dialog"
+  aria-labelledby="VisualizarSetorModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="view_modalHeader">
         <div class="modal-header">
@@ -233,39 +562,413 @@
       <div class="modal-body">
 
         <!-- Form de cadastro -->
-        <form class="form-horizontal" method="POST">
-          @csrf
-          <div class="form-group row">
-            <div class="col-sm-2">
-              <label class="control-label">ID</label>
-              <p><input class="form-control" type="text" id="idSetor" disabled></p>
-            </div>
+        <form class="form-horizontal" method="POST"></form>
+        @csrf
+        <div class="form-group row">
+          <div class="col-sm-1">
+            <label class="control-label">Código</label>
+            <p><input class="form-control" type="text" id="codigoview" maxlength="3" disabled></p>
+          </div>
 
-            <div class="col-sm-7">
-              <label class="control-label">Setor</label>
-              <p><input class="form-control" type="text" id="setorview" disabled></p>
-            </div>
+          <div class="col-sm-3">
+            <label class="control-label">Descrição</label>
+            <p><input class="form-control" type="text" id="descricaoview" maxlength="20" disabled></p>
+          </div>
+          <div class="col-sm-2">
+            <label class="control-label">Tipo</label>
+            <p><select class="select-notsearch" tabindex="-1" disabled id="tipoview">
+                <option value="0">Entrada</option>
+                <option value="1">Saída</option>
+              </select></p>
+          </div>
 
-            <div class="col-sm-3">
-              <label class="control-label">UF</label>
-              <p><input class="form-control" type="text" id="ufview" disabled></p>
-            </div>
+          <div class="col-sm-6">
+            <label class="control-label">CFOP</label>
+            <p><select class="select2" tabindex="-1" disabled id="cfopview">
+                @foreach ($cfops as $cfop)
+                <option value="{{$cfop->cfop}}">{{$cfop->cfop .' - '. $cfop->descricao}}</option>
+                @endforeach
+              </select></p>
+          </div>
 
-    
-            <div class="col-sm-12">
-              <label class="control-label">Status</label>
-              <p><select class="select-notsearch" tabindex="-1" name="statusview" id="statusview" disabled>
+          <div class="col-sm-1">
+            <label class="control-label">Ativo</label>
+            <p><select class="select-notsearch" tabindex="-1" disabled id="statusview">
                 <option value="1">Sim</option>
                 <option value="0">Não</option>
               </select></p>
+          </div>
+
+          <div class="col-sm-1">
+            <label class="control-label">Série</label>
+            <p><input class="form-control" type="text" disabled id="serieview" maxlength="4" disabled></p>
+          </div>
+
+          <div class="col-sm-2">
+            <label class="control-label">Almoxarifado Padrão</label>
+            <p><select class="select-notsearch" tabindex="-1" disabled id="alcodview">
+                <option value="1">AMC</option>
+              </select></p>
+          </div>
+
+          <div class="col-sm-2">
+            <label class="control-label">Emitir Boleto</label>
+            <p><select class="select-notsearch" tabindex="-1" disabled id="boleto_view">
+                <option value="0">Não</option>
+                <option value="1">Sim</option>
+                <option value="2">Duplicata</option>
+              </select></p>
+          </div>
+
+          <div class="col-sm-2">
+            <label class="control-label">INSS(%)</label>
+            <p><input class="form-control" type="number" disabled id="aliq_inss_view" value="0.00" min="0.00"
+                step="0.01">
+            </p>
+          </div>
+
+          <div class="col-sm-2">
+            <label class="control-label">INSS - NFe Superior</label>
+            <p><input class="form-control" type="number" disabled id="inss_view" value="0.00" min="0.00" step="0.01">
+            </p>
+          </div>
+
+          <div class="col-sm-2">
+            <label class="control-label">ISS(%)</label>
+            <p><input class="form-control" type="number" disabled id="aliq_iss_view" value="0.00" min="0.00"
+                step="0.01">
+            </p>
+          </div>
+
+          <div class="col-sm-2">
+            <label class="control-label">ISS - NFe Superior</label>
+            <p><input class="form-control" type="number" disabled id="iss_view" value="0.00" min="0.00" step="0.01"></p>
+          </div>
+
+          <div class="col-sm-2">
+            <label class="control-label">Alíquota IRRF(%)</label>
+            <p><input class="form-control" type="number" disabled id="aliq_irrf_view" value="0.00" min="0.00"
+                step="0.01">
+            </p>
+          </div>
+
+          <div class="col-sm-2">
+            <label class="control-label">IRRF - NFe Superior</label>
+            <p><input class="form-control" type="number" disabled id="irrf_view" value="0.00" min="0.00" step="0.01">
+            </p>
+          </div>
+
+          <div class="col-sm-2">
+            <label class="control-label">Retenção PIS</label>
+            <p><input class="form-control" type="number" disabled id="ret_pis_view" value="0.00" min="0.00" step="0.01">
+            </p>
+          </div>
+
+          <div class="col-sm-2">
+            <label class="control-label">PIS - NFe Superior</label>
+            <p><input class="form-control" type="number" disabled id="pis_nf_view" value="0.00" min="0.00" step="0.01">
+            </p>
+          </div>
+
+          <div class="col-sm-2">
+            <label class="control-label">Retenção COFINS</label>
+            <p><input class="form-control" type="number" disabled id="ret_cofins_view" value="0.00" min="0.00"
+                step="0.01">
+            </p>
+          </div>
+
+          <div class="col-sm-2">
+            <label class="control-label">COFINS - NFe Superior</label>
+            <p><input class="form-control" type="number" disabled id="cofins_nf_view" value="0.00" min="0.00"
+                step="0.01">
+            </p>
+          </div>
+
+          <div class="col-sm-2">
+            <label class="control-label">Retenção CSLL</label>
+            <p><input class="form-control" type="number" disabled id="ret_csll_view" value="0.00" min="0.00"
+                step="0.01">
+            </p>
+          </div>
+
+          <div class="col-sm-2">
+            <label class="control-label">Abat. Suframa - PIS</label>
+            <p><input class="form-control" type="number" disabled id="abat_suframa_pis_view" value="0.00" min="0.00"
+                step="0.01"></p>
+          </div>
+
+          <div class="col-sm-2">
+            <label class="control-label">Abat. Suframa - COFINS</label>
+            <p><input class="form-control" type="number" disabled id="abat_suframa_cofins_view" value="0.00" min="0.00"
+                step="0.01"></p>
+          </div>
+
+          <div class="col-sm-2">
+            <label class="control-label">Simples Nacional</label>
+            <p><select class="select-notsearch" tabindex="-1" disabled id="simples_view">
+                <option value="0">Não</option>
+                <option value="1">Sim</option>
+              </select></p>
+          </div>
+
+          <div class="col-sm-2">
+            <label class="control-label">Simples Nacional (%)</label>
+            <p><input class="form-control" type="number" disabled id="aliq_simples_view" value="0.00" min="0.00"
+                step="0.01">
+            </p>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" name="calc_icms_view" disabled id="calc_icms_view">
+              <label for="calc_icms_view" class="custom-control-label">Calcular ICMS</label>
             </div>
-
           </div>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" id="reset" data-dismiss="modal"><i class="fa fa-times">
-                Cancelar</i></button>
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" name="calc_ipi_view" disabled id="calc_ipi_view">
+              <label for="calc_ipi_view" class="custom-control-label">Calcular IPI</label>
+            </div>
           </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" name="cred_icm_view" disabled id="cred_icm_view">
+              <label for="cred_icm_view" class="custom-control-label">Creditar ICM</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" name="cred_ipi_view" disabled id="cred_ipi_view">
+              <label for="cred_ipi_view" class="custom-control-label">Creditar IPI</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" name="cred_piscofins_view" disabled
+                id="cred_piscofins_view">
+              <label for="cred_piscofins_view" class="custom-control-label">Creditar PIS e COFINS</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" name="financeiro_view" disabled id="financeiro_view">
+              <label for="financeiro_view" class="custom-control-label">Gera Financeiro</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" name="emissao_view" disabled id="emissao_view">
+              <label for="emissao_view" class="custom-control-label">Emissão</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" name="mov_est_view" disabled id="mov_est_view">
+              <label for="mov_est_view" class="custom-control-label">Movimentar Estoque</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" name="dest_ipi_view" disabled id="dest_ipi_view">
+              <label for="dest_ipi_view" class="custom-control-label">Destacar IPI</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" name="incide_ipi_view" disabled id="incide_ipi_view">
+              <label for="incide_ipi_view" class="custom-control-label">Incide IPI na Base ICMS</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" name="incide_frete_view" disabled
+                id="incide_frete_view">
+              <label for="incide_frete_view" class="custom-control-label">Incide Frete na B. ICMS</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" name="incide_despesas_view" disabled
+                id="incide_despesas_view">
+              <label for="incide_despesas_view" class="custom-control-label">Outras Desp. na B. ICMS</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" name="incide_base_ipi_view" disabled
+                id="incide_base_ipi_view">
+              <label for="incide_base_ipi_view" class="custom-control-label">Frete/Despesas/Seguro na B. IPI</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" name="calc_iss_view" disabled id="calc_iss_view">
+              <label for="calc_iss_view" class="custom-control-label">Calcular ISS</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" name="at_custo_view" disabled id="at_custo_view">
+              <label for="at_custo_view" class="custom-control-label">Atualizar Custo</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" name="at_custo_medio_view" disabled
+                id="at_custo_medio_view">
+              <label for="at_custo_medio_view" class="custom-control-label">Atualizar C. Médio</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" name="at_custo_aq_view" disabled
+                id="at_custo_aq_view">
+              <label for="at_custo_aq_view" class="custom-control-label">Atualizar C. Aquisição</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" name="at_preco_view" disabled id="at_preco_view">
+              <label for="at_preco_view" class="custom-control-label">Atualizar P. de Venda</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" name="soma_view" disabled id="soma_view">
+              <label for="soma_view" class="custom-control-label">Influencia em Relatórios</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" disabled id="espelho_view" name="espelho_view">
+              <label for="espelho_view" class="custom-control-label">Imprime Espelho NFe</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" disabled id="comissao_view" name="comissao_view">
+              <label for="comissao_view" class="custom-control-label">Comissão</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" disabled id="calc_import_view"
+                name="calc_import_view">
+              <label for="calc_import_view" class="custom-control-label">Calc. Importação</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" disabled id="soma_import_view"
+                name="soma_import_view">
+              <label for="soma_import_view" class="custom-control-label">Soma ICMS Importação no total</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" disabled id="lanc_ipi_view" name="lanc_ipi_view">
+              <label for="lanc_ipi_view" class="custom-control-label">Lançar IPI na 1ª Parcela (*)</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" disabled id="incide_icms_pci_view"
+                name="incide_icms_pci_view">
+              <label for="incide_icms_pci_view" class="custom-control-label">ICMS na B. PIS e COFINS Imp.</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" disabled id="incide_despesas_pc_view"
+                name="incide_despesas_pc_view">
+              <label for="incide_despesas_pc_view" class="custom-control-label">Outras Desp. na B. PIS e COFINS</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" disabled id="ded_icms_pc_view"
+                name="ded_icms_pc_view">
+              <label for="ded_icms_pc_view" class="custom-control-label">Deduzir ICMS na B. PIS e COFINS</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" disabled id="calc_fecp_view" name="calc_fecp_view">
+              <label for="calc_fecp_view" class="custom-control-label">Calcular FECP</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" disabled id="calc_difal_view" name="calc_difal_view">
+              <label for="calc_difal_view" class="custom-control-label">Calcular Partilha (Difal)</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" disabled id="dup_st_view" name="dup_st_view">
+              <label for="dup_st_view" class="custom-control-label">Gerar Duplicata ST</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" disabled id="desc_icms_view" name="desc_icms_view">
+              <label for="desc_icms_view" class="custom-control-label">Não incide desconto B. ICMS</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" disabled id="desc_icms_des_view"
+                name="desc_icms_des_view">
+              <label for="desc_icms_des_view" class="custom-control-label">Subtrair Desoneração na Nota</label>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="custom-control custom-checkbox">
+              <input class="custom-control-input" type="checkbox" disabled id="desc_icms_ipi_view"
+                name="desc_icms_ipi_view">
+              <label for="desc_icms_ipi_view" class="custom-control-label">Deduz Desconto na B. IPI</label>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="reset" data-dismiss="modal"><i class="fa fa-times">
+              Cancelar</i></button>
+        </div>
         </form>
       </div>
     </div>
@@ -305,10 +1008,10 @@
 
             <div class="col-sm-12">
               <label class="control-label">Status</label>
-              <p><select class="select-notsearch" tabindex="-1" name="statusalt" id="statusalt">
-                <option value="1">Sim</option>
-                <option value="0">Não</option>
-              </select></p>
+              <p><select class="select-notsearch" tabindex="-1" name="statusalt" disabled id="statusalt">
+                  <option value="1">Sim</option>
+                  <option value="0">Não</option>
+                </select></p>
             </div>
 
           </div>
@@ -316,8 +1019,8 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" id="reset" data-dismiss="modal"><i class="fa fa-times">
                 Cancelar</i></button>
-                <button type="submit" class="btn btn-primary" id="btnSalvar" name="btnSalvar"><i class="fa fa-floppy-o">
-                  Salvar</i></button>
+            <button type="submit" class="btn btn-primary" id="btnSalvar" name="btnSalvar"><i class="fa fa-floppy-o">
+                Salvar</i></button>
           </div>
         </form>
       </div>
@@ -329,8 +1032,9 @@
 
 
 @section('js')
-<script src="{{url('/')}}/js/pages/setores.js"></script>
 <script src="{{url('/')}}/js/plugins/select2/js/select2.full.js"></script>
 <script src="{{url('/')}}/js/plugins/datatables/jquery.dataTables.js"></script>
+<script src="{{url('/')}}/js/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 <script src="{{url('/')}}/js/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<script src="{{url('/')}}/js/pages/tes.js"></script>
 @endsection

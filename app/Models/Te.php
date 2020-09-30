@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property int $id_tes
  * @property int $emp_cod
+ * @property string $cod_tes
  * @property string $descricao
  * @property string $CFOP
  * @property int $tipo
@@ -47,6 +48,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $ret_pis
  * @property float $pis_nfsuperior
  * @property float $ret_cofins
+ * @property float $cofins_nfsuperior
  * @property float $ret_csll
  * @property float $abat_suframa_pis
  * @property float $abat_suframa_cofins
@@ -110,6 +112,7 @@ class Te extends Model
 		'ret_pis' => 'float',
 		'pis_nfsuperior' => 'float',
 		'ret_cofins' => 'float',
+		'cofins_nfsuperior' => 'float',
 		'ret_csll' => 'float',
 		'abat_suframa_pis' => 'float',
 		'abat_suframa_cofins' => 'float',
@@ -133,6 +136,7 @@ class Te extends Model
 
 	protected $fillable = [
 		'emp_cod',
+		'cod_tes',
 		'descricao',
 		'CFOP',
 		'tipo',
@@ -167,6 +171,7 @@ class Te extends Model
 		'ret_pis',
 		'pis_nfsuperior',
 		'ret_cofins',
+		'cofins_nfsuperior',
 		'ret_csll',
 		'abat_suframa_pis',
 		'abat_suframa_cofins',
