@@ -13,9 +13,13 @@
     <div class="row mb-2">
       <div class="col-sm-6">
         <h1 class="m-0 text-dark">Empresas
+          @foreach ($acessoPerfil as $acesso)
+          @if (($acesso->role == 5)&&($acesso->ativo == 1))
           <button type="button" class="btn btn-primary fa fa-user-plus" data-toggle="modal"
             data-target="#CadastroModal">
             Cadastrar</button></h1>
+        @endif
+        @endforeach
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -63,15 +67,20 @@
           <td><span @if ($empresa->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
               @endif>{{$empresa->ativo ? "Ativo" : "Inativo"}}</span></td>
           <td>
-            <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal" data-target="#VisualizarEmpModal"
-            data-codigo="{{$empresa->id_empresa}}" data-razao="{{$empresa->razao_social}}" data-fantasia="{{$empresa->nome_fantasia}}"
-            data-logradouro="{{$empresa->Logradouro}}" data-numero="{{$empresa->Numero}}" data-complemento="{{$empresa->Complemento}}"
-            data-bairro="{{$empresa->Bairro}}" data-cidade="{{$empresa->Cidade}}" data-estado="{{$empresa->Estado}}"
-            data-cep="{{$empresa->CEP}}" data-cnpj="{{$empresa->CNPJ}}" data-ie="{{$empresa->IE}}" data-im="{{$empresa->IM}}"
-            data-telefone="{{$empresa->Telefone}}" data-ativo="{{$empresa->ativo}}" data-site="{{$empresa->Pag_web}}" data-email="{{$empresa->email}}"
-            data-sigla="{{$empresa->Sigla}}" data-cadastro="{{date('d/m/Y',strtotime($empresa->DataCad))}}" data-alteracao="{{$empresa->DataAlt ? date('d/m/Y', strtotime($empresa->DataAlt)) : "Sem alteração"}}" data-regimetrib="{{$empresa->regimetrib}}"
-            data-atividade="{{$empresa->atividade}}" data-saldocliente="{{$empresa->saldo_cliente}}" data-processamento="{{$empresa->data_processamento}}"
-            data-licenca="{{$empresa->Licenca}}" data-imgview="<?php 
+            <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal"
+              data-target="#VisualizarEmpModal" data-codigo="{{$empresa->id_empresa}}"
+              data-razao="{{$empresa->razao_social}}" data-fantasia="{{$empresa->nome_fantasia}}"
+              data-logradouro="{{$empresa->Logradouro}}" data-numero="{{$empresa->Numero}}"
+              data-complemento="{{$empresa->Complemento}}" data-bairro="{{$empresa->Bairro}}"
+              data-cidade="{{$empresa->Cidade}}" data-estado="{{$empresa->Estado}}" data-cep="{{$empresa->CEP}}"
+              data-cnpj="{{$empresa->CNPJ}}" data-ie="{{$empresa->IE}}" data-im="{{$empresa->IM}}"
+              data-telefone="{{$empresa->Telefone}}" data-ativo="{{$empresa->ativo}}" data-site="{{$empresa->Pag_web}}"
+              data-email="{{$empresa->email}}" data-sigla="{{$empresa->Sigla}}"
+              data-cadastro="{{date('d/m/Y',strtotime($empresa->DataCad))}}"
+              data-alteracao="{{$empresa->DataAlt ? date('d/m/Y', strtotime($empresa->DataAlt)) : "Sem alteração"}}"
+              data-regimetrib="{{$empresa->regimetrib}}" data-atividade="{{$empresa->atividade}}"
+              data-saldocliente="{{$empresa->saldo_cliente}}" data-processamento="{{$empresa->data_processamento}}"
+              data-licenca="{{$empresa->Licenca}}" data-imgview="<?php 
             $arquivo = 'storage/img/emp/'.$empresa->id_empresa.'.jpg';
                                     if(file_exists($arquivo)){
                                     $imagem = $arquivo;
@@ -79,17 +88,21 @@
                                     $imagem = 'storage/img/emp/default.jpg';
                                     }
                                     echo ($imagem);
-            ?>" 
-            > Visualizar</button>
-            <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal" data-target="#AlterarEmpModal"
-            data-codigo="{{$empresa->id_empresa}}" data-razao="{{$empresa->razao_social}}" data-fantasia="{{$empresa->nome_fantasia}}"
-            data-logradouro="{{$empresa->Logradouro}}" data-numero="{{$empresa->Numero}}" data-complemento="{{$empresa->Complemento}}"
-            data-bairro="{{$empresa->Bairro}}" data-cidade="{{$empresa->Cidade}}" data-estado="{{$empresa->Estado}}"
-            data-cep="{{$empresa->CEP}}" data-cnpj="{{$empresa->CNPJ}}" data-ie="{{$empresa->IE}}" data-im="{{$empresa->IM}}"
-            data-telefone="{{$empresa->Telefone}}" data-ativo="{{$empresa->ativo}}" data-site="{{$empresa->Pag_web}}" data-email="{{$empresa->email}}"
-            data-sigla="{{$empresa->Sigla}}" data-cadastro="{{date('d/m/Y',strtotime($empresa->DataCad))}}" data-alteracao="{{$empresa->DataAlt ? date('d/m/Y', strtotime($empresa->DataAlt)) : "Sem alteração"}}" data-regimetrib="{{$empresa->regimetrib}}"
-            data-atividade="{{$empresa->atividade}}" data-saldocliente="{{$empresa->saldo_cliente}}" data-processamento="{{$empresa->data_processamento}}"
-            data-licenca="{{$empresa->Licenca}}" data-imgalt="<?php 
+            ?>"> Visualizar</button>
+            <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
+              data-target="#AlterarEmpModal" data-codigo="{{$empresa->id_empresa}}"
+              data-razao="{{$empresa->razao_social}}" data-fantasia="{{$empresa->nome_fantasia}}"
+              data-logradouro="{{$empresa->Logradouro}}" data-numero="{{$empresa->Numero}}"
+              data-complemento="{{$empresa->Complemento}}" data-bairro="{{$empresa->Bairro}}"
+              data-cidade="{{$empresa->Cidade}}" data-estado="{{$empresa->Estado}}" data-cep="{{$empresa->CEP}}"
+              data-cnpj="{{$empresa->CNPJ}}" data-ie="{{$empresa->IE}}" data-im="{{$empresa->IM}}"
+              data-telefone="{{$empresa->Telefone}}" data-ativo="{{$empresa->ativo}}" data-site="{{$empresa->Pag_web}}"
+              data-email="{{$empresa->email}}" data-sigla="{{$empresa->Sigla}}"
+              data-cadastro="{{date('d/m/Y',strtotime($empresa->DataCad))}}"
+              data-alteracao="{{$empresa->DataAlt ? date('d/m/Y', strtotime($empresa->DataAlt)) : "Sem alteração"}}"
+              data-regimetrib="{{$empresa->regimetrib}}" data-atividade="{{$empresa->atividade}}"
+              data-saldocliente="{{$empresa->saldo_cliente}}" data-processamento="{{$empresa->data_processamento}}"
+              data-licenca="{{$empresa->Licenca}}" data-imgalt="<?php 
             $arquivo = 'storage/img/emp/'.$empresa->id_empresa.'.jpg';
                                     if(file_exists($arquivo)){
                                     $imagem = $arquivo;
@@ -98,8 +111,12 @@
                                     }
                                     echo ($imagem);
             ?>"> Alterar</button>
+            @foreach ($acessoPerfil as $acesso)
+            @if (($acesso->role == 5)&&($acesso->ativo == 1))
             <button type="button" class="btn btn-danger btn-sm fa fa-trash-o" data-toggle="modal"
               data-target="#modal-danger" data-codigo="{{$empresa->id_empresa}}"> Excluir</button>
+            @endif
+            @endforeach
           </td>
         </tr>
         @endforeach
@@ -180,7 +197,7 @@
 
             <div class="col-sm-1">
               <label class="control-label">SIGLA</label>
-              <input class="form-control" type="text" name="siglacad" id="sigla"  maxlength="6">
+              <input class="form-control" type="text" name="siglacad" id="sigla" maxlength="6">
             </div>
 
             <div class="col-sm-4">
@@ -206,6 +223,7 @@
             <div class="col-sm-2">
               <label class="control-label">Cidade</label>
               <input class="form-control" type="text" name="cidadecad" id="cidade" maxlength="60" required>
+              <input class="form-control" type="hidden" name="ibgecad" id="ibge" maxlength="7" required>
             </div>
 
             <div class="col-sm-1">
@@ -235,7 +253,7 @@
 
             <div class="col-sm-2">
               <label class="control-label">Telefone</label>
-              <input class="form-control" type="text" name="telefonecad" maxlength="15" id="telefone">
+              <input class="form-control" type="text" name="telefonecad" maxlength="80" id="telefone">
             </div>
 
             <div class="col-sm-2">
@@ -284,11 +302,12 @@
       <div class="modal-body">
 
         <!-- Form de cadastro -->
-        <form class="form-horizontal" method="POST" action="{{action('EmpresaController@update')}}" enctype="multipart/form-data">
+        <form class="form-horizontal" method="POST" action="{{action('EmpresaController@update')}}"
+          enctype="multipart/form-data">
           @csrf
           <div class="form-group row">
             <div class="col-sm-6">
-              <p><img id="previewImgAlt" src="storage/img/emp/default.jpg" class="imgCad" ></p>
+              <p><img id="previewImgAlt" src="storage/img/emp/default.jpg" class="imgCad"></p>
             </div>
             <div class="col-sm-6">
               <div class="custom-file">
@@ -299,7 +318,8 @@
               <label class="control-label">Razão Social</label>
               <input class="form-control" type="text" name="razaoalt" id="razao_social_alt" maxlength="150" required>
               <label class="control-label">Nome Fantasia</label>
-              <input class="form-control" type="text" name="fantasiaalt" id="nome_fantasia_alt" maxlength="150" required>
+              <input class="form-control" type="text" name="fantasiaalt" id="nome_fantasia_alt" maxlength="150"
+                required>
             </div>
 
             <div class="col-sm-4">
@@ -364,6 +384,7 @@
             <div class="col-sm-2">
               <label class="control-label">Cidade</label>
               <input class="form-control" type="text" name="cidadealt" maxlength="60" id="cidade_alt" required>
+              <input class="form-control" type="hidden" name="ibgealt" maxlength="7" id="ibge_alt" required>
             </div>
 
             <div class="col-sm-1">
@@ -378,7 +399,7 @@
 
             <div class="col-sm-2">
               <label class="control-label">CNPJ</label>
-              <input class="form-control" type="text" name="cnpjalt" id="cnpj_alt" maxlength="18" required>
+              <input class="form-control" type="text" name="cnpjalt" id="cnpj_alt" maxlength="18" autocomplete="off" required>
             </div>
 
             <div class="col-sm-2">
@@ -413,7 +434,15 @@
 
             <div class="col-sm-2">
               <label class="control-label">Nº de Licenças</label>
-              <input class="form-control" type="number" name="licencaalt" id="licenca_alt" min="0">
+              @foreach ($acessoPerfil as $acesso)
+              @if (($acesso->role == 5)&&($acesso->ativo == 1))
+              <input class="form-control" type="number" name="licencaalt" id="licenca_alt" min="0" step="1">
+              @endif
+              @if (($acesso->role == 5)&&($acesso->ativo == 0))
+              <input class="form-control" type="number" id="licencaalt" min="0" step="1" disabled>
+              <input class="form-control" type="hidden" name="licencaalt" id="licenca_alt" min="0" step="1">
+              @endif
+              @endforeach
             </div>
 
 
@@ -483,8 +512,9 @@
             <div class="col-sm-3">
               <label class="control-label">Atividade</label>
               <select class="select2" tabindex="-1" name="atividadeview" id="atividade_view" disabled>
-                <option value="1">Consolidado</option>
-                <option value="2">Individual</option>
+                @foreach ($atividades as $atividade)
+                <option value="{{$atividade->id_atividade}}">{{$atividade->descricao}}</option>
+                @endforeach
               </select>
             </div>
 
@@ -625,9 +655,10 @@
 
 
 @section('js')
-<script src="{{url('/')}}/js/pages/midotech.js"></script>
-<script src="{{url('/')}}/js/plugins/bs-custom-file-input/bs-custom-file-input.js"></script>
 <script src="{{url('/')}}/js/plugins/select2/js/select2.full.js"></script>
 <script src="{{url('/')}}/js/plugins/datatables/jquery.dataTables.js"></script>
 <script src="{{url('/')}}/js/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<script src="{{url('/')}}/js/plugins/mask/jquery.mask.min.js"></script>
+<script src="{{url('/')}}/js/plugins/bs-custom-file-input/bs-custom-file-input.js"></script>
+<script src="{{url('/')}}/js/pages/midotech.js"></script>
 @endsection

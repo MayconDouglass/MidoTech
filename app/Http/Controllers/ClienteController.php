@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cliente;
 use App\Models\Clilogradouro;
 use App\Models\Modocobranca;
+use App\Models\Perfil;
 use App\Models\PerfilAcesso;
 use App\Models\Prazopagamento;
 use App\Models\Setempresa;
@@ -26,6 +27,11 @@ class ClienteController extends Controller
             $unomeperfil= Auth::user()->perfil->nome;
             $uempresa= Auth::user()->empresa;
 
+            $statusPerfil= Perfil::find(Auth::user()->perfil_fk);
+            if($statusPerfil->ativo == 0){
+            Auth::logout();
+            }
+            
             //dd();
             $arquivo = 'storage/img/users/'.$uid.'.jpg';
             if(file_exists($arquivo)){

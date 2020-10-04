@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Perfil;
 use App\Models\PerfilAcesso;
 use App\Models\Regimetrib;
 use Illuminate\Http\Request;
@@ -15,11 +16,16 @@ class EmpresaController extends Controller
     public function create()
     {
         if (Auth::user()){
-            
             $uid= Auth::user()->id_usuario;
-            $unome= Auth::user()->nome;
             $uperfil= Auth::user()->perfil_fk;
+            $unome= Auth::user()->nome;
             $unomeperfil= Auth::user()->perfil->nome;
+            $uempresa= Auth::user()->empresa;
+            
+            $statusPerfil= Perfil::find(Auth::user()->perfil_fk);
+            if($statusPerfil->ativo == 0){
+            Auth::logout();
+            }
 
             //dd();
             $arquivo = 'storage/img/users/'.$uid.'.jpg';
@@ -29,18 +35,21 @@ class EmpresaController extends Controller
             $uimagem = 'storage/img/users/default.jpg';
             }
             
-            $empresas = Setempresa::all();
             $atividades = Setatividade::where('ativo',1)->get();
+            
             $regimetributados = Regimetrib::where('ativo',1)->get();
-            $roleView = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
-            ->where('role',1)
-            ->pluck('ativo');
+           
             $acessoPerfil = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
-            ->select('role','ativo')->get();
-            $roles = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
-            ->pluck('ativo');
+                                        ->select('role','ativo')->get();
 
-                if (($roleView[0]  == 1) && ($roles[4] == 1)){
+            $roles = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
+                                 ->pluck('ativo');
+            if($roles[4] == 1){
+            $empresas = Setempresa::all();
+            }else{
+            $empresas = Setempresa::where('id_empresa',$uempresa)->get();   
+            }
+                if (($roles[0]  == 1) && ($roles[1] == 1)){
                     return view('painel.page.empresa',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','atividades','regimetributados','acessoPerfil'));
                 }else{
                     return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','acessoPerfil'));
@@ -66,6 +75,7 @@ class EmpresaController extends Controller
             $empresa->Cidade = $request->cidadecad;
             $empresa->Estado = $request->ufcad;
             $empresa->CEP = $request->cepcad;
+            $empresa->CEP = $request->ibgecad;
             $empresa->CNPJ = $request->cnpjcad;
             $empresa->IE = $request->iecad;
             $empresa->IM = $request->imcad;
@@ -112,8 +122,8 @@ class EmpresaController extends Controller
 
     public function update(Request $request){
         
-        $countEmp = count(Setempresa::where('CNPJ',$request->cnpjcad)->get());
-        if($countEmp < 1 ){
+        $countEmp = count(Setempresa::where('CNPJ',$request->cnpjalt)->get());
+        
             $empresa = Setempresa::find($request->idEmp);
             $empresa->razao_social = $request->razaoalt;
             $empresa->nome_fantasia = $request->fantasiaalt;
@@ -124,7 +134,10 @@ class EmpresaController extends Controller
             $empresa->Cidade = $request->cidadealt;
             $empresa->Estado = $request->ufalt;
             $empresa->CEP = $request->cepalt;
-            $empresa->CNPJ = $request->cnpjalt;
+            $empresa->ibge = $request->ibgealt;
+            if($countEmp < 1 ){
+                $empresa->CNPJ = $request->cnpjalt;
+            }
             $empresa->IE = $request->iealt;
             $empresa->IM = $request->imalt;
             $empresa->Telefone = $request->telefonealt;
@@ -137,7 +150,7 @@ class EmpresaController extends Controller
             $empresa->regimetrib = $request->regimealt;
             $empresa->atividade = $request->atividadealt;
             $empresa->saldo_cliente = $request->saldoalt;
-            $updateStatus = $empresa->save();
+            $updateStatus = $empresa->update();
 
             
         if($request->fotoalt){
@@ -161,11 +174,6 @@ class EmpresaController extends Controller
                     return redirect()->action('EmpresaController@create')->with('status_error', 'OPS! Algum erro na atualização, tente novamente!');
                 }
 
-        }else{
-           
-            return redirect()->action('EmpresaController@create')->with('status_error', 'Já existe uma empresa com este CNPJ!');
-
-        }
 
     }
 

@@ -14,7 +14,7 @@
       <div class="col-sm-6">
         <h1 class="m-0 text-dark">Unidades
           @foreach ($acessoPerfil as $acesso)
-          @if (($acesso->role == 2)&&($acesso->ativo == 1))
+          @if (($acesso->role == 5)&&($acesso->ativo == 1))
           <button type="button" class="btn btn-primary fa fa-user-plus" data-toggle="modal"
             data-target="#CadastroModal">
             Cadastrar

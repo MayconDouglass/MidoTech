@@ -140,7 +140,8 @@
               <label class="control-label">UF</label>
               <p><input class="form-control" type="text" name="ufcad" maxlength="2" required></p>
             </div>
-
+            @foreach ($acessoPerfil as $acesso)
+            @if (($acesso->role == 5)&&($acesso->ativo == 1))
             <div class="col-sm-12">
               <label class="control-label">Empresa</label>
               <p><select class="select-notsearch" tabindex="-1" name="empresacad">
@@ -150,7 +151,15 @@
                   @endforeach
                 </select></p>
             </div>
+            @endif
+
+            @if (($acesso->role == 5)&&($acesso->ativo == 0))
+            <div class="col-sm-12">
+            <input class="form-control" type="hidden" name="empresacad" value="{{$uempresa}}" required>
+            </div>
+            @endif
             
+            @endforeach
 
             <div class="col-sm-12">
               <label class="control-label">Ativo</label>
@@ -237,7 +246,8 @@
               <label class="control-label">UF</label>
               <p><input class="form-control" type="text" id="ufview" disabled></p>
             </div>
-
+            @foreach ($acessoPerfil as $acesso)
+            @if (($acesso->role == 5)&&($acesso->ativo == 1))
             <div class="col-sm-12">
               <label class="control-label">Empresa</label>
               <p><select class="select-notsearch" tabindex="-1" name="empresaview" id="empresaview" disabled>
@@ -246,6 +256,8 @@
                 @endforeach
               </select></p>
             </div>
+            @endif
+            @endforeach
 
             <div class="col-sm-12">
               <label class="control-label">Status</label>
@@ -297,7 +309,8 @@
               <label class="control-label">UF</label>
               <p><input class="form-control" type="text" id="ufalt" disabled></p>
             </div>
-
+            @foreach ($acessoPerfil as $acesso)
+            @if (($acesso->role == 5)&&($acesso->ativo == 1))
             <div class="col-sm-12">
               <label class="control-label">Empresa</label>
               <p><select class="select-notsearch" tabindex="-1" name="empresaalt" id="empresaalt" disabled>
@@ -306,6 +319,8 @@
                 @endforeach
               </select></p>
             </div>
+            @endif
+            @endforeach
 
             <div class="col-sm-12">
               <label class="control-label">Status</label>

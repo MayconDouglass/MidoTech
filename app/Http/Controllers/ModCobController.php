@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Modocobranca;
 use App\Models\Natoperacao;
+use App\Models\Perfil;
 use App\Models\PerfilAcesso;
 use App\Models\Situacaomodcob;
 
@@ -22,6 +23,12 @@ class ModCobController extends Controller
             $uperfil= Auth::user()->perfil_fk;
             $unomeperfil= Auth::user()->perfil->nome;
 
+            
+            $statusPerfil= Perfil::find($uperfil);
+            if($statusPerfil->ativo == 0){
+                Auth::logout();
+            }
+            
             //dd();
             $arquivo = 'storage/img/users/'.$uid.'.jpg';
             if(file_exists($arquivo)){

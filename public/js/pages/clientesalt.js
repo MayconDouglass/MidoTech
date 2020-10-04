@@ -117,7 +117,6 @@ $(function () {
                         $('#cidade').val(response.municipio);
                         $('#bairro').val(response.bairro);
                         $('#numero').val(response.numero);
-                        $('#numero').val(response.numero);
                         $('#uf').val(response.uf);
                         $('#complemento').val(response.complemento);
                         $('#email').val(response.email);
@@ -142,6 +141,7 @@ $(function () {
 
 
     var idCliente = $("#idCliente").val();
+    var mascara = '';
     $.ajax({
         type: 'get',
         dataType: 'json',
@@ -151,11 +151,16 @@ $(function () {
         },
 
         success: function (result) {
+            if(result.tipo_pessoa < 1){
+                mascara = "99.999.999/9999-99"
+            }else{
+                mascara = "999.999.999-999"
+            }
             $("#razao").val(result.razao_social).trigger("change");
             $("#fantasia").val(result.nome_fantasia).trigger("change");
             $("#pessoa").val(result.tipo_pessoa).trigger("change");
             $("#grupo").val(result.grupo).trigger("change");
-            $("#cnpjcpf").val(result.cpf_cnpj).trigger("change");
+            $("#cnpjcpf").val(result.cpf_cnpj).unmask().mask(mascara).trigger("change");
             $("#status").val(result.status).trigger("change");
             $("#iestadual").val(result.insc_estadual).trigger("change");
             $("#email").val(result.email).trigger("change");

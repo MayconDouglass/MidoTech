@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $emp_cod
  * @property string $cod_tes
  * @property string $descricao
- * @property string $CFOP
+ * @property int $CFOP
  * @property int $tipo
  * @property int $status
  * @property string $serie
@@ -70,6 +70,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $desc_ipi
  * 
  * @property Setempresa $setempresa
+ * @property Operacaofiscal $operacaofiscal
  *
  * @package App\Models
  */
@@ -81,6 +82,7 @@ class Te extends Model
 
 	protected $casts = [
 		'emp_cod' => 'int',
+		'CFOP' => 'int',
 		'tipo' => 'int',
 		'status' => 'int',
 		'calc_icms' => 'int',
@@ -196,5 +198,10 @@ class Te extends Model
 	public function setempresa()
 	{
 		return $this->belongsTo(Setempresa::class, 'emp_cod');
+	}
+
+	public function operacaofiscal()
+	{
+		return $this->belongsTo(Operacaofiscal::class, 'CFOP');
 	}
 }

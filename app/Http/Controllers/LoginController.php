@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\Perfil;
 use Illuminate\Http\Request;
 //use Illuminate\Support\Facades\Auth;
 use App\User;
@@ -79,18 +80,29 @@ class LoginController extends Controller
 
         $lembrar = empty($request->remember) ? false : true;
 
-        $usuario = User::where('email', $request->email)->where('ativo',1)->first();
+        $usuario = User::where('email', $request->email)
+                       ->where('ativo',1)
+                       ->with(['perfil','setempresa'])
+                       ->first();
+       
         $statusUser = User::where('email', $request->email)->first();
         //dd($statusUser->ativo);
         //dd(bcrypt($request->senha));
             
-        
+        if(!$usuario->setempresa->ativo){
+            return redirect()->action('LoginController@form')->with('status_login_error', 'Empresa Inativa! Contate o Setor financeiro.');
+        }
+        if(!$usuario->perfil->ativo){
+            return redirect()->action('LoginController@form')->with('status_login_error', 'Perfil do usuário Inativo!');
+        }
 
         if ($usuario && Hash::check($request->senha, $usuario->password)) {
            
             Auth::loginUsingId($usuario->id_usuario, $lembrar);
         }
             
+       
+
         if($statusUser->ativo==0){
             return redirect()->action('LoginController@form')->with('status_login_error', 'Usuário Inativo!');
         }else{

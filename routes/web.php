@@ -98,6 +98,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/tes/cad', 'TESController@store');
     Route::post('/tes/update', 'TESController@update');
     Route::post('/tes/delete', 'TESController@destroy');
+    Route::get('/tes/id/{id}', 'TESController@viewTES');
+
+    // Contratos
+    Route::get('/contratos', 'ContratoController@create')->name('contratos');
+    Route::get('/emp/{emp}/cliente/{cgc}', 'ContratoController@codCliente');
+    Route::post('/contratos/cad', 'ContratoController@store');
+    Route::post('/contratos/update', 'ContratoController@update');
+    Route::post('/contratos/delete', 'ContratoController@destroy');
 
 });
 

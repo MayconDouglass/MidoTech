@@ -290,8 +290,8 @@
 
 
 @section('js')
-<script src="{{url('/')}}/js/pages/clientes.js"></script>
+<script src="{{url('/')}}/js/plugins/datatables/jquery.dataTables.js"></script>
 <script src="{{url('/')}}/js/plugins/select2/js/select2.full.js"></script>
 <script src="{{url('/')}}/js/plugins/mask/jquery.mask.min.js"></script>
-<script src="{{url('/')}}/js/plugins/datatables/jquery.dataTables.js"></script>
+<script src="{{url('/')}}/js/pages/clientes.js"></script>
 @endsection

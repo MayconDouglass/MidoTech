@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ParcelaPrazo;
+use App\Models\Perfil;
 use App\Models\PerfilAcesso;
 use App\Models\Prazopagamento;
 
@@ -20,6 +21,11 @@ class PrazoController extends Controller
             $unome= Auth::user()->nome;
             $uperfil= Auth::user()->perfil_fk;
             $unomeperfil= Auth::user()->perfil->nome;
+
+            $statusPerfil= Perfil::find(Auth::user()->perfil_fk);
+            if($statusPerfil->ativo == 0){
+            Auth::logout();
+            }            
 
             //dd();
             $arquivo = 'storage/img/users/'.$uid.'.jpg';

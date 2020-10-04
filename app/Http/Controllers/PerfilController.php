@@ -19,6 +19,12 @@ class PerfilController extends Controller
             $unome= Auth::user()->nome;
             $uperfil= Auth::user()->perfil_fk;
             $unomeperfil= Auth::user()->perfil->nome;
+            $uempresa= Auth::user()->empresa;
+
+            $statusPerfil= Perfil::find($uperfil);
+            if($statusPerfil->ativo == 0){
+            Auth::logout();
+            }
 
             //dd();
             $arquivo = 'storage/img/users/'.$uid.'.jpg';
@@ -41,8 +47,8 @@ class PerfilController extends Controller
             $roles = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
             ->pluck('ativo');
 
-            if (($roleView[0]  == 1) && ($roles[4] == 1)){
-                    return view('painel.page.perfil',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','perfis','acessoPerfil'));
+            if (($roleView[0] == 1) && ($roles[6] == 1)){
+                    return view('painel.page.perfil',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','perfis','acessoPerfil','uempresa'));
                 }else{
                     return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','perfis','acessoPerfil'));
                 }  
@@ -121,16 +127,28 @@ class PerfilController extends Controller
     public function atualizarPermissao(Request $request){
         $select = 'role';
         $acesso = PerfilAcesso::where('perfil_cod','=',$request->idPerfil)->get();  
-        $sizeRole = PerfilAcesso::all()->max('role');
+        $sizeRole = Role::all()->max('id_role');
         //dd($sizeRole);
         if(count($acesso) > 0){
             for ($i=1; $i < $sizeRole + 1; $i++) { 
+                $roleExist = PerfilAcesso::where('perfil_cod','=',$request->idPerfil)
+                                 ->where('role','=',$i)
+                                 ->get();  
+                if(count($roleExist) > 0){
                 $perfilAcesso = PerfilAcesso::where('perfil_cod','=',$request->idPerfil)->where('role',$i)->first();     
                 $perfilAcesso->perfil_cod = $request->idPerfil;
                 $perfilAcesso->usuario = Auth::user()->id_usuario;
                 $perfilAcesso->role = $i;
                 $perfilAcesso->ativo = $request->input($select.$i);
                 $perfilAcesso->save();
+                }else{
+                $perfilAcesso = new PerfilAcesso();     
+                $perfilAcesso->perfil_cod = $request->idPerfil;
+                $perfilAcesso->usuario = Auth::user()->id_usuario;
+                $perfilAcesso->role = $i;
+                $perfilAcesso->ativo = $request->input($select.$i);
+                $perfilAcesso->save(); 
+                }
             }
         }else{
             foreach (range(1,$sizeRole) as $size => $role) {
@@ -145,6 +163,7 @@ class PerfilController extends Controller
         
         $perfil = Perfil::find($request->idPerfil);
         $perfil->usualt = Auth::user()->id_usuario;
+        $perfil->dataalt = date('Y-m-d H:i:s');
         $statusAcesso = $perfil->save();
         if($statusAcesso){   
             return redirect()->action('PerfilController@create')->with('status_success', 'Permissões atualizadas!');

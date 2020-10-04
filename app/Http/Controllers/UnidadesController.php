@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Perfil;
 use App\Models\PerfilAcesso;
-use App\Models\Setempresa;
 use App\Models\Setunidade;
-use App\Models\Tabelapreco;
 use Illuminate\Http\Request;
 
 use Auth;
@@ -21,6 +20,11 @@ class UnidadesController extends Controller
             $uperfil= Auth::user()->perfil_fk;
             $unomeperfil= Auth::user()->perfil->nome;
             $uempresa= Auth::user()->empresa;
+
+            $statusPerfil= Perfil::find(Auth::user()->perfil_fk);
+            if($statusPerfil->ativo == 0){
+            Auth::logout();
+            }
 
             //dd();
             $arquivo = 'storage/img/users/'.$uid.'.jpg';

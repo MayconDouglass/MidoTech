@@ -20,7 +20,14 @@ class UsuarioController extends Controller
             $unome= Auth::user()->nome;
             $uperfil= Auth::user()->perfil_fk;
             $unomeperfil= Auth::user()->perfil->nome;
+            $uempresa= Auth::user()->empresa;
 
+            
+            $statusPerfil= Perfil::find(Auth::user()->perfil_fk);
+            if($statusPerfil->ativo == 0){
+                Auth::logout();
+            }
+            
             //dd();
             $arquivo = 'storage/img/users/'.$uid.'.jpg';
             if(file_exists($arquivo)){
@@ -29,11 +36,8 @@ class UsuarioController extends Controller
             $uimagem = 'storage/img/users/default.jpg';
             }
             
-            $perfis = Perfil::where('ativo',1)->get();
-
             $empresas = Setempresa::all();
            
-            $usuarios = Usuario::all();
 
             $roleView = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
                                     ->where('role',1)
@@ -44,8 +48,16 @@ class UsuarioController extends Controller
             $roles = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
             ->pluck('ativo');
 
-            if (($roleView[0]  == 1) && ($roles[4] == 1)){
-            return view('painel.page.usuario',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','usuarios','perfis','acessoPerfil'));
+            if($roles[4] == 1){
+                $usuarios = Usuario::all(); 
+                $perfis = Perfil::all();
+            }else{
+                $usuarios = Usuario::where('empresa',$uempresa)->get();
+                $perfis = Perfil::where('ativo',1)->where('emp_cod',$uempresa)->get();
+            }
+
+            if (($roleView[0]  == 1) && ($roles[5] == 1)){
+            return view('painel.page.usuario',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','usuarios','perfis','acessoPerfil','uempresa'));
             }else{
                 return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','perfis','acessoPerfil'));
             }  
@@ -60,41 +72,49 @@ class UsuarioController extends Controller
 
     public function store(Request $request){
         $countUser = count(Usuario::where('email',$request->emailcad)->get());
-        if($countUser < 1){
-            $usuario = new Usuario();
-            $usuario->empresa = $request->empcad;
-            $usuario->perfil_fk = $request->perfilcad;
-            $usuario->nome = $request->nomecad;
-            $usuario->email = $request->emailcad;
-            $usuario->password = bcrypt($request->passwordcad);
-            $usuario->ativo = $request->ativacad;
-            $usuario->usucad = Auth::user()->id_usuario;
-            $usuario->data_cadastro = date('Y-m-d H:i:s');
-            $saveStatus = $usuario->save();
+        $countUserLicenca = count(Usuario::where('empresa',Auth::user()->empresa)->get());
+        $countLicenca = Setempresa::where('id_empresa',Auth::user()->empresa)->pluck('licenca')[0];
+        
+        if(($countLicenca - $countUserLicenca) > 0){
 
-            if($request->fotocad){
-                $file = $request->fotocad;
-                $filename= $usuario->id_usuario.'.jpg';
-                $info = getimagesize($file);
-                $destination_path = 'storage/img/users/';
+            if($countUser < 1){
+                $usuario = new Usuario();
+                $usuario->empresa = $request->empcad;
+                $usuario->perfil_fk = $request->perfilcad;
+                $usuario->nome = $request->nomecad;
+                $usuario->email = $request->emailcad;
+                $usuario->password = bcrypt($request->passwordcad);
+                $usuario->ativo = $request->ativacad;
+                $usuario->usucad = Auth::user()->id_usuario;
+                $usuario->data_cadastro = date('Y-m-d H:i:s');
+                $saveStatus = $usuario->save();
+
+                if($request->fotocad){
+                    $file = $request->fotocad;
+                    $filename= $usuario->id_usuario.'.jpg';
+                    $info = getimagesize($file);
+                    $destination_path = 'storage/img/users/';
     
-                if ($info['mime'] == 'image/jpeg') {
-                    $image = imagecreatefromjpeg($file);
-                }elseif($info['mime'] == 'image/png'){
-                    $image = imagecreatefrompng($file);
-                }
+                    if ($info['mime'] == 'image/jpeg') {
+                        $image = imagecreatefromjpeg($file);
+                    }elseif($info['mime'] == 'image/png'){
+                        $image = imagecreatefrompng($file);
+                    }
             
-                imagejpeg($image, $destination_path.$filename, 70);
-            }
+                    imagejpeg($image, $destination_path.$filename, 70);
+                }
 
-            if($saveStatus){            
-                return redirect()->action('UsuarioController@create')->with('status_success', 'Usuário Cadastrada!');
-            }else{
+                if($saveStatus){            
+                    return redirect()->action('UsuarioController@create')->with('status_success', 'Usuário Cadastrada!');
+                }else{
                     return redirect()->action('UsuarioController@create')->with('status_error', 'OPS! Algum erro no cadastro, tente novamente!');
-            }
+                }
 
+            }else{
+                return redirect()->action('UsuarioController@create')->with('status_error', 'Já existe um usuário com este email!');
+            }
         }else{
-            return redirect()->action('UsuarioController@create')->with('status_error', 'Já existe um usuário com este email!');
+            return redirect()->action('UsuarioController@create')->with('status_error', 'Limite de licenças atingido! Contratadas: '.$countLicenca.'.');  
         }
     }
 
@@ -104,11 +124,6 @@ class UsuarioController extends Controller
             $usuario->empresa = $request->empresaalt;
             $usuario->perfil_fk = $request->perfilalt;
             $usuario->nome = $request->nomealt;
-            if($usuario->email != $request->emailalt && $countUser==0){
-            $usuario->email = $request->emailalt;
-            }else{
-                return redirect()->action('UsuarioController@create')->with('status_warning', 'Já existe outro usuário com este email, mas as demais informações foram atualizadas!');   
-            }
             $usuario->ativo = $request->ativaalt;
             $usuario->usucad = Auth::user()->id_usuario;
             $usuario->data_alteracao = date('Y-m-d H:i:s');

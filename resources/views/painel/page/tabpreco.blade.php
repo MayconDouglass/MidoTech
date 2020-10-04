@@ -61,7 +61,11 @@
       <thead>
         <tr>
           <th class="idDataTab">ID</th>
+          @foreach ($acessoPerfil as $acesso)
+          @if (($acesso->role == 5)&&($acesso->ativo == 1))
           <th>Empresa</th>
+          @endif
+          @endforeach
           <th>Descrição</th>
           <th class="statusDataTab">Status</th>
           <th class="actionDataTab">Ações</th>
@@ -71,7 +75,11 @@
         @foreach ($tabPrecos as $tabPreco)
         <tr>
           <td class="idDataTabText">{{$tabPreco->id_tabela}}</td>
+          @foreach ($acessoPerfil as $acesso)
+          @if (($acesso->role == 5)&&($acesso->ativo == 1))
           <td>{{$tabPreco->setempresa->razao_social}}</td>
+          @endif
+          @endforeach
           <td>{{$tabPreco->descricao}}</td>
           <td>
             <span @if ($tabPreco->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
@@ -136,7 +144,9 @@
               <label class="control-label">Descricao</label>
               <p><input class="form-control" type="text" name="descricaocad" maxlength="60" required></p>
             </div>
-
+           
+            @foreach ($acessoPerfil as $acesso)
+            @if (($acesso->role == 5)&&($acesso->ativo == 1))
             <div class="col-sm-12">
               <label class="control-label">Empresa</label>
               <p><select class="select-notsearch" tabindex="-1" name="empresacad">
@@ -146,6 +156,14 @@
                   @endforeach
                 </select></p>
             </div>
+            @endif
+
+            @if (($acesso->role == 5)&&($acesso->ativo == 0))
+            <div class="col-sm-12">
+            <input class="form-control" type="hidden" name="empresacad" value="{{$uempresa}}" required>
+            </div>
+            @endif
+            @endforeach
 
             <div class="col-sm-4">
               <label class="control-label">Ativo</label>
@@ -190,7 +208,7 @@
 <!-- Modal Alteracao-->
 <div class="modal fade" id="AlterarTabPrecoModal" tabindex="-1" role="dialog"
   aria-labelledby="AlterarTabPrecoModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="alt_modalHeader">
         <div class="modal-header">
@@ -215,6 +233,8 @@
               </p>
             </div>
 
+            @foreach ($acessoPerfil as $acesso)
+            @if (($acesso->role == 5)&&($acesso->ativo == 1))
             <div class="col-sm-12">
               <label class="control-label">Empresa</label>
               <p><select class="select-notsearch" tabindex="-1" name="empresaalt" id="empresa_alt" disabled>
@@ -224,6 +244,8 @@
                   @endforeach
                 </select></p>
             </div>
+            @endif
+            @endforeach
 
             <div class="col-sm-4">
               <label class="control-label">Ativo</label>
@@ -295,7 +317,7 @@
 <!-- Modal Visualizacao-->
 <div class="modal fade" id="VisualizarTabPrecoModal" tabindex="-1" role="dialog"
   aria-labelledby="VisualizarTabPrecoModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="view_modalHeader">
         <div class="modal-header">
@@ -322,6 +344,8 @@
               </p>
             </div>
 
+            @foreach ($acessoPerfil as $acesso)
+            @if (($acesso->role == 5)&&($acesso->ativo == 1))
             <div class="col-sm-12">
               <label class="control-label">Empresa</label>
               <p><select class="select-notsearch" tabindex="-1" name="empresa_view" id="empresa_view" disabled>
@@ -331,6 +355,8 @@
                   @endforeach
                 </select></p>
             </div>
+            @endif
+            @endforeach
 
             <div class="col-sm-4">
               <label class="control-label">Ativo</label>

@@ -62,7 +62,11 @@
       <thead>
         <tr>
           <th class="idDataTab">ID</th>
+          @foreach ($acessoPerfil as $acesso)
+          @if (($acesso->role == 5)&&($acesso->ativo == 1))
           <th>Empresa</th>
+          @endif
+          @endforeach
           <th>Usuário</th>
           <th class="statusDataTab">Status</th>
           <th class="actionDataTab">Ações</th>
@@ -72,7 +76,11 @@
         @foreach ($usuarios as $usuario)
         <tr>
           <td class="idDataTabText">{{$usuario->id_usuario}}</td>
+          @foreach ($acessoPerfil as $acesso)
+          @if (($acesso->role == 5)&&($acesso->ativo == 1))
           <td>{{$usuario->setempresa->Sigla}}</td>
+          @endif
+          @endforeach
           <td>{{$usuario->nome}}</td>
           <td><span @if ($usuario->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
               @endif>{{$usuario->ativo ? "Ativo" : "Inativo"}}</span></td>
@@ -134,7 +142,7 @@
 <!-- Modal Cadastro-->
 <div class="modal fade" id="CadastroModal" tabindex="-1" role="dialog" aria-labelledby="CadastroModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-xl" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="add_modalHeader">
         <div class="modal-header">
@@ -157,7 +165,7 @@
             <div class="col-sm-6">
               <div class="custom-file">
                 <input type="file" class="custom-file-input" id="customFile" name="fotocad">
-                <label class="custom-file-label" for="customFile">Selecionar Logo</label>
+                <label class="custom-file-label" for="customFile">Selecionar Imagem</label>
               </div><br>
               <label class="control-label">Email</label>
               <input class="form-control" type="email" name="emailcad" id="email" maxlength="150" required>
@@ -166,11 +174,14 @@
                   placeholder="Máximo de 10 caracteres" required></p>
             </div>
 
+            
+
+            @foreach ($acessoPerfil as $acesso)
+            @if (($acesso->role == 5)&&($acesso->ativo == 1))
             <div class="col-sm-5">
               <label class="control-label">Nome</label>
               <input class="form-control" type="text" name="nomecad" id="nome" maxlength="250" required>
             </div>
-
             <div class="col-sm-3">
               <label class="control-label">Empresa</label>
               <p><select class="select-notsearch" tabindex="-1" name="empcad" id="emp_cod">
@@ -196,6 +207,37 @@
                 @endforeach
               </select>
             </div>
+            @endif
+
+            @if (($acesso->role == 5)&&($acesso->ativo == 0))
+            <div class="col-sm-7">
+              <label class="control-label">Nome</label>
+              <input class="form-control" type="text" name="nomecad" id="nome" maxlength="250" required>
+              <input class="form-control" type="hidden" name="empcad" id="emp_cod" value="{{$uempresa}}" required>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Ativa</label>
+              <select class="select-notsearch" tabindex="-1" name="ativacad" id="ativa">
+                <option value="1">Sim</option>
+                <option value="0">Não</option>
+              </select>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Perfil</label>
+              <select class="select-notsearch" tabindex="-1" name="perfilcad" id="perfil">
+                @foreach ($perfis as $perfil)
+                <option value="{{$perfil->id_perfil}}">{{$perfil->nome}}</option>
+                @endforeach
+              </select>
+            </div>
+
+            @endif
+
+            @endforeach
+
+            
 
           </div>
 
@@ -214,7 +256,7 @@
 <!-- Modal Alteracao-->
 <div class="modal fade" id="AlterarUserModal" tabindex="-1" role="dialog" aria-labelledby="AlterarUserModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-xl" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="alt_modalHeader">
         <div class="modal-header">
@@ -237,15 +279,17 @@
             <div class="col-sm-6">
               <div class="custom-file">
                 <input type="file" class="custom-file-input" id="customFileAlt" name="fotoalt">
-                <label class="custom-file-label" for="customFileAlt">Selecionar Logo</label>
+                <label class="custom-file-label" for="customFileAlt">Selecionar Imagem</label>
               </div><br>
               <input class="form-control" type="hidden" name="idUser" id="user_cod" required>
               <label class="control-label">Email</label>
-              <input class="form-control" type="text" name="emailalt" id="email_alt" maxlength="150" required>
+              <input class="form-control" type="text" name="emailalt" id="email_alt" disabled>
               <label class="control-label">Nome</label>
               <input class="form-control" type="text" name="nomealt" id="nome_alt" maxlength="150" required>
             </div>
 
+            @foreach ($acessoPerfil as $acesso)
+            @if (($acesso->role == 5)&&($acesso->ativo == 1))
             <div class="col-sm-4">
               <label class="control-label">Empresa</label>
               <select class="select-notsearch-users" tabindex="-1" name="empresaalt" id="empresa_alt">
@@ -266,7 +310,7 @@
 
             <div class="col-sm-2">
               <label class="control-label">Ativa</label>
-              <select class="select-notsearch-users" tabindex="-1" name="ativaalt" id="ativa_alt">
+              <select class="select-notsearch" tabindex="-1" name="ativaalt" id="ativa_alt">
                 <option value="1">Sim</option>
                 <option value="0">Não</option>
               </select>
@@ -281,6 +325,41 @@
               <label class="control-label">Data Alteração</label>
               <input class="form-control" type="text" name="dataalt" id="data_alteracao_alt" disabled>
             </div>
+            @endif
+
+            @if (($acesso->role == 5)&&($acesso->ativo == 0))
+            <div class="col-sm-3">
+              <input class="form-control" type="hidden" value="{{$uempresa}}" name="empresaalt" id="empresaalt" required>
+              <label class="control-label">Perfil</label>
+              <select class="select-notsearch-users" tabindex="-1" name="perfilalt" id="perfil_alt">
+                @foreach ($perfis as $perfil)
+                <option value="{{$perfil->id_perfil}}">{{$perfil->nome}}</option>
+                @endforeach
+              </select>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Ativa</label>
+              <select class="select-notsearch" tabindex="-1" name="ativaalt" id="ativa_alt">
+                <option value="1">Sim</option>
+                <option value="0">Não</option>
+              </select>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Data Cadastro</label>
+              <input class="form-control" type="text" name="dataalt" id="data_cadastro_alt" disabled>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Data Alteração</label>
+              <input class="form-control" type="text" name="dataalt" id="data_alteracao_alt" disabled>
+            </div>
+
+            @endif
+
+            @endforeach
+
           </div>
 
           <div class="modal-footer">
@@ -298,7 +377,7 @@
 <!-- Modal Visualizacao-->
 <div class="modal fade" id="VisualizarUserModal" tabindex="-1" role="dialog" aria-labelledby="VisualizarUserModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-xl" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="view_modalHeader">
         <div class="modal-header">
@@ -326,6 +405,8 @@
               <p><input class="form-control" type="text" name="nomeview" id="nome_view" disabled></p>
             </div>
 
+            @foreach ($acessoPerfil as $acesso)
+            @if (($acesso->role == 5)&&($acesso->ativo == 1))
             <div class="col-sm-4">
               <label class="control-label">Empresa</label>
               <select class="select-notsearch" tabindex="-1" name="empresaview" id="empresa_view" disabled>
@@ -361,6 +442,38 @@
               <label class="control-label">Data Alteração</label>
               <input class="form-control" type="text" name="dataview" id="data_alteracao_view" disabled>
             </div>
+            @endif
+
+            @if (($acesso->role == 5)&&($acesso->ativo == 0))
+            <div class="col-sm-3">
+              <label class="control-label">Perfil</label>
+              <select class="select-notsearch" tabindex="-1" name="perfilview" id="perfil_view" disabled>
+                @foreach ($perfis as $perfil)
+                <option value="{{$perfil->id_perfil}}">{{$perfil->nome}}</option>
+                @endforeach
+              </select>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Ativa</label>
+              <select class="select-notsearch" tabindex="-1" name="ativaview" id="ativa_view" disabled>
+                <option value="1">Sim</option>
+                <option value="0">Não</option>
+              </select>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Data Cadastro</label>
+              <input class="form-control" type="text" name="dataview" id="data_cadastro_view" disabled>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Data Alteração</label>
+              <input class="form-control" type="text" name="dataview" id="data_alteracao_view" disabled>
+            </div>
+            @endif
+
+            @endforeach
 
           </div>
 
@@ -435,9 +548,9 @@
 
 
 @section('js')
-<script src="{{url('/')}}/js/pages/midotech.js"></script>
-<script src="{{url('/')}}/js/plugins/bs-custom-file-input/bs-custom-file-input.js"></script>
-<script src="{{url('/')}}/js/plugins/select2/js/select2.full.js"></script>
 <script src="{{url('/')}}/js/plugins/datatables/jquery.dataTables.js"></script>
 <script src="{{url('/')}}/js/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<script src="{{url('/')}}/js/plugins/bs-custom-file-input/bs-custom-file-input.js"></script>
+<script src="{{url('/')}}/js/plugins/select2/js/select2.full.js"></script>
+<script src="{{url('/')}}/js/pages/midotech.js"></script>
 @endsection

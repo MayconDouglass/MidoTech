@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -16,6 +17,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $cfop
  * @property string $descricao
  * @property int $ativo
+ * 
+ * @property Collection|Te[] $tes
  *
  * @package App\Models
  */
@@ -36,4 +39,9 @@ class Operacaofiscal extends Model
 		'descricao',
 		'ativo'
 	];
+
+	public function tes()
+	{
+		return $this->hasMany(Te::class, 'CFOP');
+	}
 }

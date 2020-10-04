@@ -43,7 +43,7 @@
             <i class="fa fa-user-circle-o"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <span class="dropdown-item dropdown-header">{{$unome}}</span>
+            <span class="dropdown-item dropdown-header">{{explode(" ", $unome)[0]}}</span>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item">
               <i class="fa fa-user mr-2"></i> Perfil
@@ -82,8 +82,8 @@
         <div class="app-sidebar__user text-justify">
           <img class="app-sidebar__user-avatar" src="{{$uimagem}}" width="70px" height="70px" alt="User Image">
           <div>
-            <p class="app-sidebar__user-name">{{$unome}}</p>
-            <p class="app-sidebar__user-designation">{{$unomeperfil}}</p>
+            <p class="app-sidebar__user-name">{{explode(" ", $unome)[0]}}</p>
+            <p class="app-sidebar__user-designation">{{explode(" ", $unomeperfil)[0]}}</p>
           </div>
         </div>
 
@@ -101,6 +101,8 @@
                   <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
+              @foreach ($acessoPerfil as $acesso)
+              @if (($acesso->role == 7)&&($acesso->ativo == 1))
               <ul class="nav nav-treeview">
                 <li class="nav-item">
                   <a href="{{route('perfis')}}" class="nav-link">
@@ -109,6 +111,11 @@
                   </a>
                 </li>
               </ul>
+              @endif
+              @endforeach
+
+              @foreach ($acessoPerfil as $acesso)
+              @if (($acesso->role == 6)&&($acesso->ativo == 1))
               <ul class="nav nav-treeview">
                 <li class="nav-item">
                   <a href="{{route('usuarios')}}" class="nav-link">
@@ -117,6 +124,8 @@
                   </a>
                 </li>
               </ul>
+              @endif
+              @endforeach
               <ul class="nav nav-treeview">
                 <li class="nav-item">
                   <a href="{{route('empresas')}}" class="nav-link">
@@ -125,6 +134,19 @@
                   </a>
                 </li>
               </ul>
+
+              @foreach ($acessoPerfil as $acesso)
+              @if (($acesso->role == 5)&&($acesso->ativo == 1))
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{{route('contratos')}}" class="nav-link">
+                    <i class="fas fa-clipboard nav-icon"></i>
+                    <p>Contratos</p>
+                  </a>
+                </li>
+              </ul>
+              @endif
+              @endforeach
             </li>
             @endif
             @endforeach

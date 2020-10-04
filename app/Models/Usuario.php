@@ -94,6 +94,10 @@ class Usuario extends Model
 	{
 		return $this->hasMany(Perfil::class, 'usualt');
 	}
+	public function usucad()
+	{
+		return $this->hasMany(Perfil::class, 'usucad');
+	}
 
 	public function usuarios()
 	{
