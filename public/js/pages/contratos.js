@@ -1,4 +1,33 @@
 $(function () {
+    var path = [];
+    $(document).on('change', '.link-check', function (e) {
+        $thatRow = $(this);
+        let file = $thatRow.closest('tr').find('td').eq(2).text();
+        let idFile = $thatRow.closest('tr').find('td').eq(1).text();
+
+        console.log();
+        if ($('#input' + idFile).prop('checked')) {
+            path.push(file);
+        } else {
+            var index = path.indexOf(file);
+            path.splice(index, 1);
+        }
+
+        $('#fileDel').val(path);
+        let textoArray = $('#fileDel').val();
+        if(textoArray == ''){
+           $("#deleteButton").prop('disabled', true);
+        }else{
+            $("#deleteButton").prop('disabled', false);
+        }
+       
+        
+
+    });
+
+    
+
+
     $("#tableBase").DataTable({
         "autoWidth": false
     });
@@ -21,6 +50,7 @@ $(function () {
         minimumResultsForSearch: Infinity
     });
 });
+
 
 $("#cnpjcpf").mask("999.999.999-99");
 
@@ -96,47 +126,96 @@ $('#modal-danger').on('show.bs.modal', function (event) {
     modal.find('.b_text_modal_title_danger').text('Excluir Registro')
 })
 
-$('#AlterarModCobModal').on('show.bs.modal', function (event) {
+$('#AlterarContratoModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
-    var modCobCodAlt = button.data('codigo')
-    var descricaoAlt = button.data('descricao')
-    var situacaoAlt = button.data('situacao')
-    var naturezaAlt = button.data('natureza')
-    var liberacaoAlt = button.data('liberacao')
-    var pagNfeAlt = button.data('pagnfe')
-    var statusAlt = button.data('status')
-    var obsAlt = button.data('observacao')
-    var usuCadAlt = button.data('usucad')
-    var dataCadAlt = button.data('datacad')
-    var usuAltAlt = button.data('usualt')
-    var dataAltAlt = button.data('dataalt')
+    var contratoCod = button.data('codigo')
 
-    $("#forma_alt").select2({
-        dropdownParent: $("#AlterarModCobModal"), width: '100%', minimumResultsForSearch: Infinity
-    }).val(pagNfeAlt).trigger("change");
+    $.getJSON('/contrato/' + contratoCod, function (data) {
 
-    $("#situacao_alt").select2({
-        dropdownParent: $("#AlterarModCobModal"), width: '100%', minimumResultsForSearch: Infinity
-    }).val(situacaoAlt).trigger("change");
+        $("#razaoAlt").val(data.razao_social);
+        $("#valorAlt").val(data.valor);
+        $("#descontoAlt").val(data.desconto);
 
-    $("#liberacao_alt").select2({
-        dropdownParent: $("#AlterarModCobModal"), width: '100%', minimumResultsForSearch: Infinity
-    }).val(liberacaoAlt).trigger("change");
+        $("#basico_alt").prop("checked", data.basico ? true : false);
+        $("#nfs_alt").prop("checked", data.nfs ? true : false);
+        $("#nfe_alt").prop("checked", data.nfe ? true : false);
+        $("#nfce_alt").prop("checked", data.nfce ? true : false);
+        $("#cfesat_alt").prop("checked", data.cfe_sat ? true : false);
+        $("#mfe_alt").prop("checked", data.mfe ? true : false);
+        $("#mde_alt").prop("checked", data.mde ? true : false);
+        $("#mdfe_alt").prop("checked", data.mdfe ? true : false);
+        $("#cte_alt").prop("checked", data.cte ? true : false);
+        $("#contrato_alt").prop("checked", data.contratos ? true : false);
+        $("#servico_alt").prop("checked", data.servicos ? true : false);
 
-    $("#status_alt").select2({
-        dropdownParent: $("#AlterarModCobModal"), width: '100%', minimumResultsForSearch: Infinity
-    }).val(statusAlt).trigger("change");
+        $("#statusAlt").select2({
+            dropdownParent: $("#AlterarContratoModal"), width: '100%',
+            minimumResultsForSearch: Infinity
+        }).val(data.status).trigger("change");
 
-    $("#natureza_alt").select2({
-        dropdownParent: $("#AlterarModCobModal"), width: '100%'
-    }).val(naturezaAlt).trigger("change");
 
+    });
     var modal = $(this)
     modal.find('.modal-title').text('Alterar Registro')
-    modal.find('#idModCob').val(modCobCodAlt)
-    modal.find('#desc_alt').val(descricaoAlt)
-    modal.find('#obs_alt').val(obsAlt)
+    modal.find('#idContrato').val(contratoCod)
 })
+
+$('#ArquivosModal').on('hidden.bs.modal', function (e) {
+    $('#filestab').DataTable().clear().draw();
+    $('#filestab').DataTable().destroy();
+});
+
+$('#assdas').click(function (event) {
+    var button = $(event.relatedTarget) // Botão que acionou o modal
+    var path = button.data('path')
+
+    $.ajax({
+        url: "/contratos/delete/file",
+        method: "POST",
+        dataType: "JSON",
+        cache: false,
+        data: {
+            file: path
+        },
+        success: function (data) {
+            console.log(data);
+        },
+        erro: function (result) {
+            console.log(result);
+        }
+    });
+
+});
+
+
+$('#ArquivosModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Botão que acionou o modal
+    var contratoCod = button.data('codigo')
+    
+
+    $.getJSON('/contrato/' + contratoCod, function (data) {
+        var employee_data = '';
+        var token = $('meta[name="csrf-token"]').attr('content');
+
+        $.each(data.contrato_arquivos, function (key, value) {
+            var extensao = value.path.substring(value.path.lastIndexOf("/") + 1);
+            employee_data += '<tr>';
+            employee_data += '<td name="file"><input class="link-check" type="checkbox" id="input' + value.id_arquivo + '" name="input' + value.id_arquivo + '"></td>';
+            employee_data += '<td>' + value.id_arquivo + '</td>';
+            employee_data += '<td name="file" name="teste' + value.id_arquivo + '">' + value.path + '</td>';
+            employee_data += '<td>' + ' <div class="btn-group btn-group-sm">';
+            employee_data += '<a href="storage/' + value.path + '" target="_blank" class="btn btn-info" ><i class="fas fa-eye"></i></a></div> </td>';
+            employee_data += '</tr>';
+        });
+        $('#filestab').prepend(employee_data);
+    });
+
+
+    var modal = $(this)
+    modal.find('.modal-title').text('Arquivos Anexados')
+    modal.find('#idContrato').val(contratoCod)
+});
+
 
 $('#VisualizarModCobModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
@@ -188,4 +267,29 @@ $('#CadastroModal').on('show.bs.modal', function (event) {
     $(this).find('form').trigger('reset');
     var modal = $(this)
     modal.find('#empresa').val(empcod)
+})
+
+//preview upload
+$('#customFileAlt').change(function () {
+    const file = $(this)[0].files
+    const fileReader = new FileReader()
+    const countFiles = [];
+
+    for (var i = 0; i < file.length; i++) {
+        countFiles.push(file[i].name);
+    }
+
+    $('#arquivoAlt').text('Total de itens selecionados: ' + countFiles.length)
+})
+
+$('#customFileCad').change(function () {
+    const file = $(this)[0].files
+    const fileReader = new FileReader()
+    const countFiles = [];
+
+    for (var i = 0; i < file.length; i++) {
+        countFiles.push(file[i].name);
+    }
+
+    $('#arquivoCad').text('Total de itens selecionados: ' + countFiles.length)
 })

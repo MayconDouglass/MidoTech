@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use App\Models\Contrato;
+use App\Models\ContratoArquivo;
 use App\Models\ContratosEmpresa;
 use App\Models\Perfil;
 use App\Models\PerfilAcesso;
@@ -11,6 +12,7 @@ use App\Models\Setunidade;
 use Illuminate\Http\Request;
 
 use Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ContratoController extends Controller
 {
@@ -64,20 +66,14 @@ class ContratoController extends Controller
         $uempresa= Auth::user()->empresa;
         $ctEspecial = array('.','/','-');
         $proposta = str_shuffle(str_replace($ctEspecial, '', $request->cgccad.$uempresa));
-        $contFiles = $request->file('arquivocad');
-        if($contFiles == null){
-        $path = null;
-        }else{
-        $path = $contFiles->store('contratos','public');
-        }
-
+        $contFiles = $request->file('arquivoCad');
+       
         $contrato = new Contrato;
         $contrato->razao_social = $request->razaocad;
-        $contrato->cli_cod = $request->idCliente;
+        $contrato->cli_cod = $request->idCliente ? $request->idCliente : 1;
         $contrato->proposta = $proposta;
         $contrato->pessoa = $request->pessoacad;
         $contrato->cgc = $request->cgccad;
-        $contrato->path = $path;
         $contrato->status = $request->statuscad;
         $contrato->valor = $request->valorcad;
         $contrato->desconto = $request->descontocad;
@@ -101,6 +97,14 @@ class ContratoController extends Controller
                 $contEmpresa->emp_cod = $uempresa;
                 $contEmpresa->contrato = $contrato->id_contrato;
                 $saveConEmp = $contEmpresa->save();
+                if($contFiles != null){
+                    foreach ($contFiles as $key => $contFile) {
+                        $arquivo = new ContratoArquivo;
+                        $arquivo->contrato = $contrato->id_contrato;
+                        $arquivo->path = $contFile->store('contratos','public');
+                        $arquivo->save();
+                    }
+                }
 
                 if($saveConEmp){
                     return redirect()->action('ContratoController@create')->with('status_success', 'Contrato Cadastrado!');
@@ -108,6 +112,45 @@ class ContratoController extends Controller
                     return redirect()->action('ContratoController@create')->with('status_error', 'Erro I/O - Contratos. Entre em contato com o suporte.');
                 }            
                 
+        }else{
+                return redirect()->action('ContratoController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
+        }
+
+
+    }
+
+    public function update(Request $request){
+        $contFiles = $request->file('arquivoAlt');
+ 
+        $contrato = Contrato::find($request->idContrato);
+        $contrato->valor = $request->valoralt;
+        $contrato->desconto = $request->descontoalt;
+        $contrato->data_alt = date('Y-m-d H:i:s');
+        $contrato->basico = $request->basico_alt ? '1' : '0';
+        $contrato->nfs = $request->nfs_alt ? '1' : '0';
+        $contrato->nfe = $request->nfe_alt ? '1' : '0';
+        $contrato->nfce = $request->nfce_alt ? '1' : '0';
+        $contrato->cfe_sat = $request->cfesat_alt ? '1' : '0';
+        $contrato->mfe = $request->mfe_alt ? '1' : '0';
+        $contrato->mde = $request->mde_alt ? '1' : '0';
+        $contrato->mdfe = $request->mdfe_alt ? '1' : '0';
+        $contrato->cte = $request->cte_alt ? '1' : '0';
+        $contrato->contratos = $request->contrato_alt ? '1' : '0';
+        $contrato->servicos = $request->servico_alt ? '1' : '0';
+        $updateStatus = $contrato->save();
+              
+        if($updateStatus){   
+
+                if($contFiles != null){
+                    foreach ($contFiles as $key => $contFile) {
+                        $arquivo = new ContratoArquivo;
+                        $arquivo->contrato = $request->idContrato;
+                        $arquivo->path = $contFile->store('contratos','public');
+                        $arquivo->save();
+                    }
+                }
+                  
+                return redirect()->action('ContratoController@create')->with('status_success', 'Contrato Atualizado!');              
         }else{
                 return redirect()->action('ContratoController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
         }
@@ -125,5 +168,47 @@ class ContratoController extends Controller
         return response()->json($cliente, 200);
     }
 
+    public function contrato($id){
+        $contrato = Contrato::where('id_contrato',$id)
+                          ->with(['contrato_arquivos','cliente'])
+                          ->first();
+            if(!$contrato)
+                return response()->json(['code'=>'404','erro'=>'Não encontrado'], 404);
+
+        return response()->json($contrato, 200);
+    }
+
+    public function deleteFile(Request $request){
+        $arrayPath = explode(',',$request->fileDel);
+   
+        $contrato = ContratoArquivo::whereIn('path',$arrayPath)->get();
+        $statusDel = $contrato->each->delete();
+        if($statusDel){
+            Storage::delete($arrayPath);
+            return redirect()->action('ContratoController@create')->with('status_success', 'Arquivo excluído!');              
+        }else{
+                return redirect()->action('ContratoController@create')->with('status_error', 'OPS! Algo aconteceu, tente novamente!');
+        }
+
+    }
+
+    public function destroy(Request $request){
+       
+            if(empty($request->iddelete)){
+                return redirect()->action('ContratoController@create')->with('status_error', 'Falha!');    
+            }
+                $arrayPath = json_decode(ContratoArquivo::where('contrato',$request->iddelete)->pluck('path'),true);    
+                Storage::delete($arrayPath);
+     
+                $contrato = Contrato::find($request->iddelete);
+                $delete=$contrato->delete();
+                
+                if($delete){
+                    return redirect()->action('ContratoController@create')->with('status_success', 'Contrato excluído!');
+                }else{
+                    return redirect()->action('ContratoController@create')->with('status_error', 'Não foi possível excluir o registro, possivelmente existem movimentação/cadastros!');    
+                }
+
+    }
 
 }

@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $proposta
  * @property int $pessoa
  * @property string $cgc
- * @property string|null $path
  * @property int $status
  * @property float $valor
  * @property float $desconto
@@ -39,6 +38,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $servicos
  * 
  * @property Cliente $cliente
+ * @property Collection|ContratoArquivo[] $contrato_arquivos
  * @property Collection|ContratosEmpresa[] $contratos_empresas
  *
  * @package App\Models
@@ -80,7 +80,6 @@ class Contrato extends Model
 		'proposta',
 		'pessoa',
 		'cgc',
-		'path',
 		'status',
 		'valor',
 		'desconto',
@@ -103,6 +102,11 @@ class Contrato extends Model
 	public function cliente()
 	{
 		return $this->belongsTo(Cliente::class, 'cli_cod');
+	}
+
+	public function contrato_arquivos()
+	{
+		return $this->hasMany(ContratoArquivo::class, 'contrato');
 	}
 
 	public function contratos_empresas()

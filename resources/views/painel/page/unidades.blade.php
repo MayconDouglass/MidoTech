@@ -83,53 +83,46 @@
 
 
 <!-- Modal Cadastro-->
-<div class="modal fade" id="CadastroModal" tabindex="-1" role="dialog" aria-labelledby="CadastroModalLabel"
-  aria-hidden="true">
+<div class="modal fade" id="CadastroModal" tabindex="-1" role="dialog" aria-labelledby="CadastroModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="add_modalHeader">
-        <div class="modal-header">
-          <h5 class="modal-title" id="CadastroModalLabel">Nova Unidade</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-      </div>
-      <div class="modal-body">
-
-        <!-- Form de cadastro -->
-        <form class="form-horizontal" method="POST" action="{{action('UnidadesController@store')}}"
-          enctype="multipart/form-data">
-          @csrf
-          <div class="form-group row">
-            <div class="col-sm-12">
-              <label class="control-label">Descricao</label>
-              <p><input class="form-control" type="text" name="descricaocad" maxlength="5" required></p>
-            </div>
-
-            <div class="col-sm-12">
-              <label class="control-label">Ativo</label>
-              <select class="select-notsearch" tabindex="-1" name="statuscad">
-                  <option value="1">Sim</option>
-                  <option value="0">Não</option>
-                </select>
-            </div>
-
+      <div class="modal-content">
+          <div class="add_modalHeader">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="CadastroModalLabel">Nova Unidade</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
           </div>
+          <div class="modal-body">
+              <!-- Form de cadastro -->
+              <form class="form-horizontal" method="POST" action="{{action('UnidadesController@store')}}" enctype="multipart/form-data">
+                  @csrf
+                  <div class="form-group row">
+                      <div class="col-sm-12">
+                          <label class="control-label">Descricao</label>
+                          <p><input class="form-control" type="text" name="descricaocad" maxlength="5" required /></p>
+                      </div>
 
-      </div>
+                      <div class="col-sm-12">
+                          <label class="control-label">Ativo</label>
+                          <select class="select-notsearch" tabindex="-1" name="statuscad">
+                              <option value="1">Sim</option>
+                              <option value="0">Não</option>
+                          </select>
+                      </div>
+                  </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" id="reset" data-dismiss="modal"><i class="fa fa-times">
-            Cancelar</i></button>
-        <button type="submit" class="btn btn-primary" id="btnSalvar" name="btnSalvar"><i class="fa fa-floppy-o">
-            Salvar</i></button>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" id="reset" data-dismiss="modal"><i class="fa fa-times"> Cancelar</i></button>
+                      <button type="submit" class="btn btn-primary" id="btnSalvar" name="btnSalvar"><i class="fa fa-floppy-o"> Salvar</i></button>
+                  </div>
+              </form>
+          </div>
       </div>
-      </form>
-    </div>
   </div>
 </div>
-</div>
+
 
 
 @endsection

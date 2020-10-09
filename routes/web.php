@@ -103,9 +103,12 @@ Route::group(['middleware' => ['auth']], function () {
     // Contratos
     Route::get('/contratos', 'ContratoController@create')->name('contratos');
     Route::get('/emp/{emp}/cliente/{cgc}', 'ContratoController@codCliente');
+    Route::get('/contrato/{id}', 'ContratoController@contrato');
     Route::post('/contratos/cad', 'ContratoController@store');
     Route::post('/contratos/update', 'ContratoController@update');
     Route::post('/contratos/delete', 'ContratoController@destroy');
+    Route::post('/contratos/file/', 'ContratoController@deleteFile');
+
 
 });
 

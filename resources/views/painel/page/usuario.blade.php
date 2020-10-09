@@ -174,7 +174,7 @@
                   placeholder="Máximo de 10 caracteres" required></p>
             </div>
 
-            
+
 
             @foreach ($acessoPerfil as $acesso)
             @if (($acesso->role == 5)&&($acesso->ativo == 1))
@@ -237,7 +237,7 @@
 
             @endforeach
 
-            
+
 
           </div>
 
@@ -329,7 +329,8 @@
 
             @if (($acesso->role == 5)&&($acesso->ativo == 0))
             <div class="col-sm-3">
-              <input class="form-control" type="hidden" value="{{$uempresa}}" name="empresaalt" id="empresaalt" required>
+              <input class="form-control" type="hidden" value="{{$uempresa}}" name="empresaalt" id="empresaalt"
+                required>
               <label class="control-label">Perfil</label>
               <select class="select-notsearch-users" tabindex="-1" name="perfilalt" id="perfil_alt">
                 @foreach ($perfis as $perfil)
