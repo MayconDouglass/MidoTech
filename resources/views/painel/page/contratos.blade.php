@@ -83,25 +83,22 @@
                     </td>
                     <td>
                         <button type="button" class="btn btn-primary btn-sm fa fa-eye" data-toggle="modal"
-                            data-target="#VisualizarPerfilModal"></button>
-
-                        <button type="button" class="btn btn-info btn-sm fa fa-files-o" data-toggle="modal"
-                            data-target="#ArquivosModal" data-codigo="{{ $contrato['contrato']['id_contrato'] }}"></button>
+                            data-target="#VisualizarModal"
+                            data-codigo="{{ $contrato['contrato']['id_contrato'] }}"></button>
 
                         @foreach ($acessoPerfil as $acesso)
                             @if ($acesso->role == 2 && $acesso->ativo == 1)
+                            <button type="button" class="btn btn-info btn-sm fa fa-files-o" data-toggle="modal"
+                            data-target="#ArquivosModal" data-codigo="{{ $contrato['contrato']['id_contrato'] }}"></button>
                                 <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o"
                                     data-toggle="modal" data-target="#AlterarContratoModal"
                                     data-codigo="{{ $contrato['contrato']['id_contrato'] }}"></button>
-
-                                <button type="button" class="btn btn-warning btn-sm fa fa-print" data-toggle="modal"
-                                    data-target="#modal-permissao"></button>
                             @endif
                         @endforeach
                         @foreach ($acessoPerfil as $acesso)
                             @if ($acesso->role == 3 && $acesso->ativo == 1)
                                 <button type="button" class="btn btn-danger btn-sm fa fa-trash-o" data-toggle="modal"
-                    data-target="#modal-danger" data-codigo="{{$contrato['contrato']['id_contrato']}}">
+                                    data-target="#modal-danger" data-codigo="{{ $contrato['contrato']['id_contrato'] }}">
                                 </button>
                             @endif
                         @endforeach
@@ -550,7 +547,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="add_modalHeader">
+                <div class="info_modalHeader">
                     <div class="modal-header">
                         <h5 class="modal-title" id="ArquivosModalLabel">Anexos</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -610,13 +607,85 @@
                 <div class="modal-body">
                     <form class="form-horizontal" method="POST" action="{{ action('ContratoController@destroy') }}">
                         @csrf
-                        <input type="text" class="form-control col-form-label-sm" id="iddelete" name="iddelete">
+                        <input type="hidden" class="form-control col-form-label-sm" id="iddelete" name="iddelete">
                         <label class="b_text_modal_danger">Deseja realmente excluir este registro?</label>
 
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-secondary btn-sm fa fa-times" data-dismiss="modal">
                                 Cancelar</button>
                             <button type="submit" class="btn btn-danger btn-sm fa fa-trash-o"> Confirmar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Visualizacao-->
+    <div class="modal fade" id="VisualizarModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="view_modalHeader">
+                    <div class="modal-header">
+                        <h4 class="modal-title"></h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group row">
+
+                            <div class="col-sm-3">
+                                <label class="b_text_modal_danger">Nº Contrato</label>
+                                <p><input class="form-control" type="text" disabled id="propostaview"></p>
+                            </div>
+
+                            <div class="col-sm-7">
+                                <label class="b_text_modal_danger">Cliente</label>
+                                <p><input class="form-control" type="text" disabled id="clienteview"></p>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <label class="b_text_modal_danger">Situação</label>
+                                <p><input class="form-control" type="text" disabled id="statusview"></p>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label class="b_text_modal_danger">Data Cadastro</label>
+                                <p><input class="form-control" type="text" disabled id="datacadview"></p>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label class="b_text_modal_danger">Data Alteração</label>
+                                <p><input class="form-control" type="text" disabled id="dataaltview" /></p>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label class="b_text_modal_danger">Data Fechamento</label>
+                                <p><input class="form-control" type="text" disabled id="datafechaview" /></p>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label class="b_text_modal_danger">Valor Original</label>
+                                <p><input class="form-control" type="text" disabled id="valorview" /></p>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label class="b_text_modal_danger">Desconto (%)</label>
+                                <p><input class="form-control" type="text" disabled id="descontoview" /></p>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label class="b_text_modal_danger">Valor Após Desconto</label>
+                                <p><input class="form-control" type="text" disabled id="newvalorview" /></p>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-secondary btn-sm fa fa-times" data-dismiss="modal">
+                                Cancelar</button>
                         </div>
                     </form>
                 </div>

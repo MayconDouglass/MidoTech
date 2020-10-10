@@ -218,8 +218,7 @@ $(function () {
         } else {
             cTabPreco = 0;
         }
-        var formAction = $(this).attr('/api/clientes/' + idCliente);
-
+        
         $.ajax({
             url: '/api/clientes/' + idCliente,
             data: {

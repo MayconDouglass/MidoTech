@@ -10,6 +10,7 @@ use App\Models\PerfilAcesso;
 use App\Models\Prazopagamento;
 use App\Models\Setempresa;
 use App\Models\Tabelapreco;
+use App\Models\Te as TES;
 use App\Models\Vendedor;
 use Illuminate\Http\Request;
 
@@ -52,10 +53,11 @@ class ClienteController extends Controller
                                         ->pluck('ativo');
             if($roleClientes = 1){
                 $clientes = Cliente::all();
+                $tes = TES::all();
             }else{
-                $clientes = Cliente::where('emp_cod',$uempresa)->get();   
+                $clientes = Cliente::where('emp_cod',$uempresa)->get(); 
             }
-
+           
             $empresas = Setempresa::all();
 
                 if ($roleView[0]  == 1){
@@ -106,11 +108,17 @@ class ClienteController extends Controller
                 $tabPrecos = Tabelapreco::where('ativo',1)->where('emp_cod',$uempresa)->get();
                 $prazoCobs = Prazopagamento::where('ativo',1)->get();
                 $vendedores = Vendedor::where('ativo',1)->get();
+                $tes = TES::where([['tes.emp_cod',$uempresa],['tes.tipo',1],['operacaofiscal.tipo','S']])
+                ->join('operacaofiscal','operacaofiscal.id_operacao','=','tes.CFOP')
+                ->get();
             }else{  
                 $modCobs = Modocobranca::where('ativo',1)->get();
                 $tabPrecos = Tabelapreco::where('ativo',1)->where('emp_cod',$uempresa)->get();
                 $prazoCobs = Prazopagamento::where('ativo',1)->get();
                 $vendedores = Vendedor::where('ativo',1)->where('emp_cod',$uempresa)->get();
+                $tes = TES::where([['tes.emp_cod',$uempresa],['tes.status',1],['tes.tipo',1],['operacaofiscal.tipo','S']])
+                ->join('operacaofiscal','operacaofiscal.id_operacao','=','tes.CFOP')
+                ->get();
             }
 
             $empresas = Setempresa::all();
@@ -119,7 +127,7 @@ class ClienteController extends Controller
                     return view('painel.page.clienteadd',
                     compact('uperfil','unomeperfil','uempresa',
                     'unome','uid','uimagem','empresas','acessoPerfil',
-                    'modCobs','tabPrecos','prazoCobs','vendedores'));
+                    'modCobs','tabPrecos','prazoCobs','vendedores','tes'));
                 }else{
                     return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','acessoPerfil'));
                 }  
@@ -357,11 +365,17 @@ class ClienteController extends Controller
                 $tabPrecos = Tabelapreco::where('ativo',1)->where('emp_cod',$uempresa)->get();
                 $prazoCobs = Prazopagamento::where('ativo',1)->get();
                 $vendedores = Vendedor::where('ativo',1)->get();
+                $tes = TES::where([['tes.emp_cod',$uempresa],['tes.tipo',1],['operacaofiscal.tipo','S']])
+                          ->join('operacaofiscal','operacaofiscal.id_operacao','=','tes.CFOP')
+                          ->get();
             }else{  
                 $modCobs = Modocobranca::where('ativo',1)->get();
                 $tabPrecos = Tabelapreco::where('ativo',1)->where('emp_cod',$uempresa)->get();
                 $prazoCobs = Prazopagamento::where('ativo',1)->get();
                 $vendedores = Vendedor::where('ativo',1)->where('emp_cod',$uempresa)->get();
+                $tes = TES::where([['tes.emp_cod',$uempresa],['tes.status',1],['tes.tipo',1],['operacaofiscal.tipo','S']])
+                          ->join('operacaofiscal','operacaofiscal.id_operacao','=','tes.CFOP')
+                          ->get();
             }
 
             $empresas = Setempresa::all();
@@ -371,7 +385,7 @@ class ClienteController extends Controller
                     return view('painel.page.clientealt',
                     compact('uperfil','unomeperfil','uempresa',
                     'unome','uid','uimagem','empresas','acessoPerfil',
-                    'modCobs','tabPrecos','prazoCobs','vendedores','cliente'));
+                    'modCobs','tabPrecos','prazoCobs','vendedores','cliente','tes'));
                 }else{
                     return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','acessoPerfil'));
                 }  

@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -20,6 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $qtd_estatistica
  * 
  * @property Setempresa $setempresa
+ * @property Collection|AlLocalizacao[] $al_localizacaos
  *
  * @package App\Models
  */
@@ -48,5 +50,10 @@ class Almoxarifado extends Model
 	public function setempresa()
 	{
 		return $this->belongsTo(Setempresa::class, 'emp_cod');
+	}
+
+	public function al_localizacao()
+	{
+		return $this->hasMany(AlLocalizacao::class, 'al_cod');
 	}
 }

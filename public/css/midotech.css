@@ -163,6 +163,11 @@
     color: #fff;
 }
 
+.info_modalHeader {
+    background-color: #117a8b;
+    color: #fff;
+}
+
 .permissao_modalHeader {
     background-color: #035f3cec;
     color: #fff;

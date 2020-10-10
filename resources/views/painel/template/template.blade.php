@@ -192,6 +192,12 @@
                     <p>Unidades</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="{{route('almoxarifado')}}" class="nav-link">
+                    <i class="fa fa-archive nav-icon"></i>
+                    <p>Almoxarifado</p>
+                  </a>
+                </li>
                 @endif
                 @endforeach
               </ul>

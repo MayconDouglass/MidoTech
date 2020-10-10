@@ -15,18 +15,14 @@ $(function () {
 
         $('#fileDel').val(path);
         let textoArray = $('#fileDel').val();
-        if(textoArray == ''){
-           $("#deleteButton").prop('disabled', true);
-        }else{
+        if (textoArray == '') {
+            $("#deleteButton").prop('disabled', true);
+        } else {
             $("#deleteButton").prop('disabled', false);
         }
-       
-        
+
 
     });
-
-    
-
 
     $("#tableBase").DataTable({
         "autoWidth": false
@@ -165,33 +161,11 @@ $('#ArquivosModal').on('hidden.bs.modal', function (e) {
     $('#filestab').DataTable().destroy();
 });
 
-$('#assdas').click(function (event) {
-    var button = $(event.relatedTarget) // Botão que acionou o modal
-    var path = button.data('path')
-
-    $.ajax({
-        url: "/contratos/delete/file",
-        method: "POST",
-        dataType: "JSON",
-        cache: false,
-        data: {
-            file: path
-        },
-        success: function (data) {
-            console.log(data);
-        },
-        erro: function (result) {
-            console.log(result);
-        }
-    });
-
-});
-
 
 $('#ArquivosModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
     var contratoCod = button.data('codigo')
-    
+
 
     $.getJSON('/contrato/' + contratoCod, function (data) {
         var employee_data = '';
@@ -200,9 +174,9 @@ $('#ArquivosModal').on('show.bs.modal', function (event) {
         $.each(data.contrato_arquivos, function (key, value) {
             var extensao = value.path.substring(value.path.lastIndexOf("/") + 1);
             employee_data += '<tr>';
-            employee_data += '<td name="file"><input class="link-check" type="checkbox" id="input' + value.id_arquivo + '" name="input' + value.id_arquivo + '"></td>';
+            employee_data += '<td><input class="link-check" type="checkbox" id="input' + value.id_arquivo + '" name="input' + value.id_arquivo + '"></td>';
             employee_data += '<td>' + value.id_arquivo + '</td>';
-            employee_data += '<td name="file" name="teste' + value.id_arquivo + '">' + value.path + '</td>';
+            employee_data += '<td name="file' + value.id_arquivo + '">' + value.path + '</td>';
             employee_data += '<td>' + ' <div class="btn-group btn-group-sm">';
             employee_data += '<a href="storage/' + value.path + '" target="_blank" class="btn btn-info" ><i class="fas fa-eye"></i></a></div> </td>';
             employee_data += '</tr>';
@@ -217,47 +191,60 @@ $('#ArquivosModal').on('show.bs.modal', function (event) {
 });
 
 
-$('#VisualizarModCobModal').on('show.bs.modal', function (event) {
+$('#VisualizarModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Botão que acionou o modal
-    var modCobCodView = button.data('codigo')
-    var descricaoView = button.data('descricao')
-    var situacaoView = button.data('situacao')
-    var naturezaView = button.data('natureza')
-    var liberacaoView = button.data('liberacao')
-    var pagNfeView = button.data('pagnfe')
-    var statusView = button.data('status')
-    var obsView = button.data('observacao')
-    var usuCadView = button.data('usucad')
-    var dataCadView = button.data('datacad')
-    var usuAltView = button.data('usualt')
-    var dataAltView = button.data('dataalt')
+    var idContrato = button.data('codigo')
+    $.ajax({
+        type: 'get',
+        dataType: 'json',
+        url: '/api/contratos/' + idContrato,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
 
-    $("#forma_view").select2({
-        dropdownParent: $("#VisualizarModCobModal"), width: '100%',
-    }).val(pagNfeView).trigger("change");
+        success: function (result) {
+            let status = '';
+            switch (result.status) {
+                case 0:
+                    status = 'Inativo'
+                    $("#statusview").addClass('status-6')
+                    $("#statusview").removeClass(['status-3','status-5'])
+                    break;
+                case 1:
+                    status = 'Ativo'
+                    $("#statusview").removeClass(['status-3','status-6'])
+                    $("#statusview").addClass('status-5')
+                    break;
 
-    $("#situacao_view").select2({
-        dropdownParent: $("#VisualizarModCobModal"), width: '100%',
-    }).val(situacaoView).trigger("change");
+                default:
+                    $("#statusview").removeClass(['status-5','status-6'])
+                    $("#statusview").addClass('status-3')
+                    status = 'Error'
+                    break;
+            }
 
-    $("#liberacao_view").select2({
-        dropdownParent: $("#VisualizarModCobModal"), width: '100%',
-    }).val(liberacaoView).trigger("change");
+            modal.find("#propostaview").val(result.proposta)
+            modal.find("#clienteview").val(result.razao_social)
+            modal.find("#statusview").val(status)
+            modal.find("#datacadview").val(dataFormatada(result.data_cad))
+            modal.find("#dataaltview").val(result.data_alt ? dataFormatada(result.data_alt) : "Sem Alteração")
+            modal.find("#datafechaview").val(result.data_fechamento ? dataFormatada(result.data_fechamento) : "Em Aberto")
+            modal.find("#valorview").val(formatter.format(result.valor))
+            modal.find("#descontoview").val(result.desconto)
+            modal.find("#newvalorview").val(formatter.format(((100 -result.desconto)/100)*result.valor))
+      
+        },
+        error: function (resultError) {
 
-    $("#status_view").select2({
-        dropdownParent: $("#VisualizarModCobModal"), width: '100%',
-    }).val(statusView).trigger("change");
+            console.log('Erro na consulta');
 
-    $("#natureza_view").select2({
-        dropdownParent: $("#VisualizarModCobModal"), width: '100%',
-    }).val(naturezaView).trigger("change");
+        }
+
+    });
 
     $(this).find('form').trigger('reset');
     var modal = $(this)
     modal.find('.modal-title').text('Visualizar Registro')
-    modal.find('#idModCob').val(modCobCodView)
-    modal.find('#desc_view').val(descricaoView)
-    modal.find('#obs_view').val(obsView)
 })
 
 $('#CadastroModal').on('show.bs.modal', function (event) {
@@ -293,3 +280,28 @@ $('#customFileCad').change(function () {
 
     $('#arquivoCad').text('Total de itens selecionados: ' + countFiles.length)
 })
+
+function dataFormatada(date) {
+    var data = new Date(date);
+
+    if (data.getDate() < 10) {
+        dia = "0" + data.getDate();
+    } else {
+        dia = data.getDate();
+    }
+
+    if ((data.getMonth() + 1) < 10) {
+        mes = "0" + (data.getMonth() + 1);
+    } else {
+        mes = data.getMonth() + 1;
+    }
+
+    ano = data.getFullYear();
+
+    return [dia, mes, ano].join('/');
+}
+var formatter = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: 2,
+});

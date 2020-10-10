@@ -196,7 +196,9 @@
         <div class="col-sm-3">
           <label class="control-label">Tipo de Saída</label>
           <p><select class="select2" tabindex="-1" name="tes" id="tes">
-              <option value="0">FAZER CRUD</option>
+            @foreach ($tes as $tesaida)
+            <option value="{{$tesaida->id_tes}}">{{'TS: ' .$tesaida->cod_tes. ' - CFOP: ' .$tesaida->CFOP}}</option>
+          @endforeach
             </select></p>
         </div>
 

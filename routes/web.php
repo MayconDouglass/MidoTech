@@ -109,6 +109,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/contratos/delete', 'ContratoController@destroy');
     Route::post('/contratos/file/', 'ContratoController@deleteFile');
 
+    // Almoxarifado
+    Route::get('/almoxarifado', 'AlmoxarifadoController@create')->name('almoxarifado');
+    Route::post('/almoxarifado/cad', 'AlmoxarifadoController@store');
+    Route::post('/almoxarifado/update', 'AlmoxarifadoController@update');
+    Route::post('/almoxarifado/delete', 'AlmoxarifadoController@destroy');
+
 
 });
 
