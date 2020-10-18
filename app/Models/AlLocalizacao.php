@@ -15,9 +15,10 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id_localizacao
  * @property int $al_cod
  * @property string $localiza_fisica
- * @property string $ean
+ * @property string|null $ean
  * @property int $tipo
  * @property float $capacidade
+ * @property int $status
  * @property Carbon $data_cad
  * @property Carbon|null $data_alt
  * 
@@ -34,7 +35,8 @@ class AlLocalizacao extends Model
 	protected $casts = [
 		'al_cod' => 'int',
 		'tipo' => 'int',
-		'capacidade' => 'float'
+		'capacidade' => 'float',
+		'status' => 'int'
 	];
 
 	protected $dates = [
@@ -48,6 +50,7 @@ class AlLocalizacao extends Model
 		'ean',
 		'tipo',
 		'capacidade',
+		'status',
 		'data_cad',
 		'data_alt'
 	];

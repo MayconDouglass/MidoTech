@@ -112,8 +112,15 @@ Route::group(['middleware' => ['auth']], function () {
     // Almoxarifado
     Route::get('/almoxarifado', 'AlmoxarifadoController@create')->name('almoxarifado');
     Route::post('/almoxarifado/cad', 'AlmoxarifadoController@store');
+    Route::post('/almoxarifado/local/cad', 'AlmoxarifadoController@storeLocal');
     Route::post('/almoxarifado/update', 'AlmoxarifadoController@update');
     Route::post('/almoxarifado/delete', 'AlmoxarifadoController@destroy');
+ 
+    // Situacao Tributaria
+    Route::get('/situacaotrib', 'SituacaoTribController@create')->name('situacaotrib');
+    Route::post('/situacaotrib/cad', 'SituacaoTribController@store');
+    Route::post('/situacaotrib/update', 'SituacaoTribController@update');
+    Route::post('/situacaotrib/delete', 'SituacaoTribController@destroy');
 
 
 });

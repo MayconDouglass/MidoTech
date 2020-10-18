@@ -35,7 +35,7 @@
       </ul>
 
       <!-- Right navbar links -->
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav ml-autDo">
 
         <!-- Notifications Dropdown Menu -->
         <li class="nav-item dropdown">
@@ -196,6 +196,12 @@
                   <a href="{{route('almoxarifado')}}" class="nav-link">
                     <i class="fa fa-archive nav-icon"></i>
                     <p>Almoxarifado</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{route('situacaotrib')}}" class="nav-link">
+                    <i class="fa fa-gavel nav-icon"></i>
+                    <p>Situação Tributária</p>
                   </a>
                 </li>
                 @endif

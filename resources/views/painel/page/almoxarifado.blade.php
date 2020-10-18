@@ -14,7 +14,7 @@
                 <div class="col-sm-6">
                     <h1 class="m-0 text-dark">Almoxarifados
                         @foreach ($acessoPerfil as $acesso)
-                            @if ($acesso->role == 5 && $acesso->ativo == 1)
+                            @if ($acesso->role == 2 && $acesso->ativo == 1)
                                 <button type="button" class="btn btn-primary fa fa-user-plus" data-toggle="modal"
                                     data-target="#CadastroModal">
                                     Cadastrar
@@ -114,7 +114,7 @@
                             @endif
 
 
-                            @if ($acesso->role == 5 && $acesso->ativo == 1)
+                            @if ($acesso->role == 3 && $acesso->ativo == 1)
                                 <button type="button" class="btn btn-danger btn-sm fa fa-trash-o" data-toggle="modal"
                                     data-target="#modal-danger" data-codigo={{ $almoxarifado->id_almoxarifado }}></button>
                             @endif
@@ -350,7 +350,7 @@
     <!-- Modal Localizacao-->
     <div class="modal fade" id="LocalizacaoModal" tabindex="-1" role="dialog" aria-labelledby="LocalizacaoModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="view_modalHeader">
                     <div class="modal-header">
@@ -362,12 +362,20 @@
                 </div>
                 <div class="modal-body">
                     <!-- Form de cadastro -->
-                    <form class="form-horizontal" enctype="multipart/form-data">
+                    <form class="form-horizontal" method="POST" action="{{ action('AlmoxarifadoController@storeLocal')}}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
+                            <div id="div_status" class="col-sm-12 alert alert-success d-none">
+                                Atualizado com sucesso!
+                              </div>
+
+                            <div id="div_status_erro" class="col-sm-12 alert alert-danger d-none">
+                                Erro na atualização! Tente novamente.
+                              </div>
 
                             <div class="col-sm-12">
-                              <input class="form-control" type="hidden" id="idAlmo" name="idAlmo" required />
+                                <input class="form-control" type="hidden" id="idAlmo" name="idAlmo" required />
+                                <p>
                                 <div class="card-body table-responsive p-0" style="height: 200px;">
                                     <table class="table table-head-fixed text-nowrap" id="localizatab">
                                         <thead>
@@ -384,20 +392,41 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                </p>
                             </div>
 
-                            <div class="col-sm-4">
-                                <label class="control-label">Qtd Estatistica</label>
-                                <p><select class="select-notsearch" tabindex="-1" name="qtdview" id="qtdview" disabled>
-                                        <option value="1">Sim</option>
-                                        <option value="0">Não</option>
+                            <div class="col-sm-3">
+                                <input class="form-control" type="hidden" name="idLocal" id="idLocal"/>
+                                <input class="form-control" type="hidden" name="Alcod" id="Alcod"/>
+                                <label class="control-label">Loc. Física</label>
+                                <p><input class="form-control" type="text" name="locfisica" id="locfisica" maxlength="11"
+                                        required /></p>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label class="control-label">Cód. Barras</label>
+                                <p><input class="form-control" type="text" name="ean" id="ean" minlength="13"
+                                        maxlength="13" /></p>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <label class="control-label">Capacidade</label>
+                                <p><input class="form-control" type="number" name="capacidade" id="capacidade" step="0.001"
+                                        value="0.000" min="0.000" /></p>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <label class="control-label">Tipo</label>
+                                <p><select class="select-notsearch" tabindex="-1" name="tipo" id="tipo">
+                                        <option value="0">Normal</option>
+                                        <option value="1">Pulmão</option>
+                                        <option value="2">Picking</option>
                                     </select></p>
                             </div>
 
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <label class="control-label">Ativo</label>
-                                <p><select class="select-notsearch" tabindex="-1" name="statusview" id="statusview"
-                                        disabled>
+                                <p><select class="select-notsearch" tabindex="-1" name="status" id="status">
                                         <option value="1">Sim</option>
                                         <option value="0">Não</option>
                                     </select></p>
@@ -408,7 +437,16 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" id="reset" data-dismiss="modal"><i
-                                    class="fa fa-times"> Cancelar</i></button>
+                                    class="fa fa-times"> Sair</i></button>
+                            <button type="button" class="btn btn-danger" id="canButton" disabled><i
+                                    class="fa fa-trash-o">
+                                    Cancelar</i></button>
+                            <button type="button" class="btn btn-success" id="attButton" disabled><i
+                                    class="fa fa-trash-o">
+                                    Atualizar</i></button>
+                            <button type="submit" class="btn btn-success" id="saveButton"><i
+                                    class="fa fa-trash-o">
+                                    Cadastrar</i></button>
                         </div>
                     </form>
                 </div>
@@ -420,8 +458,9 @@
 
 
 @section('js')
-    <script src="{{ url('/') }}/js/pages/almoxarifado.js"></script>
+<script src="{{ url('/') }}/js/plugins/datatables/jquery.dataTables.js"></script>
+<script src="{{ url('/') }}/js/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
     <script src="{{ url('/') }}/js/plugins/select2/js/select2.full.js"></script>
-    <script src="{{ url('/') }}/js/plugins/datatables/jquery.dataTables.js"></script>
-    <script src="{{ url('/') }}/js/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+    <script src="{{ url('/') }}/js/plugins/mask/jquery.mask.min.js"></script>
+    <script src="{{ url('/') }}/js/pages/almoxarifado.js"></script>
 @endsection

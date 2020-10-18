@@ -213,7 +213,7 @@
 
         <div class="info-box-content">
           <span class="info-box-text">Almoxarifado</span>
-          <span class="info-box-number">1</span>
+          <span class="info-box-number">{{$almoxarifado}}</span>
         </div>
         <!-- /.info-box-content -->
       </div>

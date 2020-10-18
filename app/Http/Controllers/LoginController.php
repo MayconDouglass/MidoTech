@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Almoxarifado;
 use App\Models\Cliente;
 use App\Models\Perfil;
 use Illuminate\Http\Request;
@@ -42,20 +43,12 @@ class LoginController extends Controller
             $acessoPerfil = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
             ->select('role','ativo')->get();
             
-            if($roleAdmin[0] == 1){
-
-                $clientes = Cliente::all()->count();
-                $vendedores = Vendedor::all()->count();
-                
-            }else{
-
-                $clientes = Cliente::where('emp_cod',$uempresa)->count();
-                $vendedores = Vendedor::where('emp_cod',$uempresa)->count();
-
-            }
+            $clientes = Cliente::where('emp_cod',$uempresa)->count();
+            $vendedores = Vendedor::where('emp_cod',$uempresa)->count();
+            $almoxarifado = Almoxarifado::where('emp_cod',$uempresa)->count();
             
             if ($roleView[0]  == 1){
-                return view('painel.page.index',compact('uperfil','unomeperfil','unome','uid','uimagem','acessoPerfil','clientes','vendedores'));
+                return view('painel.page.index',compact('uperfil','unomeperfil','unome','uid','uimagem','acessoPerfil','clientes','vendedores','almoxarifado'));
             }else{
                 return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','perfis','acessoPerfil'));
             }  

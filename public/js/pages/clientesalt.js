@@ -258,7 +258,6 @@ $(function () {
             },
             type: 'put',
             success: function (data) {
-                console.log(data);
                 sessionStorage.setItem("status", "Cliente atualizado!");
                 //window.location.href='/clientes/?atualizado=1';
                 window.location.href='/clientes';

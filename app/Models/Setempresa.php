@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $Cidade
  * @property string $Estado
  * @property string $CEP
+ * @property string|null $ibge
  * @property string $CNPJ
  * @property string $IE
  * @property string|null $IM
@@ -40,11 +41,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $Licenca
  * 
  * @property Setatividade $setatividade
+ * @property Collection|Almoxarifado[] $almoxarifados
  * @property Collection|Cliente[] $clientes
  * @property Collection|Clilogradouro[] $clilogradouros
  * @property Collection|Climov[] $climovs
+ * @property Collection|ContratosEmpresa[] $contratos_empresas
  * @property Collection|Perfil[] $perfils
  * @property Collection|Setor[] $setors
+ * @property Collection|Settributo[] $settributos
  * @property Collection|Tabelapreco[] $tabelaprecos
  * @property Collection|Te[] $tes
  * @property Collection|Usuario[] $usuarios
@@ -83,6 +87,7 @@ class Setempresa extends Model
 		'Cidade',
 		'Estado',
 		'CEP',
+		'ibge',
 		'CNPJ',
 		'IE',
 		'IM',
@@ -110,6 +115,11 @@ class Setempresa extends Model
 		return $this->belongsTo(Regimetrib::class, 'regimetrib');
 	}
 
+	public function almoxarifados()
+	{
+		return $this->hasMany(Almoxarifado::class, 'emp_cod');
+	}
+
 	public function clientes()
 	{
 		return $this->hasMany(Cliente::class, 'emp_cod');
@@ -125,6 +135,11 @@ class Setempresa extends Model
 		return $this->hasMany(Climov::class, 'emp_cod');
 	}
 
+	public function contratos_empresas()
+	{
+		return $this->hasMany(ContratosEmpresa::class, 'emp_cod');
+	}
+
 	public function perfils()
 	{
 		return $this->hasMany(Perfil::class, 'emp_cod');
@@ -133,6 +148,11 @@ class Setempresa extends Model
 	public function setors()
 	{
 		return $this->hasMany(Setor::class, 'emp_cod');
+	}
+
+	public function settributos()
+	{
+		return $this->hasMany(Settributo::class, 'emp_cod');
 	}
 
 	public function tabelaprecos()

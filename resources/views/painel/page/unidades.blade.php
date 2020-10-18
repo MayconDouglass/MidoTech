@@ -26,7 +26,7 @@
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="index">Home</a></li>
-          <li class="breadcrumb-item active">Unidades</li>
+          <li class="breadcrumb-item active">Tabelas Genéricas</li>
           <li class="breadcrumb-item active">Unidades</li>
         </ol>
       </div>

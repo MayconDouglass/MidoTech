@@ -3,19 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\AlLocalizacao;
-use App\Models\Cliente;
-use App\Models\Contrato;
-use App\Models\ContratoArquivo;
-use App\Models\ContratosEmpresa;
 use App\Models\Perfil;
 use App\Models\PerfilAcesso;
 use App\Models\Almoxarifado;
+use App\Models\Settributo;
 use Illuminate\Http\Request;
 
 use Auth;
 use Illuminate\Support\Facades\Storage;
 
-class AlmoxarifadoController extends Controller
+class SituacaoTribController extends Controller
 {
     public function create()
     {
@@ -45,12 +42,11 @@ class AlmoxarifadoController extends Controller
 
             $acessoPerfil = PerfilAcesso::where('perfil_cod',$uperfil)
                                         ->select('role','ativo')->get();
-
-
-            $almoxarifados = Almoxarifado::where('emp_cod',$uempresa)->get();
+           
+            $sittributarias = Settributo::where('emp_cod',$uempresa)->get();
 
             if ($roleView[0] == 1){
-                return view('painel.page.almoxarifado',compact('uperfil','uempresa','unomeperfil','unome','uid','uimagem','acessoPerfil','almoxarifados','uempresa'));
+                return view('painel.page.situacaotrib',compact('uperfil','uempresa','unomeperfil','unome','uid','uimagem','acessoPerfil','uempresa','sittributarias'));
             }else{
                 return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','acessoPerfil'));
             }  

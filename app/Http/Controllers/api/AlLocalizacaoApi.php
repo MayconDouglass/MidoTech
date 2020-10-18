@@ -7,12 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Models\AlLocalizacao;
 use App\Models\Almoxarifado;
 
-class AlmoxarifadoApi extends Controller
+class AlLocalizacaoApi extends Controller
 {
     
     public function index()
     {
-        $almoxarifados = Almoxarifado::with('al_localizacao')->get();
+        $almoxarifados = AlLocalizacao::with('almoxarifado')->get();
         return $almoxarifados;
     }
 
@@ -24,7 +24,7 @@ class AlmoxarifadoApi extends Controller
     
     public function show($id)
     {
-        $almoxarifado = Almoxarifado::where('id_almoxarifado',$id)->with('al_localizacao')->first();
+        $almoxarifado =AlLocalizacao::where('id_localizacao',$id)->with('almoxarifado')->first();
         if(!$almoxarifado)
             return response()->json(['erro'=> '404','status'=>'Registro nao encontrado'], 404); 
 
@@ -42,17 +42,17 @@ class AlmoxarifadoApi extends Controller
     public function update(Request $request, $id)
     {
         $localizacao = AlLocalizacao::where('id_localizacao',$id)->first();
-        //dd($localizacao);
+        //dd($request->all());
         if(!$localizacao)
             return response()->json(['erro'=> '404','status'=>'Registro nao encontrado'], 404);    
 
-        $localizacao->localiza_fisica = $request->locfisica;
+        $localizacao->localiza_fisica = $request->localiza_fisica;
         $localizacao->ean = $request->ean;
-        $localizacao->tipo = $request->tipo;
         $localizacao->capacidade = $request->capacidade;
+        $localizacao->tipo = $request->tipo;
         $localizacao->status = $request->status;
-        $localizacao->data_alt = $request->data_alt;
-        $statusUpdate = $localizacao->update();
+        $localizacao->data_alt = date('Y-m-d H:i:s');
+        $statusUpdate = $localizacao->update($request->all());
 
         if($statusUpdate){
             return response()->json(['code'=> '200','status'=>'Registro Atualizado'], 200);    
