@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AlLocalizacao;
 use App\Models\Perfil;
 use App\Models\PerfilAcesso;
-use App\Models\Almoxarifado;
 use App\Models\Settributo;
 use Illuminate\Http\Request;
 
@@ -61,49 +59,41 @@ class SituacaoTribController extends Controller
     public function store(Request $request){
         $uempresa = Auth::user()->empresa;
       
-        $almoxarifado = new Almoxarifado;
-        $almoxarifado->emp_cod = $uempresa;
-        $almoxarifado->codigo = $request->codigocad;
-        $almoxarifado->descricao = $request->descricaocad;
-        $almoxarifado->tipo = $request->tipocad;
-        $almoxarifado->status = $request->statuscad;
-        $almoxarifado->qtd_estatistica = $request->qtdcad;
+        $st = new Settributo;
+        $st->emp_cod = $uempresa;
+        $st->codigo = $request->codigocad;
+        $st->descricao = $request->descricaocad;
+        $st->tipo = $request->tipocad;
+        $st->trib_cst = $request->cstcad;
+        $st->trib_origem = $request->origemcad;
+        $st->mod_icms = $request->mod_icmscad;
+        $st->mod_icms_st = $request->mod_icms_stcad;
+        $st->mot_desoneracao = $request->mot_desoneracaocad;
+        $st->aliq_mva = $request->mvacad;
+        $st->aliq_mva_simples = $request->mva_simplescad;
+        $st->aliq_icms = $request->aliq_icmscad;
+        $st->aliq_icms_interno = $request->aliq_icms_ufcad;
+        $st->aliq_icms_st = $request->aliq_icms_stcad;
+        $st->aliq_red_icms = $request->aliq_red_icmscad;
+        $st->aliq_red_icms_st = $request->aliq_red_icms_stcad;
+        $st->aliq_simples = $request->aliq_simplescad;
+        $st->trib_csosn = $request->csosncad;
+        $st->aliq_fecp = $request->aliq_fecpcad;
+        $st->tipo_riolog = $request->riologcad;
+        $st->benef_fiscal = $request->beneficiocad;
+        $st->aliq_diferimento = $request->aliq_diferimentocad;
+        $st->aliq_red_unitario = $request->aliq_red_unitariocad;
+        $st->ativo = $request->statuscad;
        
-        $saveStatus = $almoxarifado->save();
+        $saveStatus = $st->save();
               
         if($saveStatus){   
    
-            return redirect()->action('AlmoxarifadoController@create')->with('status_success', 'Almoxarifado Cadastrado!');              
+            return redirect()->action('SituacaoTribController@create')->with('status_success', 'Situacao Tributária Cadastrada!');              
                 
         }else{
 
-            return redirect()->action('AlmoxarifadoController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
-
-        }
-
-
-    }
-
-    public function storeLocal(Request $request){
-      
-        $localizacao = new AlLocalizacao;
-        $localizacao->al_cod = $request->idAlmo;
-        $localizacao->localiza_fisica = $request->locfisica;
-        $localizacao->ean = $request->ean;
-        $localizacao->tipo = $request->tipo;
-        $localizacao->capacidade = $request->capacidade;
-        $localizacao->status = $request->status;
-        $localizacao->data_cad = date('Y-m-d H:i:s');
-       
-        $saveStatus = $localizacao->save();
-              
-        if($saveStatus){   
-   
-            return redirect()->action('AlmoxarifadoController@create')->with('status_success', 'Localização Cadastrada!');              
-                
-        }else{
-
-            return redirect()->action('AlmoxarifadoController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
+            return redirect()->action('SituacaoTribController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
 
         }
 
@@ -112,39 +102,55 @@ class SituacaoTribController extends Controller
 
     public function update(Request $request){
  
-        $almoxarifado = Almoxarifado::find($request->idAlmo);
-        $almoxarifado->tipo = $request->tipoalt;
-        $almoxarifado->status = $request->statusalt;
-        $almoxarifado->qtd_estatistica = $request->qtdalt;
+        $st = Settributo::find($request->idST);
+        $st->descricao = $request->descricaoalt;
+        $st->tipo = $request->tipoalt;
+        $st->trib_cst = $request->cstalt;
+        $st->trib_origem = $request->origemalt;
+        $st->mod_icms = $request->mod_icmsalt;
+        $st->mod_icms_st = $request->mod_icms_stalt;
+        $st->mot_desoneracao = $request->mot_desoneracaoalt;
+        $st->aliq_mva = $request->mvaalt;
+        $st->aliq_mva_simples = $request->mva_simplesalt;
+        $st->aliq_icms = $request->aliq_icmsalt;
+        $st->aliq_icms_interno = $request->aliq_icms_ufalt;
+        $st->aliq_icms_st = $request->aliq_icms_stalt;
+        $st->aliq_red_icms = $request->aliq_red_icmsalt;
+        $st->aliq_red_icms_st = $request->aliq_red_icms_stalt;
+        $st->aliq_simples = $request->aliq_simplesalt;
+        $st->trib_csosn = $request->csosnalt;
+        $st->aliq_fecp = $request->aliq_fecpalt;
+        $st->tipo_riolog = $request->riologalt;
+        $st->benef_fiscal = $request->beneficioalt;
+        $st->aliq_diferimento = $request->aliq_diferimentoalt;
+        $st->aliq_red_unitario = $request->aliq_red_unitarioalt;
+        $st->ativo = $request->statusalt;
        
-        $updateStatus = $almoxarifado->save();
+        $updateStatus = $st->save();
               
         if($updateStatus){   
                   
-                return redirect()->action('AlmoxarifadoController@create')->with('status_success', 'Almoxarifado Atualizado!');              
+                return redirect()->action('SituacaoTribController@create')->with('status_success', 'Almoxarifado Atualizado!');              
 
         }else{
 
-                return redirect()->action('AlmoxarifadoController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
+                return redirect()->action('SituacaoTribController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
         }
 
 
     }
 
     public function destroy(Request $request){
-       
-            if(empty($request->iddelete)){
-                return redirect()->action('AlmoxarifadoController@create')->with('status_error', 'Falha!');    
-            }
-                $almoxarifado = Almoxarifado::find($request->iddelete);
-                $delete=$almoxarifado->delete();
-                
+        if(empty($request->iddelete)){
+            return redirect()->action('SituacaoTribController@create')->with('status_error', 'Falha!');    
+        }
+                $stDel = Settributo::find($request->iddelete);
+                $delete=$stDel ->delete();
                 if($delete){
-                    return redirect()->action('AlmoxarifadoController@create')->with('status_success', 'Almoxarifado excluído!');
+                   return redirect()->action('SituacaoTribController@create')->with('status_success', 'Excluído!');
                 }else{
-                    return redirect()->action('AlmoxarifadoController@create')->with('status_error', 'Não foi possível excluir o registro, possivelmente existem movimentação/cadastros!');    
+                return redirect()->action('SituacaoTribController@create')->with('status_error', 'Não foi possível excluir o registro, possivelmente existem movimentação/cadastros!');    
                 }
-
     }
 
 }

@@ -11,4 +11,5 @@ Route::group(['middleware' => ['api']], function () {
     Route::get('/almoxarifado/local/{id}', 'api\\AlmoxarifadoApi@showLocalizacao');
     Route::post('localizacao/{id}', 'api\\AlLocalizacaoApi@update');
     Route::apiResource('localizacao', 'api\AlLocalizacaoApi');
+    Route::apiResource('st', 'api\SituacaoTribApi');
 });
