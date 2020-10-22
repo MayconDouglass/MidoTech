@@ -40,7 +40,7 @@ class PerfilController extends Controller
             $acessoPerfil = PerfilAcesso::where('perfil_cod',$uperfil)
                                         ->select('role','ativo')->get();
 
-            $perfis = Perfil::all();
+            $perfis = Perfil::where('emp_cod',$uempresa)->get();
            
             $empresas = Setempresa::all();
             

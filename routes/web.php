@@ -122,6 +122,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/situacaotrib/update', 'SituacaoTribController@update');
     Route::post('/situacaotrib/delete', 'SituacaoTribController@destroy');
 
+    // Transportadora
+    Route::get('/transportadora', 'TranspController@create')->name('transportadora');
+    Route::post('/transportadora/cad', 'Transpontroller@store');
+    Route::post('/transportadora/update', 'TranspController@update');
+    Route::post('/transportadora/delete', 'TranspController@destroy');
+
 
 });
 

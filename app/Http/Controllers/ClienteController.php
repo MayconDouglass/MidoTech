@@ -103,15 +103,7 @@ class ClienteController extends Controller
                                         ->where('role',5)
                                         ->pluck('ativo');
 
-            if($roleAdmin = 1){
-                $modCobs = Modocobranca::where('ativo',1)->get();
-                $tabPrecos = Tabelapreco::where('ativo',1)->where('emp_cod',$uempresa)->get();
-                $prazoCobs = Prazopagamento::where('ativo',1)->get();
-                $vendedores = Vendedor::where('ativo',1)->get();
-                $tes = TES::where([['tes.emp_cod',$uempresa],['tes.tipo',1],['operacaofiscal.tipo','S']])
-                ->join('operacaofiscal','operacaofiscal.id_operacao','=','tes.CFOP')
-                ->get();
-            }else{  
+            
                 $modCobs = Modocobranca::where('ativo',1)->get();
                 $tabPrecos = Tabelapreco::where('ativo',1)->where('emp_cod',$uempresa)->get();
                 $prazoCobs = Prazopagamento::where('ativo',1)->get();
@@ -119,7 +111,6 @@ class ClienteController extends Controller
                 $tes = TES::where([['tes.emp_cod',$uempresa],['tes.status',1],['tes.tipo',1],['operacaofiscal.tipo','S']])
                 ->join('operacaofiscal','operacaofiscal.id_operacao','=','tes.CFOP')
                 ->get();
-            }
 
             $empresas = Setempresa::all();
 
@@ -186,13 +177,14 @@ class ClienteController extends Controller
     }
 
     public function store(Request $request){
+        $ctEspecial = array('.','/','-');
         $cliente = new Cliente;
         $cliente->emp_cod = $request->empcod;
         $cliente->razao_social = $request->razao;
         $cliente->nome_fantasia = $request->fantasia;
         $cliente->tipo_pessoa = $request->pessoa;
         $cliente->grupo = $request->grupo;
-        $cliente->cpf_cnpj = $request->cnpjcpf;
+        $cliente->cpf_cnpj = str_replace($ctEspecial, '', $request->cnpjcpf);
         $cliente->status = $request->status;
         $cliente->insc_estadual = $request->iestadual;
         $cliente->email = $request->email;
@@ -260,12 +252,14 @@ class ClienteController extends Controller
     }
 
     public function update(Request $request){
+        $ctEspecial = array('.','/','-');
+        dd(str_replace($ctEspecial, '', $request->cnpjcpf));
         $cliente = Cliente::findOrFail($request->idCliente);
         $cliente->razao_social = $request->razao;
         $cliente->nome_fantasia = $request->fantasia;
         $cliente->tipo_pessoa = $request->pessoa;
         $cliente->grupo = $request->grupo;
-        $cliente->cpf_cnpj = $request->cnpjcpf;
+        $cliente->cpf_cnpj = str_replace($ctEspecial, '', $request->cnpjcpf);
         $cliente->status = $request->status;
         $cliente->insc_estadual = $request->iestadual;
         $cliente->email = $request->email;

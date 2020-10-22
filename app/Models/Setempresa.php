@@ -46,11 +46,15 @@ use Illuminate\Database\Eloquent\Model;
  * @property Collection|Clilogradouro[] $clilogradouros
  * @property Collection|Climov[] $climovs
  * @property Collection|ContratosEmpresa[] $contratos_empresas
+ * @property Collection|Modocobranca[] $modocobrancas
+ * @property Collection|Natoperacao[] $natoperacaos
  * @property Collection|Perfil[] $perfils
+ * @property Collection|Prazopagamento[] $prazopagamentos
  * @property Collection|Setor[] $setors
  * @property Collection|Settributo[] $settributos
  * @property Collection|Tabelapreco[] $tabelaprecos
  * @property Collection|Te[] $tes
+ * @property Collection|Transportadora[] $transportadoras
  * @property Collection|Usuario[] $usuarios
  * @property Collection|Vendedor[] $vendedors
  *
@@ -140,9 +144,24 @@ class Setempresa extends Model
 		return $this->hasMany(ContratosEmpresa::class, 'emp_cod');
 	}
 
+	public function modocobrancas()
+	{
+		return $this->hasMany(Modocobranca::class, 'emp_cod');
+	}
+
+	public function natoperacaos()
+	{
+		return $this->hasMany(Natoperacao::class, 'emp_cod');
+	}
+
 	public function perfils()
 	{
 		return $this->hasMany(Perfil::class, 'emp_cod');
+	}
+
+	public function prazopagamentos()
+	{
+		return $this->hasMany(Prazopagamento::class, 'emp_cod');
 	}
 
 	public function setors()
@@ -163,6 +182,11 @@ class Setempresa extends Model
 	public function tes()
 	{
 		return $this->hasMany(Te::class, 'emp_cod');
+	}
+
+	public function transportadoras()
+	{
+		return $this->hasMany(Transportadora::class, 'emp_cod');
 	}
 
 	public function usuarios()

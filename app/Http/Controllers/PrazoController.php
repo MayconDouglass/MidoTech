@@ -21,6 +21,7 @@ class PrazoController extends Controller
             $unome= Auth::user()->nome;
             $uperfil= Auth::user()->perfil_fk;
             $unomeperfil= Auth::user()->perfil->nome;
+            $uempresa= Auth::user()->empresa;
 
             $statusPerfil= Perfil::find(Auth::user()->perfil_fk);
             if($statusPerfil->ativo == 0){
@@ -41,7 +42,7 @@ class PrazoController extends Controller
             $acessoPerfil = PerfilAcesso::where('perfil_cod',$uperfil)
                                         ->select('role','ativo')->get();
 
-            $prazoPagamentos = Prazopagamento::all(); 
+            $prazoPagamentos = Prazopagamento::where('emp_cod',$uempresa)->get(); 
 
                 if ($roleView[0]  == 1){
                     return view('painel.page.prazopag',compact('uperfil','unomeperfil','unome','uid','uimagem','acessoPerfil','prazoPagamentos'));
@@ -57,7 +58,8 @@ class PrazoController extends Controller
     }
 
     public function store(Request $request){
-//dd($request->parcelacad);
+        $uempresa= Auth::user()->empresa;
+        
         if($request->tipocad == 0){
             $qtdParcelas = 1;
         }else{
@@ -65,6 +67,7 @@ class PrazoController extends Controller
         }
         
         $prazoPag = new Prazopagamento;
+        $prazoPag->emp_cod = $uempresa;
         $prazoPag->descricao = $request->descricaocad;
         $prazoPag->taxa_diario = $request->taxajuroscad;
         $prazoPag->multa_atraso = $request->multacad;

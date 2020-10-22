@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class Modocobranca
  * 
  * @property int $id_modocob
+ * @property int $emp_cod
  * @property string $descricao
  * @property int $situacao
  * @property string|null $observacao
@@ -29,6 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Situacaomodcob $situacaomodcob
  * @property Usuario $usuario
  * @property Natoperacao $natoperacao
+ * @property Setempresa $setempresa
  * @property Collection|Cliente[] $clientes
  * @property Collection|Venmodcobranca[] $venmodcobrancas
  *
@@ -41,6 +43,7 @@ class Modocobranca extends Model
 	public $timestamps = false;
 
 	protected $casts = [
+		'emp_cod' => 'int',
 		'situacao' => 'int',
 		'natureza' => 'int',
 		'lib_credito' => 'int',
@@ -56,6 +59,7 @@ class Modocobranca extends Model
 	];
 
 	protected $fillable = [
+		'emp_cod',
 		'descricao',
 		'situacao',
 		'observacao',
@@ -82,6 +86,11 @@ class Modocobranca extends Model
 	public function natoperacao()
 	{
 		return $this->belongsTo(Natoperacao::class, 'natureza');
+	}
+
+	public function setempresa()
+	{
+		return $this->belongsTo(Setempresa::class, 'emp_cod');
 	}
 
 	public function clientes()

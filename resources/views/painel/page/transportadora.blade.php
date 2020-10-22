@@ -1,6 +1,6 @@
 @extends('painel.template.template')
 
-@section('title','Clientes')
+@section('title','Transportadora')
 
 @section('css')
 <link rel="stylesheet" href="{{url('/')}}/js/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
@@ -12,7 +12,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0 text-dark">Clientes
+        <h1 class="m-0 text-dark">Transportadora
           @foreach ($acessoPerfil as $acesso)
           @if (($acesso->role == 2)&&($acesso->ativo == 1))
           <a href="{{route('addUser') }}">

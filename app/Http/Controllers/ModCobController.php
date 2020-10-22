@@ -22,6 +22,7 @@ class ModCobController extends Controller
             $unome= Auth::user()->nome;
             $uperfil= Auth::user()->perfil_fk;
             $unomeperfil= Auth::user()->perfil->nome;
+            $uempresa= Auth::user()->empresa;
 
             
             $statusPerfil= Perfil::find($uperfil);
@@ -43,9 +44,9 @@ class ModCobController extends Controller
             $acessoPerfil = PerfilAcesso::where('perfil_cod',$uperfil)
                                         ->select('role','ativo')->get();
 
-            $modoCobs = Modocobranca::all();
+            $modoCobs = Modocobranca::where('emp_cod',$uempresa)->get();
             $situacoesCob = Situacaomodcob::all();
-            $natOperacoes = Natoperacao::where('ativo',1)->get();
+            $natOperacoes = Natoperacao::where([['ativo',1],['emp_cod',$uempresa]])->get();
 
                 if ($roleView[0]  == 1){
                     return view('painel.page.modocob',compact('uperfil','unomeperfil','unome','uid','uimagem','acessoPerfil','situacoesCob','modoCobs','natOperacoes'));
@@ -61,8 +62,9 @@ class ModCobController extends Controller
     }
 
     public function store(Request $request){
-
+        $uempresa= Auth::user()->empresa;
         $modCob = new Modocobranca;
+        $modCob->emp_cod = $uempresa;
         $modCob->descricao = $request->descricaocad;
         $modCob->situacao = $request->situacaocad;
         $modCob->observacao = $request->obscad;

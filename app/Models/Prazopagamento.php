@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class Prazopagamento
  * 
  * @property int $id_prazo
+ * @property int $emp_cod
  * @property string $descricao
  * @property float $taxa_diario
  * @property int $intervalodias
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $num_parcelas
  * @property int $ativo
  * 
+ * @property Setempresa $setempresa
  * @property Collection|ParcelaPrazo[] $parcela_prazos
  * @property Collection|Venprazopag[] $venprazopags
  *
@@ -35,6 +37,7 @@ class Prazopagamento extends Model
 	public $timestamps = false;
 
 	protected $casts = [
+		'emp_cod' => 'int',
 		'taxa_diario' => 'float',
 		'intervalodias' => 'int',
 		'multa_atraso' => 'float',
@@ -46,6 +49,7 @@ class Prazopagamento extends Model
 	];
 
 	protected $fillable = [
+		'emp_cod',
 		'descricao',
 		'taxa_diario',
 		'intervalodias',
@@ -56,6 +60,11 @@ class Prazopagamento extends Model
 		'num_parcelas',
 		'ativo'
 	];
+
+	public function setempresa()
+	{
+		return $this->belongsTo(Setempresa::class, 'emp_cod');
+	}
 
 	public function parcela_prazos()
 	{

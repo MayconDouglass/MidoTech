@@ -285,8 +285,29 @@
                 </li>
               </ul>
             </li>
-
-
+              </ul>
+              
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fa fa-cart-arrow-down "></i>
+                <p>
+                  Compras
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                @foreach ($acessoPerfil as $acesso)
+                @if (($acesso->role == 1)&&($acesso->ativo == 1))
+                <li class="nav-item">
+                  <a href="{{route('transportadora')}}" class="nav-link">
+                    <i class="fa fa-truck nav-icon"></i>
+                    <p>Transportadora</p>
+                  </a>
+                </li>
+                @endif
+                @endforeach
+              </ul>
+            </li>
 
         </nav>
         <!-- /.sidebar-menu -->

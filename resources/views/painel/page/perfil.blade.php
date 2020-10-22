@@ -61,11 +61,6 @@
       <thead>
         <tr>
           <th class="idDataTab">ID</th>
-          @foreach ($acessoPerfil as $acesso)
-          @if (($acesso->role == 5)&&($acesso->ativo == 1))
-          <th>Empresa</th>
-          @endif
-          @endforeach
           <th>Perfil</th>
           <th class="statusDataTab">Status</th>
           <th class="actionDataTab">Ações</th>
@@ -75,11 +70,6 @@
         @foreach ($perfis as $perfil)
         <tr>
           <td class="idDataTabText">{{$perfil->id_perfil}}</td>
-          @foreach ($acessoPerfil as $acesso)
-          @if (($acesso->role == 5)&&($acesso->ativo == 1))
-          <td>{{$perfil->setempresa->razao_social}}</td>
-          @endif
-          @endforeach
           <td>{{$perfil->nome}}</td>
           <td><span @if ($perfil->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
               @endif>{{$perfil->ativo ? "Ativo" : "Inativo"}}</span></td>

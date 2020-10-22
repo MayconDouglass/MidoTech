@@ -13,12 +13,14 @@ use Illuminate\Database\Eloquent\Model;
  * Class Natoperacao
  * 
  * @property int $id_natoperacao
+ * @property int $emp_cod
  * @property string $descricao
  * @property int $classificacao
  * @property int $dre
  * @property int $fluxo
  * @property int $ativo
  * 
+ * @property Setempresa $setempresa
  * @property Collection|Modocobranca[] $modocobrancas
  *
  * @package App\Models
@@ -30,6 +32,7 @@ class Natoperacao extends Model
 	public $timestamps = false;
 
 	protected $casts = [
+		'emp_cod' => 'int',
 		'classificacao' => 'int',
 		'dre' => 'int',
 		'fluxo' => 'int',
@@ -37,12 +40,18 @@ class Natoperacao extends Model
 	];
 
 	protected $fillable = [
+		'emp_cod',
 		'descricao',
 		'classificacao',
 		'dre',
 		'fluxo',
 		'ativo'
 	];
+
+	public function setempresa()
+	{
+		return $this->belongsTo(Setempresa::class, 'emp_cod');
+	}
 
 	public function modocobrancas()
 	{

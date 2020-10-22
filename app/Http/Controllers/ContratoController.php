@@ -67,13 +67,12 @@ class ContratoController extends Controller
         $ctEspecial = array('.','/','-');
         $proposta = str_shuffle(str_replace($ctEspecial, '', $request->cgccad.$uempresa));
         $contFiles = $request->file('arquivoCad');
-       
         $contrato = new Contrato;
         $contrato->razao_social = $request->razaocad;
         $contrato->cli_cod = $request->idCliente ? $request->idCliente : 1;
         $contrato->proposta = $proposta;
         $contrato->pessoa = $request->pessoacad;
-        $contrato->cgc = $request->cgccad;
+        $contrato->cgc = str_replace($ctEspecial, '', $request->cgccad);
         $contrato->status = $request->statuscad;
         $contrato->valor = $request->valorcad;
         $contrato->desconto = $request->descontocad;

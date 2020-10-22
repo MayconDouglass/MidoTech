@@ -61,11 +61,6 @@
       <thead>
         <tr>
           <th class="idDataTab">ID</th>
-          @foreach ($acessoPerfil as $acesso)
-          @if (($acesso->role == 5)&&($acesso->ativo == 1))
-          <th>Empresa</th>
-          @endif
-          @endforeach
           <th>Descrição</th>
           <th class="statusDataTab">Status</th>
           <th class="actionDataTab">Ações</th>
@@ -75,11 +70,6 @@
         @foreach ($tabPrecos as $tabPreco)
         <tr>
           <td class="idDataTabText">{{$tabPreco->id_tabela}}</td>
-          @foreach ($acessoPerfil as $acesso)
-          @if (($acesso->role == 5)&&($acesso->ativo == 1))
-          <td>{{$tabPreco->setempresa->razao_social}}</td>
-          @endif
-          @endforeach
           <td>{{$tabPreco->descricao}}</td>
           <td>
             <span @if ($tabPreco->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
@@ -145,25 +135,9 @@
               <p><input class="form-control" type="text" name="descricaocad" maxlength="60" required></p>
             </div>
            
-            @foreach ($acessoPerfil as $acesso)
-            @if (($acesso->role == 5)&&($acesso->ativo == 1))
-            <div class="col-sm-12">
-              <label class="control-label">Empresa</label>
-              <p><select class="select-notsearch" tabindex="-1" name="empresacad">
-                  @foreach ($empresas as $empresa)
-                  <option value="{{$empresa->id_empresa}}">{{$empresa->id_empresa . ' - ' . $empresa->razao_social}}
-                  </option>
-                  @endforeach
-                </select></p>
-            </div>
-            @endif
-
-            @if (($acesso->role == 5)&&($acesso->ativo == 0))
             <div class="col-sm-12">
             <input class="form-control" type="hidden" name="empresacad" value="{{$uempresa}}" required>
             </div>
-            @endif
-            @endforeach
 
             <div class="col-sm-4">
               <label class="control-label">Ativo</label>
@@ -232,20 +206,6 @@
               <p><input class="form-control" type="text" name="descricaoalt" id="descrical_alt" maxlength="60" disabled>
               </p>
             </div>
-
-            @foreach ($acessoPerfil as $acesso)
-            @if (($acesso->role == 5)&&($acesso->ativo == 1))
-            <div class="col-sm-12">
-              <label class="control-label">Empresa</label>
-              <p><select class="select-notsearch" tabindex="-1" name="empresaalt" id="empresa_alt" disabled>
-                  @foreach ($empresas as $empresa)
-                  <option value="{{$empresa->id_empresa}}">{{$empresa->id_empresa . ' - ' . $empresa->razao_social}}
-                  </option>
-                  @endforeach
-                </select></p>
-            </div>
-            @endif
-            @endforeach
 
             <div class="col-sm-4">
               <label class="control-label">Ativo</label>
@@ -343,20 +303,6 @@
               <p><input class="form-control" type="text" name="descricao_view" id="descricao_view" maxlength="60" disabled>
               </p>
             </div>
-
-            @foreach ($acessoPerfil as $acesso)
-            @if (($acesso->role == 5)&&($acesso->ativo == 1))
-            <div class="col-sm-12">
-              <label class="control-label">Empresa</label>
-              <p><select class="select-notsearch" tabindex="-1" name="empresa_view" id="empresa_view" disabled>
-                  @foreach ($empresas as $empresa)
-                  <option value="{{$empresa->id_empresa}}">{{$empresa->id_empresa . ' - ' . $empresa->razao_social}}
-                  </option>
-                  @endforeach
-                </select></p>
-            </div>
-            @endif
-            @endforeach
 
             <div class="col-sm-4">
               <label class="control-label">Ativo</label>

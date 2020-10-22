@@ -36,7 +36,7 @@ class UsuarioController extends Controller
             $uimagem = 'storage/img/users/default.jpg';
             }
             
-            $empresas = Setempresa::all();
+            $empresas = Setempresa::where('id_empresa',$uempresa)->get();
            
 
             $roleView = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
@@ -48,13 +48,9 @@ class UsuarioController extends Controller
             $roles = PerfilAcesso::where('perfil_cod',Auth::user()->perfil_fk)
             ->pluck('ativo');
 
-            if($roles[4] == 1){
-                $usuarios = Usuario::all(); 
-                $perfis = Perfil::all();
-            }else{
                 $usuarios = Usuario::where('empresa',$uempresa)->get();
                 $perfis = Perfil::where('ativo',1)->where('emp_cod',$uempresa)->get();
-            }
+            
 
             if (($roleView[0]  == 1) && ($roles[5] == 1)){
             return view('painel.page.usuario',compact('uperfil','unomeperfil','unome','uid','uimagem','empresas','usuarios','perfis','acessoPerfil','uempresa'));

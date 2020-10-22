@@ -201,8 +201,8 @@ $(function () {
 
     $('#formId').submit(function (e) {
         e.preventDefault();
-        var formData = $('#fantasia').serialize();
         var cModCob = 0, cPrazoPag = 0, cTabPreco = 0;
+        var ctEspecial = ['.','/','-'];
         if ($('#cModCob').prop('checked')) {
             cModCob = 1;
         } else {
@@ -226,7 +226,7 @@ $(function () {
                 nome_fantasia: $('#fantasia').val(),
                 tipo_pessoa: $('#pessoa').val(),
                 grupo: $('#grupo').val(),
-                cpf_cnpj: $('#cnpjcpf').val(),
+                cpf_cnpj: $('#cnpjcpf').val().replace(/\D/g, ''),
                 status: $('#status').val(),
                 insc_estadual: $('#iestadual').val(),
                 email: $('#email').val(),

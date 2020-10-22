@@ -46,14 +46,10 @@ class TabPrecoController extends Controller
                                         ->select('role','ativo')->get();
 
                      
-            if($roleAdmin[0] == 1){
-                $tabPrecos = Tabelapreco::all();
-                $empresas = Setempresa::all();
-            }else{
+           
                 $tabPrecos = Tabelapreco::where('emp_cod',$uempresa)->get();
                 $empresas = Setempresa::where('id_empresa',$uempresa)->get();
-            }
-
+        
             
 
                 if ($roleView[0]  == 1){

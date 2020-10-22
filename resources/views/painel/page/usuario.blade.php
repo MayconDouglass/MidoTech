@@ -62,11 +62,6 @@
       <thead>
         <tr>
           <th class="idDataTab">ID</th>
-          @foreach ($acessoPerfil as $acesso)
-          @if (($acesso->role == 5)&&($acesso->ativo == 1))
-          <th>Empresa</th>
-          @endif
-          @endforeach
           <th>Usuário</th>
           <th class="statusDataTab">Status</th>
           <th class="actionDataTab">Ações</th>
@@ -76,11 +71,6 @@
         @foreach ($usuarios as $usuario)
         <tr>
           <td class="idDataTabText">{{$usuario->id_usuario}}</td>
-          @foreach ($acessoPerfil as $acesso)
-          @if (($acesso->role == 5)&&($acesso->ativo == 1))
-          <td>{{$usuario->setempresa->Sigla}}</td>
-          @endif
-          @endforeach
           <td>{{$usuario->nome}}</td>
           <td><span @if ($usuario->ativo > 0) class="badge badge-success" @else class="badge badge-danger"
               @endif>{{$usuario->ativo ? "Ativo" : "Inativo"}}</span></td>
@@ -174,43 +164,7 @@
                   placeholder="Máximo de 10 caracteres" required></p>
             </div>
 
-
-
-            @foreach ($acessoPerfil as $acesso)
-            @if (($acesso->role == 5)&&($acesso->ativo == 1))
-            <div class="col-sm-5">
-              <label class="control-label">Nome</label>
-              <input class="form-control" type="text" name="nomecad" id="nome" maxlength="250" required>
-            </div>
-            <div class="col-sm-3">
-              <label class="control-label">Empresa</label>
-              <p><select class="select-notsearch" tabindex="-1" name="empcad" id="emp_cod">
-                  @foreach ($empresas as $empresa)
-                  <option value="{{$empresa->id_empresa}}">{{$empresa->razao_social}}</option>
-                  @endforeach
-                </select></p>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Ativa</label>
-              <select class="select-notsearch" tabindex="-1" name="ativacad" id="ativa">
-                <option value="1">Sim</option>
-                <option value="0">Não</option>
-              </select>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Perfil</label>
-              <select class="select-notsearch" tabindex="-1" name="perfilcad" id="perfil">
-                @foreach ($perfis as $perfil)
-                <option value="{{$perfil->id_perfil}}">{{$perfil->nome}}</option>
-                @endforeach
-              </select>
-            </div>
-            @endif
-
-            @if (($acesso->role == 5)&&($acesso->ativo == 0))
-            <div class="col-sm-7">
+            <div class="col-sm-6">
               <label class="control-label">Nome</label>
               <input class="form-control" type="text" name="nomecad" id="nome" maxlength="250" required>
               <input class="form-control" type="hidden" name="empcad" id="emp_cod" value="{{$uempresa}}" required>
@@ -224,7 +178,7 @@
               </select>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-sm-4">
               <label class="control-label">Perfil</label>
               <select class="select-notsearch" tabindex="-1" name="perfilcad" id="perfil">
                 @foreach ($perfis as $perfil)
@@ -232,12 +186,6 @@
                 @endforeach
               </select>
             </div>
-
-            @endif
-
-            @endforeach
-
-
 
           </div>
 
@@ -288,47 +236,7 @@
               <input class="form-control" type="text" name="nomealt" id="nome_alt" maxlength="150" required>
             </div>
 
-            @foreach ($acessoPerfil as $acesso)
-            @if (($acesso->role == 5)&&($acesso->ativo == 1))
             <div class="col-sm-4">
-              <label class="control-label">Empresa</label>
-              <select class="select-notsearch-users" tabindex="-1" name="empresaalt" id="empresa_alt">
-                @foreach ($empresas as $empresa)
-                <option value="{{$empresa->id_empresa}}">{{$empresa->razao_social}}</option>
-                @endforeach
-              </select>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Perfil</label>
-              <select class="select-notsearch-users" tabindex="-1" name="perfilalt" id="perfil_alt">
-                @foreach ($perfis as $perfil)
-                <option value="{{$perfil->id_perfil}}">{{$perfil->nome}}</option>
-                @endforeach
-              </select>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Ativa</label>
-              <select class="select-notsearch" tabindex="-1" name="ativaalt" id="ativa_alt">
-                <option value="1">Sim</option>
-                <option value="0">Não</option>
-              </select>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Data Cadastro</label>
-              <input class="form-control" type="text" name="dataalt" id="data_cadastro_alt" disabled>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Data Alteração</label>
-              <input class="form-control" type="text" name="dataalt" id="data_alteracao_alt" disabled>
-            </div>
-            @endif
-
-            @if (($acesso->role == 5)&&($acesso->ativo == 0))
-            <div class="col-sm-3">
               <input class="form-control" type="hidden" value="{{$uempresa}}" name="empresaalt" id="empresaalt"
                 required>
               <label class="control-label">Perfil</label>
@@ -339,7 +247,7 @@
               </select>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-sm-2">
               <label class="control-label">Ativa</label>
               <select class="select-notsearch" tabindex="-1" name="ativaalt" id="ativa_alt">
                 <option value="1">Sim</option>
@@ -356,10 +264,6 @@
               <label class="control-label">Data Alteração</label>
               <input class="form-control" type="text" name="dataalt" id="data_alteracao_alt" disabled>
             </div>
-
-            @endif
-
-            @endforeach
 
           </div>
 
@@ -406,46 +310,6 @@
               <p><input class="form-control" type="text" name="nomeview" id="nome_view" disabled></p>
             </div>
 
-            @foreach ($acessoPerfil as $acesso)
-            @if (($acesso->role == 5)&&($acesso->ativo == 1))
-            <div class="col-sm-4">
-              <label class="control-label">Empresa</label>
-              <select class="select-notsearch" tabindex="-1" name="empresaview" id="empresa_view" disabled>
-                @foreach ($empresas as $empresa)
-                <option value="{{$empresa->id_empresa}}">{{$empresa->razao_social}}</option>
-                @endforeach
-              </select>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Perfil</label>
-              <select class="select-notsearch" tabindex="-1" name="perfilview" id="perfil_view" disabled>
-                @foreach ($perfis as $perfil)
-                <option value="{{$perfil->id_perfil}}">{{$perfil->nome}}</option>
-                @endforeach
-              </select>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Ativa</label>
-              <select class="select-notsearch" tabindex="-1" name="ativaview" id="ativa_view" disabled>
-                <option value="1">Sim</option>
-                <option value="0">Não</option>
-              </select>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Data Cadastro</label>
-              <input class="form-control" type="text" name="dataview" id="data_cadastro_view" disabled>
-            </div>
-
-            <div class="col-sm-2">
-              <label class="control-label">Data Alteração</label>
-              <input class="form-control" type="text" name="dataview" id="data_alteracao_view" disabled>
-            </div>
-            @endif
-
-            @if (($acesso->role == 5)&&($acesso->ativo == 0))
             <div class="col-sm-3">
               <label class="control-label">Perfil</label>
               <select class="select-notsearch" tabindex="-1" name="perfilview" id="perfil_view" disabled>
@@ -472,10 +336,7 @@
               <label class="control-label">Data Alteração</label>
               <input class="form-control" type="text" name="dataview" id="data_alteracao_view" disabled>
             </div>
-            @endif
-
-            @endforeach
-
+            
           </div>
 
           <div class="modal-footer">
