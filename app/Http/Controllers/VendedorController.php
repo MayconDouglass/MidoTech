@@ -129,26 +129,31 @@ class VendedorController extends Controller
       
         if($saveStatus){            
 
-            
-            foreach ($request->tabPrecocad as $tabPreco) {
-                $venTabPreco = new Ventabelapreco();
-                $venTabPreco->vendedor = Vendedor::orderBy('id_vendedor','desc')->first()->id_vendedor;
-                $venTabPreco->tabpreco = $tabPreco;
-                $venTabPreco->save();
-            }
-            
-            foreach ($request->modCobcad as $modCob) {
-                $venModCob = new Venmodcobranca();
-                $venModCob->vendedor = Vendedor::orderBy('id_vendedor','desc')->first()->id_vendedor;
-                $venModCob->modocobranca = $modCob;
-                $venModCob->save();
+           if($request->tabPrecocad){
+                foreach ($request->tabPrecocad as $tabPreco) {
+                    $venTabPreco = new Ventabelapreco();
+                    $venTabPreco->vendedor = Vendedor::orderBy('id_vendedor','desc')->first()->id_vendedor;
+                    $venTabPreco->tabpreco = $tabPreco;
+                    $venTabPreco->save();
+                }
             }
 
-            foreach ($request->tabPrazocad as $tabPrazo) {
-                $venPrazo= new Venprazopag();
-                $venPrazo->vendedor = Vendedor::orderBy('id_vendedor','desc')->first()->id_vendedor;
-                $venPrazo->prazopag = $tabPrazo;
-                $venPrazo->save();
+            if($request->modCobcad){
+                foreach ($request->modCobcad as $modCob) {
+                    $venModCob = new Venmodcobranca();
+                    $venModCob->vendedor = Vendedor::orderBy('id_vendedor','desc')->first()->id_vendedor;
+                    $venModCob->modocobranca = $modCob;
+                    $venModCob->save();
+                }
+            }
+
+            if($request->tabPrazocad){
+                foreach ($request->tabPrazocad as $tabPrazo) {
+                    $venPrazo= new Venprazopag();
+                    $venPrazo->vendedor = Vendedor::orderBy('id_vendedor','desc')->first()->id_vendedor;
+                    $venPrazo->prazopag = $tabPrazo;
+                    $venPrazo->save();
+                }
             }
 
         }

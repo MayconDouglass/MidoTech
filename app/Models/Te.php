@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -43,6 +44,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $aliq_inss
  * @property float $inss_nfsuperior
  * @property float $aliq_iss
+ * @property float $iss_nfsuperior
  * @property float $aliq_irrf
  * @property float $irrf_nfsuperior
  * @property float $ret_pis
@@ -71,6 +73,7 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property Setempresa $setempresa
  * @property Operacaofiscal $operacaofiscal
+ * @property Collection|Cliente[] $clientes
  *
  * @package App\Models
  */
@@ -109,6 +112,7 @@ class Te extends Model
 		'aliq_inss' => 'float',
 		'inss_nfsuperior' => 'float',
 		'aliq_iss' => 'float',
+		'iss_nfsuperior' => 'float',
 		'aliq_irrf' => 'float',
 		'irrf_nfsuperior' => 'float',
 		'ret_pis' => 'float',
@@ -168,6 +172,7 @@ class Te extends Model
 		'aliq_inss',
 		'inss_nfsuperior',
 		'aliq_iss',
+		'iss_nfsuperior',
 		'aliq_irrf',
 		'irrf_nfsuperior',
 		'ret_pis',
@@ -203,5 +208,10 @@ class Te extends Model
 	public function operacaofiscal()
 	{
 		return $this->belongsTo(Operacaofiscal::class, 'CFOP');
+	}
+
+	public function clientes()
+	{
+		return $this->hasMany(Cliente::class, 'tes_cod');
 	}
 }

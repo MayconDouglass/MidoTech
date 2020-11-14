@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Perfil;
 use App\Models\PerfilAcesso;
-use App\Models\Settributo;
+use App\Models\Setor;
+use App\Models\Transportadora;
 use Illuminate\Http\Request;
 
 use Auth;
@@ -41,10 +42,14 @@ class TranspController extends Controller
             $acessoPerfil = PerfilAcesso::where('perfil_cod',$uperfil)
                                         ->select('role','ativo')->get();
            
-            $transportadoras = Settributo::where('emp_cod',$uempresa)->get();
+            $transportadoras = Transportadora::where('emp_cod',$uempresa)->get();
 
+            $setores = Setor::where([['emp_cod',$uempresa],['ativo',1]])->get();
+            
             if ($roleView[0] == 1){
-                return view('painel.page.transportadora',compact('uperfil','uempresa','unomeperfil','unome','uid','uimagem','acessoPerfil','uempresa','sittributarias'));
+                return view('painel.page.transportadora',compact('uperfil','uempresa','unomeperfil',
+                                                                 'unome','uid','uimagem','acessoPerfil',
+                                                                 'uempresa','transportadoras','setores'));
             }else{
                 return view('painel.page.nopermission',compact('uperfil','unomeperfil','unome','uid','uimagem','acessoPerfil'));
             }  
@@ -59,41 +64,38 @@ class TranspController extends Controller
     public function store(Request $request){
         $uempresa = Auth::user()->empresa;
       
-        $st = new Settributo;
-        $st->emp_cod = $uempresa;
-        $st->codigo = $request->codigocad;
-        $st->descricao = $request->descricaocad;
-        $st->tipo = $request->tipocad;
-        $st->trib_cst = $request->cstcad;
-        $st->trib_origem = $request->origemcad;
-        $st->mod_icms = $request->mod_icmscad;
-        $st->mod_icms_st = $request->mod_icms_stcad;
-        $st->mot_desoneracao = $request->mot_desoneracaocad;
-        $st->aliq_mva = $request->mvacad;
-        $st->aliq_mva_simples = $request->mva_simplescad;
-        $st->aliq_icms = $request->aliq_icmscad;
-        $st->aliq_icms_interno = $request->aliq_icms_ufcad;
-        $st->aliq_icms_st = $request->aliq_icms_stcad;
-        $st->aliq_red_icms = $request->aliq_red_icmscad;
-        $st->aliq_red_icms_st = $request->aliq_red_icms_stcad;
-        $st->aliq_simples = $request->aliq_simplescad;
-        $st->trib_csosn = $request->csosncad;
-        $st->aliq_fecp = $request->aliq_fecpcad;
-        $st->tipo_riolog = $request->riologcad;
-        $st->benef_fiscal = $request->beneficiocad;
-        $st->aliq_diferimento = $request->aliq_diferimentocad;
-        $st->aliq_red_unitario = $request->aliq_red_unitariocad;
-        $st->ativo = $request->statuscad;
-       
-        $saveStatus = $st->save();
+        $transp = new Transportadora;
+        $transp->emp_cod = $uempresa;
+        $transp->razao_social = $request->razaocad;
+        $transp->nome_fantasia = $request->fantasiacad;
+        $transp->transp_cgc = $request->cnpjcad;
+        $transp->transp_ie = $request->iecad;
+        $transp->email = $request->emailcad;
+        $transp->cep = $request->cepcad;
+        $transp->logradouro = $request->logradourocad;
+        $transp->numero = $request->numerocad;
+        $transp->complemento = $request->complementocad;
+        $transp->cidade = $request->cidadecad;
+        $transp->bairro = $request->bairrocad;
+        $transp->uf = $request->ufcad;
+        $transp->ibge = $request->ibgecad;
+        $transp->telefone = $request->telefonecad;
+        $transp->car_modelo = $request->modelocad;
+        $transp->car_placa = $request->placacad;
+        $transp->car_uf = $request->ufplacacad;
+        $transp->car_cidade = $request->cidadeplacacad;
+        $transp->site = $request->sitecad;
+        $transp->setor = $request->setorcad;
+        $transp->data_cad = date('Y-m-d H:i:s');
+        $saveStatus = $transp->save();
               
         if($saveStatus){   
    
-            return redirect()->action('SituacaoTribController@create')->with('status_success', 'Situacao Tributária Cadastrada!');              
+            return redirect()->action('TranspController@create')->with('status_success', 'Transportadora Cadastrada!');              
                 
         }else{
 
-            return redirect()->action('SituacaoTribController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
+            return redirect()->action('TranspController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
 
         }
 

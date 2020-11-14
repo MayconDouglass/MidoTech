@@ -124,7 +124,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Transportadora
     Route::get('/transportadora', 'TranspController@create')->name('transportadora');
-    Route::post('/transportadora/cad', 'Transpontroller@store');
+    Route::post('/transportadora/cad', 'TranspController@store');
     Route::post('/transportadora/update', 'TranspController@update');
     Route::post('/transportadora/delete', 'TranspController@destroy');
 

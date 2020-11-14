@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id_transp
  * @property int $emp_cod
  * @property string $razao_social
- * @property int|null $nome_fantasia
+ * @property string|null $nome_fantasia
  * @property string $transp_cgc
  * @property string|null $transp_ie
  * @property string|null $email
@@ -32,7 +32,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $car_placa
  * @property string $car_uf
  * @property string $car_cidade
+ * @property string|null $site
  * @property string|null $observacao
+ * @property int $setor
  * @property Carbon $data_cad
  * @property Carbon|null $data_alt
  * 
@@ -48,7 +50,7 @@ class Transportadora extends Model
 
 	protected $casts = [
 		'emp_cod' => 'int',
-		'nome_fantasia' => 'int'
+		'setor' => 'int'
 	];
 
 	protected $dates = [
@@ -76,7 +78,9 @@ class Transportadora extends Model
 		'car_placa',
 		'car_uf',
 		'car_cidade',
+		'site',
 		'observacao',
+		'setor',
 		'data_cad',
 		'data_alt'
 	];
@@ -84,5 +88,10 @@ class Transportadora extends Model
 	public function setempresa()
 	{
 		return $this->belongsTo(Setempresa::class, 'emp_cod');
+	}
+
+	public function setor()
+	{
+		return $this->belongsTo(Setor::class, 'setor');
 	}
 }

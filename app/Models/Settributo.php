@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $codigo
  * @property string $descricao
  * @property int $tipo
- * @property int $trib_cst
+ * @property string $trib_cst
  * @property int $trib_origem
  * @property int $mod_icms
  * @property int $mod_icms_st
@@ -29,7 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property float $aliq_red_icms
  * @property float $aliq_red_icms_st
  * @property float $aliq_simples
- * @property int $trib_csosn
+ * @property string $trib_csosn
  * @property float $aliq_fecp
  * @property int $tipo_riolog
  * @property string|null $benef_fiscal
@@ -50,7 +50,6 @@ class Settributo extends Model
 	protected $casts = [
 		'emp_cod' => 'int',
 		'tipo' => 'int',
-		'trib_cst' => 'int',
 		'trib_origem' => 'int',
 		'mod_icms' => 'int',
 		'mod_icms_st' => 'int',
@@ -63,7 +62,6 @@ class Settributo extends Model
 		'aliq_red_icms' => 'float',
 		'aliq_red_icms_st' => 'float',
 		'aliq_simples' => 'float',
-		'trib_csosn' => 'int',
 		'aliq_fecp' => 'float',
 		'tipo_riolog' => 'int',
 		'aliq_diferimento' => 'float',

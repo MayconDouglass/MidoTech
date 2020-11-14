@@ -52,7 +52,7 @@ class ClienteController extends Controller
                                         ->where('role',5)
                                         ->pluck('ativo');
             if($roleClientes = 1){
-                $clientes = Cliente::all();
+                $clientes = Cliente::wherenotin('id_cliente',[1])->get();
                 $tes = TES::all();
             }else{
                 $clientes = Cliente::where('emp_cod',$uempresa)->get(); 

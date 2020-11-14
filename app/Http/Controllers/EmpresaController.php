@@ -64,6 +64,14 @@ class EmpresaController extends Controller
 
     public function store(Request $request){
         $countEmp = count(Setempresa::where('CNPJ',$request->cnpjcad)->get());
+        
+        if(!$request->licencacad){
+            $licencas = 0;
+        }else{
+            $licencas = $request->licencacad;
+        }
+
+
         if($countEmp < 1 ){
             $empresa = new Setempresa;
             $empresa->razao_social = $request->razaocad;
@@ -75,7 +83,7 @@ class EmpresaController extends Controller
             $empresa->Cidade = $request->cidadecad;
             $empresa->Estado = $request->ufcad;
             $empresa->CEP = $request->cepcad;
-            $empresa->CEP = $request->ibgecad;
+            $empresa->ibge = $request->ibgecad;
             $empresa->CNPJ = $request->cnpjcad;
             $empresa->IE = $request->iecad;
             $empresa->IM = $request->imcad;
@@ -84,7 +92,7 @@ class EmpresaController extends Controller
             $empresa->Pag_web = $request->sitecad;
             $empresa->email = $request->emailcad;
             $empresa->Sigla = $request->siglacad;
-            $empresa->Licenca = $request->licencacad;
+            $empresa->Licenca =$licencas ;
             $empresa->DataCad = date('Y-m-d H:i:s');
             $empresa->regimetrib = $request->regimecad;
             $empresa->atividade = $request->atividadecad;
@@ -124,6 +132,12 @@ class EmpresaController extends Controller
         
         $countEmp = count(Setempresa::where('CNPJ',$request->cnpjalt)->get());
         
+        if(!$request->licencaalt){
+            $licencas = 0;
+        }else{
+            $licencas = $request->licencaalt;
+        }
+
             $empresa = Setempresa::find($request->idEmp);
             $empresa->razao_social = $request->razaoalt;
             $empresa->nome_fantasia = $request->fantasiaalt;
@@ -145,7 +159,7 @@ class EmpresaController extends Controller
             $empresa->Pag_web = $request->sitealt;
             $empresa->email = $request->emailalt;
             $empresa->Sigla = $request->siglaalt;
-            $empresa->Licenca = $request->licencaalt;
+            $empresa->Licenca = $licencas;
             $empresa->DataAlt = date('Y-m-d H:i:s');
             $empresa->regimetrib = $request->regimealt;
             $empresa->atividade = $request->atividadealt;

@@ -79,12 +79,16 @@ class LoginController extends Controller
                        ->first();
        
         $statusUser = User::where('email', $request->email)->first();
-        //dd($statusUser->ativo);
-        //dd(bcrypt($request->senha));
+      
             
+        if(!$usuario){
+            return redirect()->action('LoginController@form')->with('status_login_error', 'Email inválido.'); 
+        }
+
         if(!$usuario->setempresa->ativo){
             return redirect()->action('LoginController@form')->with('status_login_error', 'Empresa Inativa! Contate o Setor financeiro.');
         }
+
         if(!$usuario->perfil->ativo){
             return redirect()->action('LoginController@form')->with('status_login_error', 'Perfil do usuário Inativo!');
         }

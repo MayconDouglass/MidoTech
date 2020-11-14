@@ -89,7 +89,7 @@
                                     $imagem = 'storage/img/users/default.jpg';
                                     }
                                     echo ($imagem);
-            ?>"> Visualizar</button>
+            ?>"></button>
             @foreach ($acessoPerfil as $acesso)
             @if (($acesso->role == 2)&&($acesso->ativo == 1))
             <button type="button" class="btn btn-alterar btn-sm fa fa-pencil-square-o" data-toggle="modal"
@@ -106,7 +106,7 @@
                                     $imagem = 'storage/img/users/default.jpg';
                                     }
                                     echo ($imagem);
-            ?>"> Alterar</button>
+            ?>"></button>
 
             <button type="button" class="btn btn-info btn-sm fa fa-key" data-toggle="modal"
               data-target="#modal-password" data-codigo="{{$usuario->id_usuario}}"></button>

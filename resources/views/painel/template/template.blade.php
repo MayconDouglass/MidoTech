@@ -209,8 +209,8 @@
               </ul>
             </li>
 
-            <li class="nav-item has-treeview">
-              <a href="#" class="nav-link">
+            <li id="menuClientes" class="nav-item has-treeview">
+              <a href="#" id="subClientes" class="nav-link">
                 <i class="nav-icon fas fa-circle"></i>
                 <p>
                   Clientes
@@ -221,7 +221,7 @@
                 @foreach ($acessoPerfil as $acesso)
                 @if (($acesso->role == 1)&&($acesso->ativo == 1))
                 <li class="nav-item">
-                  <a href="{{route('clientes')}}" class="nav-link">
+                  <a id="menuCliente" href="{{route('clientes')}}" class="nav-link">
                     <i class="fa fa-user-o nav-icon"></i>
                     <p>Clientes</p>
                   </a>
@@ -287,8 +287,8 @@
             </li>
               </ul>
               
-            <li class="nav-item has-treeview">
-              <a href="#" class="nav-link">
+            <li id="menuCompras" class="nav-item has-treeview">
+              <a id="subCompras" href="#" class="nav-link">
                 <i class="nav-icon fa fa-cart-arrow-down "></i>
                 <p>
                   Compras
@@ -299,7 +299,7 @@
                 @foreach ($acessoPerfil as $acesso)
                 @if (($acesso->role == 1)&&($acesso->ativo == 1))
                 <li class="nav-item">
-                  <a href="{{route('transportadora')}}" class="nav-link">
+                  <a id="menuTransp" href="{{route('transportadora')}}" class="nav-link">
                     <i class="fa fa-truck nav-icon"></i>
                     <p>Transportadora</p>
                   </a>

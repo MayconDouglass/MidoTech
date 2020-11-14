@@ -809,7 +809,7 @@
       <div class="modal-body">
         <form class="form-horizontal" method="POST" action="{{action('VendedorController@destroy')}}">
           @csrf
-          <input type="text" class="form-control col-form-label-sm" id="iddelete" name="iddelete">
+          <input type="hidden" class="form-control col-form-label-sm" id="iddelete" name="iddelete">
           <label class="b_text_modal_danger">Deseja realmente excluir este registro?</label>
 
           <div class="modal-footer justify-content-between">

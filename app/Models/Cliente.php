@@ -41,8 +41,10 @@ use Illuminate\Database\Eloquent\Model;
  * 
  * @property Setempresa $setempresa
  * @property Modocobranca $modocobranca
+ * @property Te $te
  * @property Collection|Clilogradouro[] $clilogradouros
  * @property Collection|Climov[] $climovs
+ * @property Collection|Contrato[] $contratos
  *
  * @package App\Models
  */
@@ -112,6 +114,11 @@ class Cliente extends Model
 		return $this->belongsTo(Modocobranca::class, 'modo_cobranca');
 	}
 
+	public function te()
+	{
+		return $this->belongsTo(Te::class, 'tes_cod');
+	}
+
 	public function clilogradouros()
 	{
 		return $this->hasMany(Clilogradouro::class, 'cli_cod');
@@ -120,5 +127,10 @@ class Cliente extends Model
 	public function climovs()
 	{
 		return $this->hasMany(Climov::class, 'cli_cod');
+	}
+
+	public function contratos()
+	{
+		return $this->hasMany(Contrato::class, 'cli_cod');
 	}
 }

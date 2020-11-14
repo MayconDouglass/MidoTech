@@ -63,12 +63,14 @@ class PerfilController extends Controller
 
     public function store(Request $request)
     {
+        $uempresa = Auth::user()->empresa;
         $sizeRole = Role::all()->max('id_role');
         $countPerfil = count(Perfil::where('nome',$request->nomecad)->where('emp_cod',$request->empcad)->get());
         if($countPerfil < 1)
         {
+            
             $perfil = new Perfil();
-            $perfil->emp_cod = $request->empcad;
+            $perfil->emp_cod = $uempresa;
             $perfil->nome = $request->nomecad;
             $perfil->ativo = $request->statuscad;
             $perfil->datacad = date('Y-m-d H:i:s');

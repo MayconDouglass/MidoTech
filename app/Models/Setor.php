@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $ativo
  * 
  * @property Setempresa $setempresa
+ * @property Collection|Transportadora[] $transportadoras
  *
  * @package App\Models
  */
@@ -42,5 +44,10 @@ class Setor extends Model
 	public function setempresa()
 	{
 		return $this->belongsTo(Setempresa::class, 'emp_cod');
+	}
+
+	public function transportadoras()
+	{
+		return $this->hasMany(Transportadora::class, 'setor');
 	}
 }

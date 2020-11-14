@@ -9,6 +9,9 @@ $(function () {
         }
     }*/
     
+    $("#menuClientes").addClass("menu-open");
+    $("#subClientes").addClass("active");
+    $("#menuCliente").addClass("active");
 
     if (sessionStorage.getItem("status") != null) {
         exibirAtualizadoSucesso();

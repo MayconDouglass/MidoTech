@@ -52,7 +52,7 @@ class Almoxarifado extends Model
 		return $this->belongsTo(Setempresa::class, 'emp_cod');
 	}
 
-	public function al_localizacao()
+	public function al_localizacaos()
 	{
 		return $this->hasMany(AlLocalizacao::class, 'al_cod');
 	}
