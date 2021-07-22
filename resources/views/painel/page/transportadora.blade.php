@@ -223,7 +223,7 @@
 
             <div class="col-sm-3">
               <label class="control-label">Setor</label>
-              <p><select class="select2" tabindex="-1" name="setorcad" id="setor">
+              <p><select class="select2" tabindex="-1" name="setorcad" id="setorcad">
                 @foreach ($setores as $setor)
                   <option value="{{$setor->id_setor}}">{{$setor->setor}}</option>
                 @endforeach
@@ -232,7 +232,164 @@
 
             <div class="col-sm-1">
               <label class="control-label">Ativo</label>
-              <p><select class="select-notsearch" tabindex="-1" name="ativaview" id="ativa_view">
+              <p><select class="select-notsearch" tabindex="-1" name="statuscad" id="statuscad">
+                <option value="1">Sim</option>
+                <option value="0">Não</option>
+              </select></p>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label>Observação</label>
+                <textarea class="form-control" name="obscad" id="observacao" maxlength="200" rows="4" placeholder="(OPCIONAL) O tamanho máximo é de  200 caracteres."></textarea>
+              </div>
+            </div>
+
+          </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="reset" data-dismiss="modal"><i class="fa fa-times">
+            Cancelar</i></button>
+        <button type="submit" class="btn btn-primary" id="btnSalvar" name="btnSalvar"><i class="fa fa-floppy-o">
+            Salvar</i></button>
+      </div>
+      </form>
+    </div>4
+  </div>
+</div>
+</div>
+
+<!-- Modal Alteracao-->
+<div class="modal fade" id="AlterarModal" tabindex="-1" role="dialog" aria-labelledby="AlterarModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div id="loadModal" class="d-none">
+        <div class="overlay d-flex justify-content-center align-items-center">
+          <i class="fas fa-2x fa-sync fa-spin"></i>
+        </div>
+      </div>
+      <div class="add_modalHeader">
+        <div class="modal-header">
+          <h5 class="modal-title" id="AlterarModalLabel">Nova Transportadora</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+
+        <!-- Form de cadastro -->
+        <form class="form-horizontal" method="POST" action="{{action('TranspController@store')}}"
+          enctype="multipart/form-data">
+          @csrf
+          <div class="form-group row">
+
+            <div class="col-sm-6">
+              <label class="control-label">Razão social</label>
+              <p><input class="form-control" type="text" name="razaoalt" id="razao" maxlength="250" required></p>
+            </div>
+
+            <div class="col-sm-6">
+              <label class="control-label">Nome Fantasia</label>
+              <p><input class="form-control" type="text" name="fantasiaalt" id="fantasia" maxlength="150"></p>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">CNPJ</label>
+              <p><input class="form-control" type="text" name="cnpjalt" id="cnpj" maxlength="18" required></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">IE</label>
+              <p><input class="form-control" type="text" name="iealt" id="ie" maxlength="20"></p>
+            </div>
+
+            <div class="col-sm-4">
+              <label class="control-label">Email</label>
+              <p><input class="form-control" type="email" name="emailalt" id="email" maxlength="150"></p>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">CEP</label>
+              <p><input class="form-control" type="text" name="cepalt" id="cep" maxlength="9" required></p>
+            </div>
+
+            <div class="col-sm-3">
+              <input class="form-control" type="hidden" name="ibgealt" id="ibge" maxlength="7" required>
+              <label class="control-label">Cidade</label>
+              <p><input class="form-control" type="text" name="cidadealt" id="cidade" maxlength="50" required></p>
+            </div>
+            
+            <div class="col-sm-3">
+              <label class="control-label">Bairro</label>
+              <p><input class="form-control" type="text" name="bairroalt" id="bairro" maxlength="50" required></p>
+            </div>
+
+            <div class="col-sm-4">
+              <label class="control-label">Logradouro</label>
+              <p><input class="form-control" type="text" name="logradouroalt" id="logradouro" maxlength="9" required></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Número</label>
+              <p><input class="form-control" type="text" name="numeroalt" id="numero" maxlength="8" required></p>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Complemento</label>
+              <p><input class="form-control" type="text" name="complementoalt" id="complemento" maxlength="30"></p>
+            </div>
+
+            <div class="col-sm-1">
+              <label class="control-label">UF</label>
+              <p><input class="form-control" type="text" name="ufalt" id="uf" maxlength="2" required></p>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Telefone</label>
+              <p><input class="form-control" type="text" name="telefonealt" id="telefone" maxlength="30"></p>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Veículo / Modelo</label>
+              <p><input class="form-control" type="text" name="modeloalt" id="modelo" maxlength="30"></p>
+            </div>
+
+            <div class="col-sm-2">
+              <label class="control-label">Placa Veículo</label>
+              <p><input class="form-control" type="text" name="placaalt" id="placa" maxlength="8"></p>
+            </div>
+
+            <div class="col-sm-1">
+              <label class="control-label">UF Veículo</label>
+              <p><input class="form-control" type="text" name="ufplacaalt" id="ufplaca" maxlength="2"></p>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Cidade Veículo</label>
+              <p><input class="form-control" type="text" name="cidadeplacaalt" id="cidadeplaca" maxlength="50"></p>
+            </div>
+
+            <div class="col-sm-4">
+              <label class="control-label">Site</label>
+              <p><input class="form-control" type="text" name="sitealt" id="site" maxlength="70"></p>
+            </div>
+
+            <div class="col-sm-3">
+              <label class="control-label">Setor</label>
+              <p><select class="select2" tabindex="-1" name="setoralt" id="setor">
+                @foreach ($setores as $setor)
+                  <option value="{{$setor->id_setor}}">{{$setor->setor}}</option>
+                @endforeach
+              </select></p>
+            </div>
+
+            <div class="col-sm-1">
+              <label class="control-label">Ativo</label>
+              <p><select class="select-notsearch" tabindex="-1" name="statuscad" id="status">
                 <option value="1">Sim</option>
                 <option value="0">Não</option>
               </select></p>
@@ -274,7 +431,7 @@
         </div>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" method="POST" action="{{action('ClienteController@destroy')}}">
+        <form class="form-horizontal" method="POST" action="{{action('TranspController@destroy')}}">
           @csrf
           <input type="text" class="form-control col-form-label-sm" id="iddelete" name="iddelete">
           <label class="b_text_modal_danger">Deseja realmente excluir este registro?</label>

@@ -116,7 +116,6 @@ $(function () {
                     $('#bairro').val(response.bairro);
                     $('#numero').val(response.numero);
                     $('#uf').val(response.uf);
-                    $('#complemento').val(response.complemento);
                     $('#email').val(response.email);
                     $('#telefone').val(response.telefone.split('/')[0]);
                     if (!getObs) {

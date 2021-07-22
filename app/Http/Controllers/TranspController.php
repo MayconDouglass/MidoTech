@@ -86,6 +86,7 @@ class TranspController extends Controller
         $transp->car_cidade = $request->cidadeplacacad;
         $transp->site = $request->sitecad;
         $transp->setor = $request->setorcad;
+        $transp->status = $request->statuscad;
         $transp->data_cad = date('Y-m-d H:i:s');
         $saveStatus = $transp->save();
               
@@ -104,54 +105,53 @@ class TranspController extends Controller
 
     public function update(Request $request){
  
-        $st = Settributo::find($request->idST);
-        $st->descricao = $request->descricaoalt;
-        $st->tipo = $request->tipoalt;
-        $st->trib_cst = $request->cstalt;
-        $st->trib_origem = $request->origemalt;
-        $st->mod_icms = $request->mod_icmsalt;
-        $st->mod_icms_st = $request->mod_icms_stalt;
-        $st->mot_desoneracao = $request->mot_desoneracaoalt;
-        $st->aliq_mva = $request->mvaalt;
-        $st->aliq_mva_simples = $request->mva_simplesalt;
-        $st->aliq_icms = $request->aliq_icmsalt;
-        $st->aliq_icms_interno = $request->aliq_icms_ufalt;
-        $st->aliq_icms_st = $request->aliq_icms_stalt;
-        $st->aliq_red_icms = $request->aliq_red_icmsalt;
-        $st->aliq_red_icms_st = $request->aliq_red_icms_stalt;
-        $st->aliq_simples = $request->aliq_simplesalt;
-        $st->trib_csosn = $request->csosnalt;
-        $st->aliq_fecp = $request->aliq_fecpalt;
-        $st->tipo_riolog = $request->riologalt;
-        $st->benef_fiscal = $request->beneficioalt;
-        $st->aliq_diferimento = $request->aliq_diferimentoalt;
-        $st->aliq_red_unitario = $request->aliq_red_unitarioalt;
-        $st->ativo = $request->statusalt;
-       
-        $updateStatus = $st->save();
+        $transp = Transportadora::find($request->idTransp);
+        $transp->razao_social = $request->razaoalt;
+        $transp->nome_fantasia = $request->fantasiaalt;
+        $transp->transp_cgc = $request->cnpjalt;
+        $transp->transp_ie = $request->iealt;
+        $transp->email = $request->emailalt;
+        $transp->cep = $request->cepalt;
+        $transp->logradouro = $request->logradouroalt;
+        $transp->numero = $request->numeroalt;
+        $transp->complemento = $request->complementoalt;
+        $transp->cidade = $request->cidadealt;
+        $transp->bairro = $request->bairroalt;
+        $transp->uf = $request->ufalt;
+        $transp->ibge = $request->ibgealt;
+        $transp->telefone = $request->telefonealt;
+        $transp->car_modelo = $request->modeloalt;
+        $transp->car_placa = $request->placaalt;
+        $transp->car_uf = $request->ufplacaalt;
+        $transp->car_cidade = $request->cidadeplacaalt;
+        $transp->site = $request->sitealt;
+        $transp->setor = $request->setoralt;
+        $transp->status = $request->statusalt;
+        $transp->data_alt = date('Y-m-d H:i:s');
+        $updateStatus = $transp->save();
               
         if($updateStatus){   
-                  
-                return redirect()->action('SituacaoTribController@create')->with('status_success', 'Almoxarifado Atualizado!');              
-
+   
+            return redirect()->action('TranspController@create')->with('status_success', 'Transportadora Atualizada!');              
+                
         }else{
 
-                return redirect()->action('SituacaoTribController@create')->with('status_error', 'OPS! Algum erro no Cadastrado, tente novamente!');
-        }
+            return redirect()->action('TranspController@create')->with('status_error', 'OPS! Algum erro aconteceu, tente novamente!');
 
+        }
 
     }
 
     public function destroy(Request $request){
         if(empty($request->iddelete)){
-            return redirect()->action('SituacaoTribController@create')->with('status_error', 'Falha!');    
+            return redirect()->action('TranspController@create')->with('status_error', 'Falha!');    
         }
-                $stDel = Settributo::find($request->iddelete);
+                $stDel = Transportadora::find($request->iddelete);
                 $delete=$stDel ->delete();
                 if($delete){
-                   return redirect()->action('SituacaoTribController@create')->with('status_success', 'Excluído!');
+                   return redirect()->action('TranspController@create')->with('status_success', 'Excluído!');
                 }else{
-                return redirect()->action('SituacaoTribController@create')->with('status_error', 'Não foi possível excluir o registro, possivelmente existem movimentação/cadastros!');    
+                return redirect()->action('TranspController@create')->with('status_error', 'Não foi possível excluir o registro, possivelmente existem movimentação/cadastros!');    
                 }
     }
 
